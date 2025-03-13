@@ -49,13 +49,13 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export const RootLayout = async ({
+export default async function RootLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-}>) => {
+}>) {
   const { locale } = await params;
   if (!routing.locales.includes(locale as "en" | "ru")) {
     notFound();
@@ -75,6 +75,4 @@ export const RootLayout = async ({
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}
