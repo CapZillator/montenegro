@@ -5,6 +5,7 @@ import { auth0 } from "./lib/auth0";
 const intlMiddleware = createMiddleware({
   locales: ["en", "ru"],
   defaultLocale: "en",
+  localePrefix: "as-needed",
 });
 
 export async function middleware(request: NextRequest) {
