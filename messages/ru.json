@@ -1,5 +1,81 @@
 {
   "welcome": {
     "hi": "Hi ru"
+  },
+  "errors": {
+    "inputs": {
+      "invalidValue": "Неверное значение!",
+      "nonEmptyString": "Не может быть пустым!"
+    }
+  },
+  "actions": {
+    "add": "Добавить",
+    "addSection": "Добавить секцию",
+    "addGroup": "Добавить раздел",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "close": "Закрыть",
+    "search": "Поиск",
+    "next": "Вперед",
+    "back": "Назад"
+  },
+  "states": {
+    "saved": "Сохранено",
+    "error": "Ошибка",
+    "yes": "Да",
+    "no": "Нет",
+    "nothingFound": "Ничего не найдено",
+    "steps": {
+      "basic": "Основные данные",
+      "images": "Изображения",
+      "location": "Местоположение"
+    }
+  },
+  "realEstate": {
+    "types": {
+      "apartment": "Квартира",
+      "studio": "Студия",
+      "house": "Дом",
+      "townhouse": "Таунхаус",
+      "duplexTriplex": "Дюплекс/Триплекс",
+      "villa": "Вилла",
+      "room": "Комната"
+    }
+  },
+  "listings": {
+    "types": {
+      "sale": "Продажа",
+      "longTermRent": "Аренда"
+    }
+  },
+  "properties": {
+    "title": "Title",
+    "description": "Description",
+    "price": "Price",
+    "rooms": "Rooms",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "area": "Area",
+    "location": "Location",
+    "floor": "Floor",
+    "buildingYear": "Building year",
+    "furnished": "Furnished",
+    "balcony": "Balcony?",
+    "parking": "Parking",
+    "heating": "Heating",
+    "address": "Address",
+    "deposit": "Deposit",
+    "petsAllowed": "Pets",
+    "ac": "Кондиционер"
+  },
+  "files": {
+    "dragToAdd": "Перетащи сюда файлы или кликни, чтобы выбрать",
+    "restriction": "Максимум 24 файла в формате .jpeg .png или .webp, не больше 5мб"
+  },
+  "user": {
+    "addContactHeader": "Contact data",
+    "addContactIntro": "Please add your contact information so people can contact you.",
+    "phone": "Phone number",
+    "additionalContacts": "Additional ways to contact"
   }
 }

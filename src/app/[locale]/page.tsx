@@ -1,6 +1,7 @@
-import { auth0 } from "@/lib/auth0";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+
+import { auth0 } from "@/lib/auth0";
 
 export default async function Home() {
   const session = await auth0.getSession();
@@ -9,8 +10,7 @@ export default async function Home() {
   if (!session) {
     return (
       <main>
-        <Link href={"/auth/login?screen_hint=signup"}>Sign up</Link>
-        <Link href={"/auth/login"}>Log in</Link>
+        <Link href="/auth/login">Login</Link>
       </main>
     );
   }

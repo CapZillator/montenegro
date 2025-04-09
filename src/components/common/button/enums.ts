@@ -1,0 +1,16 @@
+export enum ButtonIcon {
+  ADD = "add",
+  DELETE = "delete",
+  // EDIT = "edit",
+  SAVE = "save",
+  // CANCEL = "cancel",
+  CLOSE = "close",
+  NEXT = "next",
+  BACK = "back",
+  // SEARCH = "search",
+  // FILTER = "filter",
+  // SORT = "sort",
+  // REFRESH = "refresh",
+  // DOWNLOAD = "download",
+  // UPLOAD = "upload",
+}

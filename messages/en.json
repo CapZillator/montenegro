@@ -1,5 +1,81 @@
 {
   "welcome": {
     "hi": "Hi en"
+  },
+  "errors": {
+    "inputs": {
+      "invalidValue": "Wrong value!",
+      "nonEmptyString": "Can't be empty!"
+    }
+  },
+  "actions": {
+    "add": "Add",
+    "addSection": "Add section",
+    "addGroup": "Добавить раздел",
+    "save": "Save",
+    "delete": "Delete",
+    "close": "Close",
+    "search": "Search",
+    "next": "Next",
+    "back": "Back"
+  },
+  "states": {
+    "saved": "Saved",
+    "error": "Error",
+    "yes": "Yes",
+    "no": "No",
+    "nothingFound": "Nothing found",
+    "steps": {
+      "basic": "Basic data",
+      "images": "Images",
+      "location": "Location"
+    }
+  },
+  "realEstate": {
+    "types": {
+      "apartment": "Apartment",
+      "studio": "Studio",
+      "house": "House",
+      "townhouse": "Townhouse",
+      "duplexTriplex": "Duplex/Triplex",
+      "villa": "Villa",
+      "room": "Room"
+    }
+  },
+  "listings": {
+    "types": {
+      "sale": "Sale",
+      "longTermRent": "Rent"
+    },
+    "properties": {
+      "title": "Title",
+      "description": "Description",
+      "price": "Price",
+      "rooms": "Rooms",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "area": "Area",
+      "location": "Location",
+      "floor": "Floor",
+      "buildingYear": "Building year",
+      "furnished": "Furnished",
+      "balcony": "Balcony?",
+      "parking": "Parking",
+      "heating": "Heating",
+      "address": "Address",
+      "deposit": "Deposit",
+      "petsAllowed": "Pets",
+      "ac": "A/C"
+    }
+  },
+  "files": {
+    "dragToAdd": "Drag and drop files here or click to select",
+    "restriction": "Maximum of 24 files in .jpeg .png or .webp format, no larger than 5mb"
+  },
+  "user": {
+    "addContactHeader": "Contact data",
+    "addContactIntro": "Please add your contact information so people can contact you.",
+    "phone": "Phone number",
+    "additionalContacts": "Additional ways to contact"
   }
 }
