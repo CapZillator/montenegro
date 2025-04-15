@@ -7,10 +7,12 @@ export const formatPhoneNumber = (value: string): string => {
     const numbers = cleaned.slice(1);
     // Group numbers in chunks of 3-4 digits
     const groups = numbers.match(/.{1,4}/g) || [];
+
     return `+${groups.join(" ")}`;
   }
   
   // Format local numbers
   const groups = cleaned.match(/.{1,4}/g) || [];
+
   return groups.join(" ");
 };

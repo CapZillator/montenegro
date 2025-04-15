@@ -56,7 +56,7 @@ export const UserContactsModal: FC<Props> = ({ handleClose }) => {
         };
       });
       handleClose();
-    } catch (error) {
+    } catch (_error) {
       showToast(t("errors.genericRequest"), "error");
     }
   };

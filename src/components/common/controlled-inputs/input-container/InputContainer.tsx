@@ -15,7 +15,7 @@ export const InputContainer: FC<Props> = ({
   children,
   name,
   label,
-  error,
+  error: _error,
   icon,
   styles,
 }) => {

@@ -5,6 +5,7 @@ import {
   MAX_FILE_SIZE_MB,
   MAX_IMAGES,
 } from "@/components/common/controlled-inputs/image-uploader/constants";
+import { getErrorMessage } from "@/helpers/guards";
 import { auth0 } from "@/lib/auth0";
 import { cloudinary } from "@/lib/cloudinary";
 import { deleteImagesByPublicIds } from "@/lib/images/deleteImagesByPublicIds";
@@ -56,7 +57,10 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Upload error:", error);
 
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: getErrorMessage(error) },
+      { status: 500 }
+    );
   }
 }
 
@@ -76,6 +80,9 @@ export async function DELETE(req: NextRequest) {
   } catch (error) {
     console.error("Delete error:", error);
 
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: getErrorMessage(error) },
+      { status: 500 }
+    );
   }
 }

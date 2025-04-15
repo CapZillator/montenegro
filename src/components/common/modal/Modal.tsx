@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  FC,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
 
@@ -37,7 +30,7 @@ export const Modal: FC<Props> = ({ isOpen, children, onClose }) => {
   }, [isOpen]);
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent<HTMLElement>) => {
+    const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", handler);

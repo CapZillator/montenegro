@@ -74,7 +74,7 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
   const [listingLocale, setListingLocale] = useState(selectedLocale);
   const {
     control,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
     handleSubmit,
     setValue,
     watch,

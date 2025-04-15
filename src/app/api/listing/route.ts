@@ -3,6 +3,7 @@ import { neon } from "@neondatabase/serverless";
 import { z } from "zod";
 
 import { validationSchema } from "@/constants/validationSchemas";
+import { getErrorMessage } from "@/helpers/guards";
 import { auth0 } from "@/lib/auth0";
 import { deleteImagesByPublicIds } from "@/lib/images/deleteImagesByPublicIds";
 import { ResidentialPremises } from "@/types/realEstate";
@@ -51,7 +52,10 @@ export async function GET(req: NextRequest) {
 
     console.log("error", error);
 
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: getErrorMessage(error) },
+      { status: 500 }
+    );
   }
 }
 
@@ -100,7 +104,10 @@ export async function POST(req: NextRequest) {
 
     console.log("error", error);
 
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: getErrorMessage(error) },
+      { status: 500 }
+    );
   }
 }
 
@@ -157,7 +164,10 @@ export async function PUT(req: NextRequest) {
 
     console.log("error", error);
 
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: getErrorMessage(error) },
+      { status: 500 }
+    );
   }
 }
 
@@ -204,6 +214,9 @@ export async function DELETE(req: NextRequest) {
 
     console.log("error", error);
 
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: getErrorMessage(error) },
+      { status: 500 }
+    );
   }
 }
