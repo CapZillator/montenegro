@@ -5,8 +5,9 @@ import { Control, Controller } from "react-hook-form";
 import classNames from "classnames";
 import { twMerge } from "tailwind-merge";
 
-import { InputContainer } from "../input-container/InputContainer";
 import { formatPhoneNumber } from "@/formatters/contacts";
+
+import { InputContainer } from "../input-container/InputContainer";
 
 type Props = {
   name: string;
@@ -33,13 +34,9 @@ export const PhoneInput: FC<Props> = ({
     render={({ field, fieldState }) => (
       <InputContainer
         error={fieldState.error?.message}
-        {...{ name, label, icon }}
+        {...{ name, label, icon, styles: containerStyles }}
       >
-        <div
-          className={twMerge(
-            classNames("relative flex items-center", containerStyles)
-          )}
-        >
+        <div className={twMerge(classNames("relative flex items-center"))}>
           <input
             {...field}
             placeholder={placeholder}
@@ -65,4 +62,4 @@ export const PhoneInput: FC<Props> = ({
       </InputContainer>
     )}
   />
-); 
+);

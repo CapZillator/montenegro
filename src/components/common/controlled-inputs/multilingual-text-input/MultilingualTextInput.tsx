@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Control,Controller } from "react-hook-form";
+import { Control, Controller } from "react-hook-form";
 import classNames from "classnames";
 
 import { InputContainer } from "../input-container/InputContainer";
@@ -11,6 +11,7 @@ type Props = {
   label?: string;
   placeholder?: string;
   disabled?: boolean;
+  containerStyles?: string;
 };
 
 export const MultilingualTextInput: FC<Props> = ({
@@ -20,12 +21,16 @@ export const MultilingualTextInput: FC<Props> = ({
   label,
   placeholder,
   disabled,
+  containerStyles,
 }) => (
   <Controller
     name={name}
     control={control}
     render={({ field, fieldState }) => (
-      <InputContainer error={fieldState.error?.message} {...{ name, label }}>
+      <InputContainer
+        error={fieldState.error?.message}
+        {...{ name, label, styles: containerStyles }}
+      >
         <input
           {...field}
           placeholder={placeholder}
@@ -36,7 +41,7 @@ export const MultilingualTextInput: FC<Props> = ({
             });
           }}
           value={field.value[selectedLocale] ?? ""}
-          {...{disabled}}
+          {...{ disabled }}
           className={classNames(
             "px-2 py-1 text-primary-content rounded-sm w-full inset-shadow-sm inset-shadow-primary-content/20",
             "bg-secondary text-primary-content focus:outline-2 focus:outline-primary-content/80",

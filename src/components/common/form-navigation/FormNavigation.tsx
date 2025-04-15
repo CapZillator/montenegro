@@ -8,6 +8,7 @@ type Props<T extends Record<string, any>> = {
   totalSteps: number;
   stepFields: (keyof T)[][];
   isSubmitting: boolean;
+  isUpdate: boolean;
   onStepChange: (step: number) => void;
   onTrigger: UseFormTrigger<T>;
   onSubmit: () => void;
@@ -19,6 +20,7 @@ export const FormNavigation = <T extends Record<string, any>>({
   totalSteps,
   stepFields,
   isSubmitting,
+  isUpdate,
   onStepChange,
   onTrigger,
   onSubmit,
@@ -29,13 +31,14 @@ export const FormNavigation = <T extends Record<string, any>>({
       <Button
         type="button"
         onClick={() => onStepChange(currentStep - 1)}
+        disabled={isSubmitting}
         icon={ButtonIcon.BACK}
         iconClassName="fill-primary scale-x-[-1] h-3 w-3"
       >
         {t("actions.back")}
       </Button>
     )}
-    {currentStep < totalSteps ? (
+    {currentStep < totalSteps && (
       <Button
         type="button"
         onClick={async () => {
@@ -46,22 +49,24 @@ export const FormNavigation = <T extends Record<string, any>>({
             onStepChange(currentStep + 1);
           }
         }}
+        disabled={isSubmitting}
         icon={ButtonIcon.NEXT}
         iconClassName="fill-primary h-3 w-3"
         iconSide="right"
       >
         {t("actions.next")}
       </Button>
-    ) : (
+    )}
+    {currentStep === totalSteps || isUpdate ? (
       <Button
         type="submit"
         disabled={isSubmitting}
         onClick={onSubmit}
-        icon={ButtonIcon.ADD}
+        icon={isUpdate ? ButtonIcon.SAVE : ButtonIcon.ADD}
         iconClassName="stroke-primary"
       >
-        <span>{t("actions.add")}</span>
+        <span>{t(isUpdate ? "actions.save" : "actions.add")}</span>
       </Button>
-    )}
+    ) : null}
   </div>
 );

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
-// import { useTranslations } from "next-intl";
 import classNames from "classnames";
+import { twMerge } from "tailwind-merge";
 
 type Props = {
   children: ReactNode;
@@ -8,6 +8,7 @@ type Props = {
   label?: string;
   error?: string;
   icon?: ReactNode;
+  styles?: string;
 };
 
 export const InputContainer: FC<Props> = ({
@@ -16,11 +17,12 @@ export const InputContainer: FC<Props> = ({
   label,
   error,
   icon,
+  styles,
 }) => {
   // const t = useTranslations("errors");
 
   return (
-    <div>
+    <div className={twMerge(classNames(styles))}>
       {label?.length ? (
         <label
           htmlFor={name}

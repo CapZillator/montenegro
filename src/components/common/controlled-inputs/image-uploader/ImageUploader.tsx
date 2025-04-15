@@ -3,10 +3,14 @@ import { useDropzone } from "react-dropzone";
 import { Control, Controller } from "react-hook-form";
 import classNames from "classnames";
 
+import { deleteListingImageFetcher } from "@/fetchers/images";
+import { uploadImageFetcher } from "@/fetchers/images";
 import { useToast } from "@/hooks/use-toast/useToast";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 import { truncateFileName } from "@/utils/files";
 
+import { Button } from "../../button/Button";
+import { ButtonIcon } from "../../button/enums";
 import { Close } from "../../icons/actions/Close";
 import { Upload } from "../../icons/actions/Upload";
 import { Image } from "../../icons/Image";
@@ -35,7 +39,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
       );
 
       if (filteredFiles.length < acceptedFiles.length) {
-        showToast("Wrong files size/format", "info");
+        showToast(t("warnings.wrongFile"), "info");
       }
 
       setImages((prev) => [...prev, ...filteredFiles]);
@@ -52,7 +56,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
 
         const handleUpload = async () => {
           if (images.length + uploadedUrls.length > MAX_IMAGES) {
-            showToast("Too many images!", "info");
+            showToast(t("warnings.tooMany"), "info");
 
             return;
           }
@@ -62,23 +66,17 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
           try {
             const formData = new FormData();
             images.forEach((image) => formData.append("file", image));
+            const uploadedImages = await uploadImageFetcher(formData);
 
-            const res = await fetch("/api/image/upload", {
-              method: "POST",
-              body: formData,
-            });
-
-            const data = await res.json();
-
-            if (data.results) {
+            if (uploadedImages.results) {
               onChange([
                 ...uploadedUrls,
-                ...data.results.map((img: any) => img.secure_url),
+                ...uploadedImages.results.map((img: any) => img.secure_url),
               ]);
               setImages([]);
             }
           } catch (_error) {
-            showToast("Uploading error, try again", "error");
+            showToast(t("errors.uploadFailed"), "error");
           }
 
           setUploading(false);
@@ -87,21 +85,13 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
         const handleDelete = async (publicId: string) => {
           try {
             setUploading(true);
-            const res = await fetch("/api/image/delete", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ publicIds: [publicId] }),
-            });
+            await deleteListingImageFetcher([publicId]);
 
-            const data = await res.json();
-
-            if (data.result === "ok") {
-              onChange(
-                uploadedUrls.filter((url: string) => !url.includes(publicId))
-              );
-            }
+            onChange(
+              uploadedUrls.filter((url: string) => !url.includes(publicId))
+            );
           } catch (_error) {
-            showToast("Delete image error, try again", "error");
+            showToast(t("errors.deleteFailed"), "error");
           } finally {
             setUploading(false);
           }
@@ -129,8 +119,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
             </div>
 
             {images.length > 0 && (
-              <div className="mt-4">
-                {/* <p>Файлы для загрузки:</p> */}
+              <div className="mt-4 space-y-2">
                 <ul>
                   {images.map((file, index) => (
                     <li key={index} className="flex items-center gap-2">
@@ -149,15 +138,15 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={handleUpload}
-                  className={`bg-blue-500 text-white px-4 py-2 rounded mt-2 ${
-                    isLimitReached ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
+                <Button
+                  type="button"
                   disabled={isLimitReached || uploading}
+                  onClick={handleUpload}
+                  icon={ButtonIcon.UPLOAD}
+                  iconClassName="stroke-primary"
                 >
-                  {uploading ? "Загружается..." : "Загрузить"}
-                </button>
+                  <span>{t("actions.upload")}</span>
+                </Button>
               </div>
             )}
 

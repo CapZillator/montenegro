@@ -3,19 +3,14 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import { useQuery } from "@tanstack/react-query";
 
+import { queryKeys } from "@/constants/fetch";
 import { checkUserFetcher } from "@/fetchers/user";
-
-type UserResponse = {
-  id: string;
-  needsPhone: boolean;
-  status: "existing" | "created";
-};
 
 export const useCurrentUser = () => {
   const { user } = useUser();
 
-  return useQuery<UserResponse>({
-    queryKey: ["user", user?.sub],
+  return useQuery({
+    queryKey: [queryKeys.user.status, user?.sub],
     queryFn: checkUserFetcher,
     enabled: !!user?.sub,
     retry: false,

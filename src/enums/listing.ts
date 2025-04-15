@@ -12,3 +12,4 @@ export enum ListingType {
   SALE = "sale",
   LONG_TERM_RENT = "longTermRent",
 }
+

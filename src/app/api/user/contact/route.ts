@@ -19,9 +19,7 @@ export async function POST(req: NextRequest) {
 
     const updateData = {
       phone: validData.phone,
-      messengers: validData.contacts
-        ? JSON.stringify(validData.contacts)
-        : null,
+      contacts: validData.contacts ? JSON.stringify(validData.contacts) : null,
     };
 
     const { query, values } = buildSqlQuery("users", updateData, "update", {

@@ -15,6 +15,7 @@ type Props = {
   disabled?: boolean;
   measurementUnitBadge?: string | ReactNode;
   containerStyles?: string;
+  inputContainerStyles?: string;
   icon?: ReactNode;
 };
 
@@ -26,6 +27,7 @@ export const NumericInput: FC<Props> = ({
   disabled,
   measurementUnitBadge,
   containerStyles,
+  inputContainerStyles,
   icon,
 }) => (
   <Controller
@@ -34,11 +36,11 @@ export const NumericInput: FC<Props> = ({
     render={({ field, fieldState }) => (
       <InputContainer
         error={fieldState.error?.message}
-        {...{ name, label, icon }}
+        {...{ name, label, icon, styles: containerStyles }}
       >
         <div
           className={twMerge(
-            classNames("relative flex items-center", containerStyles)
+            classNames("relative flex items-center", inputContainerStyles)
           )}
         >
           <input

@@ -15,6 +15,7 @@ type Props = {
   disabled?: boolean;
   searchEnabled?: boolean;
   controlButtonStyles?: string;
+  containerStyles?: string;
 };
 
 export const ControlledDropdown: FC<Props> = ({
@@ -28,12 +29,16 @@ export const ControlledDropdown: FC<Props> = ({
   disabled,
   searchEnabled,
   controlButtonStyles,
+  containerStyles,
 }) => (
   <Controller
     name={name}
     control={control}
     render={({ field, fieldState }) => (
-      <InputContainer error={fieldState.error?.message} {...{ name, label }}>
+      <InputContainer
+        error={fieldState.error?.message}
+        {...{ name, label, styles: containerStyles }}
+      >
         <Dropdown
           onUpdate={(value) => field.onChange(value)}
           selectedValue={field.value}

@@ -8,36 +8,18 @@ import { twMerge } from "tailwind-merge";
 import { Button } from "@/components/common/button/Button";
 import { ButtonIcon } from "@/components/common/button/enums";
 import { Dropdown } from "@/components/common/dropdown/Dropdown";
+import { Messengers } from "@/enums/user";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 
 import { DeleteStroke } from "../../icons/actions/DeleteStroke";
 import { InputContainer } from "../input-container/InputContainer";
 import { TextInput } from "../text-input/TextInput";
-
-export enum MessengerType {
-  TELEGRAM = "telegram",
-  WHATSAPP = "whatsapp",
-  VIBER = "viber",
-}
-
-const MESSENGER_OPTIONS: { name: string; value: MessengerType }[] = [
-  { name: "Telegram", value: MessengerType.TELEGRAM },
-  { name: "WhatsApp", value: MessengerType.WHATSAPP },
-  { name: "Viber", value: MessengerType.VIBER },
-];
-
-type ContactMethod = {
-  type: MessengerType;
-  contact: string;
-};
-
-type FormValues = {
-  phone: string;
-  contacts?: ContactMethod[];
-};
+import { MESSENGER_OPTIONS } from "./constants";
+import { ContactMethod } from "./types";
 
 type Props = {
-  control: Control<FormValues>;
+  name: string;
+  control: Control<any>;
   label?: string;
   disabled?: boolean;
   containerStyles?: string;
@@ -46,6 +28,7 @@ type Props = {
 };
 
 export const ContactMethodInput: FC<Props> = ({
+  name,
   control,
   label,
   disabled,
@@ -53,23 +36,23 @@ export const ContactMethodInput: FC<Props> = ({
   icon,
   submitButton,
 }) => {
-  const { fields, append, remove } = useFieldArray<FormValues, "contacts">({
+  const { fields, append, remove } = useFieldArray({
     control,
-    name: "contacts",
+    name,
   });
-  const { t } = useTranslation();
 
-  // Watch the contacts array for changes
   const contacts = useWatch({
     control,
-    name: "contacts",
+    name,
     defaultValue: [],
   }) as ContactMethod[];
+
+  const { t } = useTranslation();
 
   const getAvailableOptions = (currentIndex: number) => {
     const selectedTypes = contacts
       .map((contact, index) => (index !== currentIndex ? contact?.type : null))
-      .filter(Boolean) as MessengerType[];
+      .filter(Boolean) as Messengers[];
 
     return MESSENGER_OPTIONS.filter(
       (option) =>
@@ -87,15 +70,15 @@ export const ContactMethodInput: FC<Props> = ({
 
   return (
     <InputContainer
-      error={undefined} // TODO: Add error handling
-      name="contacts"
-      {...{ label, icon }}
+      error={undefined}
+      name={name}
+      {...{ label, icon, styles: containerStyles }}
     >
-      <div className={twMerge(classNames("space-y-2", containerStyles))}>
+      <div className={twMerge(classNames("space-y-2"))}>
         {fields.map((field, index) => (
           <div key={field.id} className="flex items-center gap-2">
             <Controller
-              name={`contacts.${index}.type`}
+              name={`${name}.${index}.type`}
               control={control}
               render={({ field: typeField }) => {
                 const availableOptions = getAvailableOptions(index);
@@ -105,7 +88,6 @@ export const ContactMethodInput: FC<Props> = ({
                     values={availableOptions}
                     selectedValue={typeField.value}
                     onUpdate={(value) => {
-                      // Only allow updating to available options
                       if (availableOptions.some((opt) => opt.value === value)) {
                         typeField.onChange(value);
                       }
@@ -117,11 +99,11 @@ export const ContactMethodInput: FC<Props> = ({
               }}
             />
             <Controller
-              name={`contacts.${index}.contact`}
+              name={`${name}.${index}.contact`}
               control={control}
               render={() => (
                 <TextInput
-                  name={`contacts.${index}.contact`}
+                  name={`${name}.${index}.contact`}
                   control={control}
                   placeholder="Username or phone number"
                   disabled={disabled}
@@ -129,7 +111,7 @@ export const ContactMethodInput: FC<Props> = ({
               )}
             />
             <button
-              className="w-5 h-5 cursor-pointer group "
+              className="w-5 h-5 cursor-pointer group"
               type="button"
               onClick={() => remove(index)}
               disabled={disabled}

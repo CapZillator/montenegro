@@ -6,7 +6,10 @@
     "inputs": {
       "invalidValue": "Wrong value!",
       "nonEmptyString": "Can't be empty!"
-    }
+    },
+    "genericRequest": "Request failed",
+    "deleteFailed": "Deletion failed, try again",
+    "uploadFailed": "Uploading failed, try again"
   },
   "actions": {
     "add": "Add",
@@ -17,10 +20,13 @@
     "close": "Close",
     "search": "Search",
     "next": "Next",
-    "back": "Back"
+    "back": "Back",
+    "upload": "Upload"
   },
   "states": {
     "saved": "Saved",
+    "added": "Successfully added",
+    "updated": "Successfully updated",
     "error": "Error",
     "yes": "Yes",
     "no": "No",
@@ -30,6 +36,10 @@
       "images": "Images",
       "location": "Location"
     }
+  },
+  "warnings": {
+    "wrongFile": "Wrong file(s) size or format!",
+    "tooMany": "Too many files!"
   },
   "realEstate": {
     "types": {
@@ -66,6 +76,9 @@
       "deposit": "Deposit",
       "petsAllowed": "Pets",
       "ac": "A/C"
+    },
+    "elements": {
+      "preview": "preview"
     }
   },
   "files": {

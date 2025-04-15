@@ -2,15 +2,16 @@ import { z } from "zod";
 
 import { MAX_IMAGES } from "@/components/common/controlled-inputs/image-uploader/constants";
 import { ListingType, ResidentialPremisesType } from "@/enums/listing";
+import { Messengers } from "@/enums/user";
+
 import { regexPatterns } from "./regexPatterns";
-import { MessengerType } from "@/components/common/controlled-inputs/contact-method-input/ContactMethodInput";
 
 const multilingialText = z
   .record(z.string(), z.string().min(1))
   .refine((value) => Object.values(value).some((val) => val.trim().length > 0));
 
 const contactMethodSchema = z.object({
-  type: z.nativeEnum(MessengerType),
+  type: z.nativeEnum(Messengers),
   contact: z.string().min(1),
 });
 
@@ -25,6 +26,7 @@ export const validationSchema = {
 
   residentialPremises: z
     .object({
+      id: z.string().optional(),
       title: multilingialText,
       description: multilingialText,
       price: z.number().positive(),

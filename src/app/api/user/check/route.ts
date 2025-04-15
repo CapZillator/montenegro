@@ -23,9 +23,11 @@ export async function GET() {
       const { id, phone } = existingUser[0];
 
       return NextResponse.json({
-        id,
-        needsPhone: !phone,
-        status: "existing",
+        userStatus: {
+          id,
+          needsPhone: !phone,
+          status: "existing",
+        },
       });
     }
 
@@ -36,9 +38,11 @@ export async function GET() {
     `;
 
     return NextResponse.json({
-      id: insertedUser[0].id,
-      needsPhone: true,
-      status: "created",
+      userStatus: {
+        id: insertedUser[0].id,
+        needsPhone: true,
+        status: "created",
+      },
     });
   } catch (error: any) {
     console.error("Check or create user error:", error);

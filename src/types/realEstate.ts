@@ -1,4 +1,4 @@
-import { ListingType,ResidentialPremisesType } from "@/enums/listing";
+import { ListingType, ResidentialPremisesType } from "@/enums/listing";
 
 export type ResidentialPremises = {
   id: string;
@@ -28,4 +28,5 @@ export type ResidentialPremises = {
   longitude?: number;
   deposit?: number;
   petsAllowed?: boolean;
+  airConditioner?: boolean;
 };

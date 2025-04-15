@@ -10,6 +10,7 @@ type Props = {
   label?: string;
   icon?: ReactNode;
   disabled?: boolean;
+  containerStyles?: string;
 };
 
 export const ControlledSwitcher: FC<Props> = ({
@@ -18,6 +19,7 @@ export const ControlledSwitcher: FC<Props> = ({
   label,
   icon,
   disabled,
+  containerStyles,
 }) => (
   <Controller
     name={name}
@@ -25,7 +27,7 @@ export const ControlledSwitcher: FC<Props> = ({
     render={({ field, fieldState }) => (
       <InputContainer
         error={fieldState.error?.message}
-        {...{ name, label, icon }}
+        {...{ name, label, icon, styles: containerStyles }}
       >
         <Switcher
           value={field.value}

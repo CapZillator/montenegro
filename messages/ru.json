@@ -6,7 +6,10 @@
     "inputs": {
       "invalidValue": "Неверное значение!",
       "nonEmptyString": "Не может быть пустым!"
-    }
+    },
+    "genericRequest": "Ошибка запроса к БД",
+    "deleteFailed": "Deletion failed, try again",
+    "uploadFailed": "Uploading failed, try again"
   },
   "actions": {
     "add": "Добавить",
@@ -17,10 +20,13 @@
     "close": "Закрыть",
     "search": "Поиск",
     "next": "Вперед",
-    "back": "Назад"
+    "back": "Назад",
+    "upload": "Загрузить"
   },
   "states": {
     "saved": "Сохранено",
+    "added": "Успешно добавлено",
+    "updated": "Успешно обновлено",
     "error": "Ошибка",
     "yes": "Да",
     "no": "Нет",
@@ -30,6 +36,10 @@
       "images": "Изображения",
       "location": "Местоположение"
     }
+  },
+  "warnings": {
+    "wrongFile": "Wrong file(s) size or format!",
+    "tooMany": "Too many files!"
   },
   "realEstate": {
     "types": {
@@ -44,29 +54,32 @@
   },
   "listings": {
     "types": {
-      "sale": "Продажа",
-      "longTermRent": "Аренда"
+      "sale": "Sale",
+      "longTermRent": "Rent"
+    },
+    "properties": {
+      "title": "Title",
+      "description": "Description",
+      "price": "Price",
+      "rooms": "Rooms",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "area": "Area",
+      "location": "Location",
+      "floor": "Floor",
+      "buildingYear": "Building year",
+      "furnished": "Furnished",
+      "balcony": "Balcony?",
+      "parking": "Parking",
+      "heating": "Heating",
+      "address": "Address",
+      "deposit": "Deposit",
+      "petsAllowed": "Pets",
+      "ac": "A/C"
+    },
+    "elements": {
+      "preview": "preview"
     }
-  },
-  "properties": {
-    "title": "Title",
-    "description": "Description",
-    "price": "Price",
-    "rooms": "Rooms",
-    "bedrooms": "Bedrooms",
-    "bathrooms": "Bathrooms",
-    "area": "Area",
-    "location": "Location",
-    "floor": "Floor",
-    "buildingYear": "Building year",
-    "furnished": "Furnished",
-    "balcony": "Balcony?",
-    "parking": "Parking",
-    "heating": "Heating",
-    "address": "Address",
-    "deposit": "Deposit",
-    "petsAllowed": "Pets",
-    "ac": "Кондиционер"
   },
   "files": {
     "dragToAdd": "Перетащи сюда файлы или кликни, чтобы выбрать",

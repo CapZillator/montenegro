@@ -12,5 +12,5 @@ export enum ButtonIcon {
   // SORT = "sort",
   // REFRESH = "refresh",
   // DOWNLOAD = "download",
-  // UPLOAD = "upload",
+  UPLOAD = "upload",
 }

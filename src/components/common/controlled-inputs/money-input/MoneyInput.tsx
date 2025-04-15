@@ -15,6 +15,7 @@ type Props = {
   placeholder?: string;
   disabled?: boolean;
   containerStyles?: string;
+  inputContainerStyles?: string;
   icon?: ReactNode;
 };
 
@@ -25,6 +26,7 @@ export const MoneyInput: FC<Props> = ({
   placeholder,
   disabled,
   containerStyles,
+  inputContainerStyles,
   icon,
 }) => (
   <Controller
@@ -33,9 +35,9 @@ export const MoneyInput: FC<Props> = ({
     render={({ field, fieldState }) => (
       <InputContainer
         error={fieldState.error?.message}
-        {...{ name, label, icon }}
+        {...{ name, label, icon, styles: containerStyles }}
       >
-        <div className={twMerge(classNames("relative", containerStyles))}>
+        <div className={twMerge(classNames("relative", inputContainerStyles))}>
           <input
             {...field}
             placeholder={placeholder}

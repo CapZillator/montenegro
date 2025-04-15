@@ -11,6 +11,7 @@ type Props = {
   placeholder?: string;
   disabled?: boolean;
   icon?: ReactNode;
+  containerStyles?: string;
 };
 
 export const TextInput: FC<Props> = ({
@@ -20,6 +21,7 @@ export const TextInput: FC<Props> = ({
   placeholder,
   disabled,
   icon,
+  containerStyles,
 }) => (
   <Controller
     name={name}
@@ -27,7 +29,7 @@ export const TextInput: FC<Props> = ({
     render={({ field, fieldState }) => (
       <InputContainer
         error={fieldState.error?.message}
-        {...{ name, label, icon }}
+        {...{ name, label, icon, styles: containerStyles }}
       >
         <input
           {...field}

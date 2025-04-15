@@ -1,66 +1,65 @@
 "use client";
 
-import { FC, useCallback, useState } from "react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { useUser } from "@auth0/nextjs-auth0";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { ContactMethodInput } from "@/components/common/controlled-inputs/contact-method-input/ContactMethodInput";
 import { PhoneInput } from "@/components/common/controlled-inputs/phone-input/PhoneInput";
 import { GenericModal } from "@/components/common/generic-modal/GenericModal";
 import { validationSchema } from "@/constants/validationSchemas";
+import { updateUserContactsFetcher } from "@/fetchers/user";
 import { useCurrentUser } from "@/hooks/use-current-user/useCurrentUser";
 import { useToast } from "@/hooks/use-toast/useToast";
+import { UserContacts } from "@/types/user";
 
 import { Button } from "../button/Button";
 import { ButtonIcon } from "../button/enums";
-import { MessengerType } from "../controlled-inputs/contact-method-input/ContactMethodInput";
 import { Contacts } from "../icons/user/Contacts";
 import { Phone } from "../icons/user/Phone";
 
-type FormData = {
-  phone: string;
-  contacts?: Array<{
-    type: MessengerType;
-    contact: string;
-  }>;
+type Props = {
+  handleClose: () => void;
 };
 
-export const UserContactsModal: FC = () => {
+export const UserContactsModal: FC<Props> = ({ handleClose }) => {
+  const { user } = useUser();
   const { data: userData } = useCurrentUser();
-  const [isOpen, setIsOpen] = useState(true);
+  const queryClient = useQueryClient();
   const { showToast } = useToast();
   const t = useTranslations();
-  const needsContacts = userData?.needsPhone ?? false;
 
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<FormData>({
+  } = useForm<UserContacts>({
     resolver: zodResolver(validationSchema.userContacts),
     mode: "onChange",
     defaultValues: {
       contacts: [],
     },
   });
+  console.log("userRes", userData);
 
-  const handleClose = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: UserContacts) => {
     try {
-      // TODO: Implement API call to update user contacts
       console.log("Form data:", data);
-      showToast("Contact information updated", "success");
+      await updateUserContactsFetcher(data);
+      queryClient.setQueryData(["user", user?.sub], () => {
+        return {
+          ...userData,
+          needsPhone: false,
+        };
+      });
       handleClose();
     } catch (error) {
-      showToast("Failed to update contact information", "error");
+      showToast(t("errors.genericRequest"), "error");
     }
   };
-
-  if (!needsContacts || !isOpen) return null;
 
   return (
     <GenericModal id="user-contacts" onClose={handleClose}>
@@ -78,6 +77,7 @@ export const UserContactsModal: FC = () => {
             containerStyles="mb-4"
           />
           <ContactMethodInput
+            name="contacts"
             control={control}
             label={t("user.additionalContacts")}
             disabled={isSubmitting}

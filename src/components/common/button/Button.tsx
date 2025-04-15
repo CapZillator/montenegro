@@ -30,9 +30,9 @@ export const Button: FC<Props> = ({
     {...{ type, onClick, disabled }}
     className={twMerge(
       classNames(
-        "text-sm text-primary uppercase rounded-sm cursor-pointer bg-primary-content shadow-sm shadow-primary-content/40",
-        "px-3 py-2",
-        "disabled:bg-disable disabled:focus:outline-none disabled:text-primary/30",
+        "text-sm text-primary uppercase rounded-sm cursor-pointer bg-primary-content shadow-sm shadow-primary-content/40  duration-300",
+        "px-3 py-2 hover:bg-secondary-content",
+        "disabled:bg-disable disabled:focus:outline-none disabled:text-primary/30 disabled:hover:bg-none",
         {
           "flex items-center gap-2": icon,
           "flex-row-reverse": iconSide === "right" && icon,
