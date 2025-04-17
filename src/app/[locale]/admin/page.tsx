@@ -33,6 +33,7 @@ export default function ListingManager() {
   const { t } = useTranslation();
   const { showToast } = useToast();
   const queryClient = useQueryClient();
+  const [isListDisabled, setIsListDisabled] = useState(false);
 
   const onCloseListingForm = () => {
     setComponentToShow(AdminPanelContentComponents.LISTINGS_LIST);
@@ -44,12 +45,15 @@ export default function ListingManager() {
   };
   const onDeleteListing = async (id: string) => {
     try {
+      setIsListDisabled(true);
       await deleteListingFetcher(id);
       queryClient.invalidateQueries({
         queryKey: [queryKeys.listings.userListings],
       });
     } catch (_error) {
       showToast(t("errors.deleteFailed"), "error");
+    } finally {
+      setIsListDisabled(false);
     }
   };
 
@@ -89,7 +93,14 @@ export default function ListingManager() {
       <h1>Welcome to admin panel, {user.name}!</h1>
       {componentToShow === AdminPanelContentComponents.LISTINGS_LIST && (
         <>
-          <ListingList {...{ listings, onOpenListing, onDeleteListing }} />
+          <ListingList
+            {...{
+              listings,
+              onOpenListing,
+              onDeleteListing,
+              isDisabled: isListDisabled,
+            }}
+          />
           <button
             type="button"
             className={classNames(

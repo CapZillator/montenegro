@@ -90,5 +90,8 @@
     "addContactIntro": "Please add your contact information so people can contact you.",
     "phone": "Phone number",
     "additionalContacts": "Additional ways to contact"
+  },
+  "measures": {
+    "m": "m"
   }
 }

@@ -1,6 +1,6 @@
 import { usePathname } from "next/navigation";
 
-import { AVAILABLE_LOCALES,DEFAULT_LOCALE } from "@/constants/i18n";
+import { AVAILABLE_LOCALES, DEFAULT_LOCALE } from "@/constants/i18n";
 
 export const useLocale = () => {
   const pathname = usePathname();

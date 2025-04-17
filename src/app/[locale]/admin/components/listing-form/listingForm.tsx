@@ -260,7 +260,8 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
                 disabled={isSubmitting}
                 measurementUnitBadge={
                   <>
-                    m<sup>2</sup>
+                    {t("measures.m")}
+                    <sup>2</sup>
                   </>
                 }
                 icon={<Area className="w-5 h-5 fill-primary-content" />}
