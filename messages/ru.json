@@ -19,9 +19,11 @@
     "delete": "Удалить",
     "close": "Закрыть",
     "search": "Поиск",
-    "next": "Вперед",
+    "next": "Далее",
     "back": "Назад",
-    "upload": "Загрузить"
+    "upload": "Загрузить",
+    "login": "Войти",
+    "logout": "Выйти"
   },
   "states": {
     "saved": "Сохранено",
@@ -54,31 +56,31 @@
   },
   "listings": {
     "types": {
-      "sale": "Sale",
-      "longTermRent": "Rent"
+      "sale": "Продажа",
+      "longTermRent": "Аренда"
     },
     "properties": {
-      "title": "Title",
-      "description": "Description",
-      "price": "Price",
-      "rooms": "Rooms",
-      "bedrooms": "Bedrooms",
-      "bathrooms": "Bathrooms",
-      "area": "Area",
+      "title": "Заголовок",
+      "description": "Описание",
+      "price": "Цена",
+      "rooms": "Комнаты",
+      "bedrooms": "Спальни",
+      "bathrooms": "Санузлы",
+      "area": "Площадь",
       "location": "Location",
-      "floor": "Floor",
-      "buildingYear": "Building year",
-      "furnished": "Furnished",
-      "balcony": "Balcony?",
-      "parking": "Parking",
-      "heating": "Heating",
-      "address": "Address",
-      "deposit": "Deposit",
-      "petsAllowed": "Pets",
-      "ac": "A/C"
+      "floor": "Этаж",
+      "buildingYear": "Год постройки",
+      "furnished": "Мебель",
+      "balcony": "Балкон?",
+      "parking": "Парковка",
+      "heating": "Отопление",
+      "address": "Адрес",
+      "deposit": "Депозит",
+      "petsAllowed": "Питомцы",
+      "ac": "Кондиционер"
     },
     "elements": {
-      "preview": "preview"
+      "preview": "превью"
     }
   },
   "files": {
@@ -86,10 +88,14 @@
     "restriction": "Максимум 24 файла в формате .jpeg .png или .webp, не больше 5мб"
   },
   "user": {
-    "addContactHeader": "Contact data",
-    "addContactIntro": "Please add your contact information so people can contact you.",
-    "phone": "Phone number",
-    "additionalContacts": "Additional ways to contact"
+    "addContactHeader": "Контактные данные",
+    "addContactIntro": "Пожалуйста укажите, как с вами можно связаться.",
+    "phone": "Телефон",
+    "additionalContacts": "Дополнительные способы связи",
+    "myListings": "Мои объявления",
+    "profile": "Профиль",
+    "name": "Имя",
+    "email": "Email"
   },
   "measures": {
     "m": "м"

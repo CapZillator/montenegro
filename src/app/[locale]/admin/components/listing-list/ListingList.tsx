@@ -9,12 +9,11 @@ import { Bed } from "@/components/common/icons/realty/Bed";
 import { Calendar } from "@/components/common/icons/realty/Calendar";
 import { City } from "@/components/common/icons/realty/City";
 import { Door } from "@/components/common/icons/realty/Door";
-import { DEFAULT_LOCALE } from "@/constants/i18n";
 import { isoUTCStringToLocaleString } from "@/formatters/date";
 import { formatNumberToFinancialAmount } from "@/formatters/finance";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 import { ResidentialPremises } from "@/types/realEstate";
-import { getFullAddress } from "@/utils/listings";
+import { getFullAddress, getLocalizedStringValue } from "@/utils/listings";
 
 type Props = {
   onOpenListing: (id: string) => void;
@@ -33,7 +32,14 @@ export const ListingList: FC<Props> = ({
   const { t } = useTranslation();
 
   return (
-    <div className={classNames("grid grid-cols-3 gap-2", "lg:grid-cols-3")}>
+    <div
+      className={classNames(
+        "grid grid-cols-1 gap-2",
+        "sm:grid-cols-2",
+        "md:grid-cols-3",
+        "lg:grid-cols-4 lg:gap-3"
+      )}
+    >
       {listings?.map((listing) => (
         <div
           key={listing.id}
@@ -61,7 +67,7 @@ export const ListingList: FC<Props> = ({
             </div>
 
             <h3 className={classNames("font-semibold truncate")}>
-              {listing.title[locale] ?? listing.title[DEFAULT_LOCALE]}
+              {getLocalizedStringValue(listing.title, locale)}
             </h3>
             <div className={classNames("flex items-center gap-1")}>
               <City className={classNames("w-5 h-5 stroke-primary-content")} />

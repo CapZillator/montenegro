@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
 
-import { AVAILABLE_LOCALES,DEFAULT_LOCALE } from "@/constants/i18n";
+import { AVAILABLE_LOCALES, DEFAULT_LOCALE } from "@/constants/i18n";
 
 import { auth0 } from "./lib/auth0";
 

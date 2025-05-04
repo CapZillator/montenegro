@@ -31,7 +31,7 @@ export const ImagePreview: FC<Props> = ({
     <ReactSortable
       list={sortableItems}
       setList={onChangeOrder}
-      className="grid grid-cols-5 gap-4"
+      className={classNames("grid grid-cols-2 gap-3", "md:grid-cols-4")}
     >
       {sortableItems.map((urlItem, index) => (
         <div

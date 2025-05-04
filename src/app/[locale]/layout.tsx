@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import classNames from "classnames";
 
+import { Header } from "@/components/common/header/Header";
 import { ToastContainer } from "@/components/common/toast/Toast";
 import { routing } from "@/i18n/routing";
 import { Providers } from "@/providers/providers";
@@ -35,12 +37,20 @@ export default async function RootLayout({
   return (
     <html lang={locale} data-theme="default">
       <body
-        className={`antialiased relative w-full min-h-screen`}
+        className={`antialiased relative w-full min-h-screen flex flex-col`}
         id="modal-container"
       >
         <Providers>
           <NextIntlClientProvider messages={messages}>
-            {children}
+            <Header />
+            <main
+              className={classNames(
+                "pt-20 px-3 w-full flex-1 flex flex-col",
+                "lg:px-5 lg:max-w-320 lg:mx-auto"
+              )}
+            >
+              {children}
+            </main>
             <ToastContainer />
           </NextIntlClientProvider>
         </Providers>

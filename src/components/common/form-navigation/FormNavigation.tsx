@@ -26,7 +26,7 @@ export const FormNavigation = <T extends Record<string, any>>({
   onSubmit,
   t,
 }: Props<T>) => (
-  <div className="flex gap-2 mt-4">
+  <div className="flex gap-2">
     {currentStep > 1 && (
       <Button
         type="button"
@@ -38,6 +38,17 @@ export const FormNavigation = <T extends Record<string, any>>({
         {t("actions.back")}
       </Button>
     )}
+    {currentStep === totalSteps || isUpdate ? (
+      <Button
+        type="submit"
+        disabled={isSubmitting}
+        onClick={onSubmit}
+        icon={isUpdate ? ButtonIcon.SAVE : ButtonIcon.ADD}
+        iconClassName="stroke-primary"
+      >
+        <span>{t(isUpdate ? "actions.save" : "actions.add")}</span>
+      </Button>
+    ) : null}
     {currentStep < totalSteps && (
       <Button
         type="button"
@@ -57,16 +68,5 @@ export const FormNavigation = <T extends Record<string, any>>({
         {t("actions.next")}
       </Button>
     )}
-    {currentStep === totalSteps || isUpdate ? (
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        onClick={onSubmit}
-        icon={isUpdate ? ButtonIcon.SAVE : ButtonIcon.ADD}
-        iconClassName="stroke-primary"
-      >
-        <span>{t(isUpdate ? "actions.save" : "actions.add")}</span>
-      </Button>
-    ) : null}
   </div>
 );

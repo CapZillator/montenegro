@@ -101,71 +101,79 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
           images.length + uploadedUrls.length >= MAX_IMAGES;
 
         return (
-          <div className="p-4 border border-gray-300 rounded-lg">
-            <div
-              {...getRootProps()}
-              className="flex items-center justify-center border-dashed border-2 border-secondary-content p-6 text-center cursor-pointer rounded-sm"
-            >
-              <input {...getInputProps()} {...{ disabled }} />
-              <div className={classNames("flex items-center gap-4")}>
-                <Upload className="w-15 h-15 stroke-secondary-content" />
-                <div className="text-start">
-                  <p>{t("files.dragToAdd")}</p>
-                  <p className={classNames("text-sm")}>
-                    {t("files.restriction")}
-                  </p>
+          <div
+            className={classNames(
+              "grid grid-cols-1 gap-5",
+              "lg:grid-cols-3",
+              "xl:grid-cols-3"
+            )}
+          >
+            <div>
+              <div
+                {...getRootProps()}
+                className="flex items-center justify-center border-dashed border-2 border-secondary-content p-6 text-center cursor-pointer rounded-sm"
+              >
+                <input {...getInputProps()} {...{ disabled }} />
+                <div className={classNames("flex items-center gap-4")}>
+                  <Upload className="w-15 h-15 stroke-secondary-content" />
+                  <div className="text-start">
+                    <p>{t("files.dragToAdd")}</p>
+                    <p className={classNames("text-sm")}>
+                      {t("files.restriction")}
+                    </p>
+                  </div>
                 </div>
               </div>
+
+              {images.length > 0 && (
+                <div className="mt-4 space-y-2">
+                  <ul>
+                    {images.map((file, index) => (
+                      <li key={index} className="flex items-center gap-2">
+                        <Image className="fill-primary-content/75 w-4 h-4" />
+                        <span>{truncateFileName(file.name)}</span>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setImages(images.filter((_, i) => i !== index))
+                          }
+                          disabled={disabled || uploading}
+                          className="w-4 h-4"
+                        >
+                          <Close className="fill-secondary-content cursor-pointer" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button
+                    type="button"
+                    disabled={isLimitReached || uploading}
+                    onClick={handleUpload}
+                    icon={ButtonIcon.UPLOAD}
+                    iconClassName="stroke-primary"
+                  >
+                    <span>{t("actions.upload")}</span>
+                  </Button>
+                </div>
+              )}
             </div>
 
-            {images.length > 0 && (
-              <div className="mt-4 space-y-2">
-                <ul>
-                  {images.map((file, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <Image className="fill-primary-content/75 w-4 h-4" />
-                      <span>{truncateFileName(file.name)}</span>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setImages(images.filter((_, i) => i !== index))
-                        }
-                        disabled={disabled || uploading}
-                        className="w-4 h-4"
-                      >
-                        <Close className="fill-secondary-content cursor-pointer" />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  type="button"
-                  disabled={isLimitReached || uploading}
-                  onClick={handleUpload}
-                  icon={ButtonIcon.UPLOAD}
-                  iconClassName="stroke-primary"
-                >
-                  <span>{t("actions.upload")}</span>
-                </Button>
-              </div>
-            )}
-
             {uploadedUrls.length > 0 && (
-              <div className="mt-4 space-y-3">
+              <div
+                className={classNames("space-y-3 rounded-lg", "lg:col-span-2")}
+              >
+                <ImagePreview
+                  uploadedUrls={uploadedUrls}
+                  setUploadedUrls={(newUrls) => onChange(newUrls)}
+                  handleDelete={handleDelete}
+                  {...{ disabled }}
+                />
                 <div className="flex items-center gap-2">
                   <Photo className="w-5 h-5 fill-primary-content" />
                   <span className="text-lg">
                     {uploadedUrls.length} / {MAX_IMAGES}
                   </span>
                 </div>
-                {
-                  <ImagePreview
-                    uploadedUrls={uploadedUrls}
-                    setUploadedUrls={(newUrls) => onChange(newUrls)}
-                    handleDelete={handleDelete}
-                    {...{ disabled }}
-                  />
-                }
               </div>
             )}
           </div>

@@ -21,7 +21,9 @@
     "search": "Search",
     "next": "Next",
     "back": "Back",
-    "upload": "Upload"
+    "upload": "Upload",
+    "login": "Log in",
+    "logout": "Log out"
   },
   "states": {
     "saved": "Saved",
@@ -89,7 +91,11 @@
     "addContactHeader": "Contact data",
     "addContactIntro": "Please add your contact information so people can contact you.",
     "phone": "Phone number",
-    "additionalContacts": "Additional ways to contact"
+    "additionalContacts": "Additional ways to contact",
+    "myListings": "My ads",
+    "profile": "Profile",
+    "name": "Name",
+    "email": "Email"
   },
   "measures": {
     "m": "m"

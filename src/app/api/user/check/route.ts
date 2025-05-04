@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { neon } from "@neondatabase/serverless";
 
 import { auth0 } from "@/lib/auth0";
+import { sql } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -12,9 +12,6 @@ export async function GET() {
     }
 
     const { sub, email, name } = session.user;
-
-    const sql = neon(process.env.DATABASE_URL!);
-
     const existingUser = await sql`
       SELECT id, phone FROM users WHERE sub = ${sub};
     `;

@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { neon } from "@neondatabase/serverless";
 import { z } from "zod";
 
+import { sqlFieldTypes } from "@/constants/sql";
 import { validationSchema } from "@/constants/validationSchemas";
 import { getErrorMessage } from "@/helpers/guards";
 import { auth0 } from "@/lib/auth0";
+import { sql } from "@/lib/db";
 import { deleteImagesByPublicIds } from "@/lib/images/deleteImagesByPublicIds";
 import { ResidentialPremises } from "@/types/realEstate";
-import { buildSqlQuery, toSnakeCase } from "@/utils/api";
+import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from "@/utils/api";
 
 export async function GET(req: NextRequest) {
   try {
@@ -17,7 +18,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const sql = neon(`${process.env.DATABASE_URL}`);
     const { email } = session.user;
 
     const user = await sql`SELECT id FROM users WHERE email = ${email}`;
@@ -44,7 +44,10 @@ export async function GET(req: NextRequest) {
         WHERE user_id = ${userId} AND deleted_at IS NULL
       `;
 
-    return NextResponse.json({ listings: listings }, { status: 200 });
+    return NextResponse.json(
+      { listings: safeParseJsonFields(listings) },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.message }, { status: 422 });
@@ -67,7 +70,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const sql = neon(`${process.env.DATABASE_URL}`);
     const { email } = session.user;
 
     const user = await sql`SELECT id, phone FROM users WHERE email = ${email}`;
@@ -91,7 +93,9 @@ export async function POST(req: NextRequest) {
     const { query, values } = buildSqlQuery(
       "residential_premises_listings",
       { ...validListingData, user_id: userId },
-      "insert"
+      "insert",
+      undefined,
+      sqlFieldTypes.residentialPremisesListings
     );
 
     const newListing = await sql(query, values);
@@ -119,7 +123,6 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const sql = neon(`${process.env.DATABASE_URL}`);
     const { email } = session.user;
 
     const user = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;
@@ -151,7 +154,8 @@ export async function PUT(req: NextRequest) {
       "residential_premises_listings",
       { ...validBaseListingData },
       "update",
-      { field: "id", value: id }
+      { field: "id", value: id },
+      sqlFieldTypes.residentialPremisesListings
     );
 
     const newListing = await sql(query, values);
@@ -179,7 +183,6 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const sql = neon(`${process.env.DATABASE_URL}`);
     const { email } = session.user;
 
     const user = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;

@@ -7,17 +7,26 @@ import { AnimatePresence, motion } from "framer-motion";
 type Props = {
   steps: string[];
   currentStep: number;
+  isOverflowing: boolean;
 };
 
-export const StepIndicator: FC<Props> = ({ steps, currentStep }) => (
-  <div className="flex items-center justify-center gap-4 mb-6">
+export const StepIndicator: FC<Props> = ({
+  steps,
+  currentStep,
+  isOverflowing,
+}) => (
+  <div
+    className={classNames("flex items-center gap-4", {
+      "invisible scale-0 h-0": isOverflowing,
+    })}
+  >
     {steps.map((step, index) => {
       const stepIndex = index + 1;
       const isActive = stepIndex === currentStep;
       const isCompleted = stepIndex < currentStep;
 
       return (
-        <div key={stepIndex} className="flex items-center gap-2">
+        <div key={stepIndex} className="shrink-0 flex items-center gap-2">
           <AnimatePresence mode="wait">
             <motion.div
               key={isActive ? "active" : isCompleted ? "completed" : "idle"}

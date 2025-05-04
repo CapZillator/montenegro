@@ -16,7 +16,6 @@ import { TextInput } from "@/components/common/controlled-inputs/text-input/Text
 import { Dropdown } from "@/components/common/dropdown/Dropdown";
 import { FormNavigation } from "@/components/common/form-navigation/FormNavigation";
 import { Language } from "@/components/common/icons/Language";
-import { ArrowBack } from "@/components/common/icons/navigation/ArrowBack";
 import { Address } from "@/components/common/icons/realty/Address";
 import { AirConditioner } from "@/components/common/icons/realty/AirConditioner";
 import { Area } from "@/components/common/icons/realty/Area";
@@ -42,7 +41,7 @@ import { useToast } from "@/hooks/use-toast/useToast";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 import { ResidentialPremises } from "@/types/realEstate";
 
-import { StepIndicator } from "./components/step-indicator/StepIndicator";
+import { HeaderNavigation } from "./components/header-navigation/HeaderNavigation";
 import {
   DEFAULT_RESIDENTIAL_PREMISE_DATA,
   HOUSES,
@@ -58,9 +57,14 @@ type Props = {
     ResidentialPremises,
     "userId" | "createdAt" | "updatedAt"
   >;
+  onSuccess?: () => void;
 };
 
-export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
+export const ListingForm: FC<Props> = ({
+  onClose,
+  initialListing,
+  onSuccess,
+}) => {
   const selectedLocale = useLocale();
   const locations = LOCALIZED_CITIES[selectedLocale];
   const defaultValues = useMemo(
@@ -126,7 +130,6 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
   const onSubmit = async (
     data: Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">
   ) => {
-    console.log("sub data", data);
     if (userData?.needsPhone) {
       setShowUserModalContact(true);
 
@@ -145,6 +148,11 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
         t(initialListing ? "states.updated" : "states.added"),
         "success"
       );
+      if (onSuccess) {
+        onSuccess();
+
+        return;
+      }
       onClose();
     } catch (_error) {
       showToast(t("errors.genericRequest"), "error");
@@ -173,135 +181,133 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
 
   return (
     <>
-      <div className={classNames("space-y-3 w-full", "xl:max-w-200")}>
-        <h5 className={classNames("text-lg font-semibold text-center")}>
-          New listing
-        </h5>
-        <div className={classNames("relative pl-10 w-full mb-10")}>
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute cursor-pointer left-0"
-            disabled={isSubmitting}
-          >
-            <ArrowBack
-              className={twMerge(
-                classNames(
-                  "w-7 h-7 stroke-primary-content hover:stroke-secondary-content duration-300",
-                  {
-                    "stroke-disable hover:stroke-disable": isSubmitting,
-                  }
-                )
-              )}
-            />
-          </button>
-          <StepIndicator {...{ steps, currentStep: step }} />
-        </div>
+      <div className={classNames("flex flex-1 flex-col w-full mb-5")}>
+        <HeaderNavigation
+          {...{ steps, step, isDisabled: isSubmitting, onGoBack: onClose }}
+        />
 
         {step === 1 && (
-          <>
-            <div className="flex items-center gap-2">
-              <ControlledDropdown
-                name={"propertyType"}
+          <div
+            className={classNames(
+              "grid grid-cols-1 gap-2 items-start",
+              "lg:grid-cols-2 lg:gap-5"
+            )}
+          >
+            <div className={classNames("space-y-2")}>
+              <div className="flex items-center gap-2">
+                <ControlledDropdown
+                  name={"propertyType"}
+                  control={control}
+                  values={realEstateTypeDropdownOptions}
+                  disabled={isSubmitting}
+                />
+                <ControlledDropdown
+                  name={"listingType"}
+                  control={control}
+                  values={listingTypeDropdownOptions}
+                  disabled={isSubmitting}
+                />
+                <Dropdown
+                  values={localesDropdownOptions}
+                  selectedValue={listingLocale}
+                  onUpdate={onUpdateListingLocale}
+                  icon={
+                    <Language
+                      className={twMerge(
+                        classNames("w-4 h-4 fill-primary", {
+                          "fill-primary-content/30": isSubmitting,
+                        })
+                      )}
+                    />
+                  }
+                  disabled={isSubmitting}
+                />
+              </div>
+              <MultilingualTextInput
+                name={"title"}
                 control={control}
-                values={realEstateTypeDropdownOptions}
-                disabled={isSubmitting}
+                label={`${t("listings.properties.title")} *`}
+                placeholder="Title"
+                {...{ selectedLocale: listingLocale, disabled: isSubmitting }}
               />
-              <ControlledDropdown
-                name={"listingType"}
+              <MultilingualTextarea
+                name={"description"}
                 control={control}
-                values={listingTypeDropdownOptions}
-                disabled={isSubmitting}
+                label={`${t("listings.properties.description")} *`}
+                placeholder="Description"
+                {...{ selectedLocale: listingLocale, disabled: isSubmitting }}
               />
-              <Dropdown
-                values={localesDropdownOptions}
-                selectedValue={listingLocale}
-                onUpdate={onUpdateListingLocale}
-                icon={
-                  <Language
-                    className={twMerge(
-                      classNames("w-4 h-4 fill-primary", {
-                        "fill-primary-content/30": isSubmitting,
-                      })
-                    )}
-                  />
-                }
-                disabled={isSubmitting}
-              />
+              <div
+                className={classNames(
+                  "grid grid-cols-2 gap-2",
+                  "md:grid-cols-3"
+                )}
+              >
+                <MoneyInput
+                  name={"price"}
+                  control={control}
+                  label={`${t("listings.properties.price")} *`}
+                  disabled={isSubmitting}
+                  icon={<Price className="w-5 h-5 fill-primary-content" />}
+                  inputContainerStyles="w-40"
+                />
+                <NumericInput
+                  name={"area"}
+                  control={control}
+                  label={`${t("listings.properties.area")} *`}
+                  disabled={isSubmitting}
+                  measurementUnitBadge={
+                    <>
+                      {t("measures.m")}
+                      <sup>2</sup>
+                    </>
+                  }
+                  icon={<Area className="w-5 h-5 fill-primary-content" />}
+                  inputContainerStyles="w-40"
+                />
+                <NumericInput
+                  name={"rooms"}
+                  control={control}
+                  label={`${t("listings.properties.rooms")} *`}
+                  disabled={
+                    propertyType === ResidentialPremisesType.STUDIO ||
+                    isSubmitting
+                  }
+                  containerStyles="col-start-1"
+                  icon={<Door className="w-5 h-5 fill-primary-content" />}
+                  inputContainerStyles="w-15"
+                />
+                <NumericInput
+                  name={"bedrooms"}
+                  control={control}
+                  label={`${t("listings.properties.bedrooms")} *`}
+                  disabled={
+                    propertyType === ResidentialPremisesType.STUDIO ||
+                    isSubmitting
+                  }
+                  icon={<Bed className="w-5 h-5 fill-primary-content" />}
+                  inputContainerStyles="w-15"
+                />
+                <NumericInput
+                  name={"bathrooms"}
+                  control={control}
+                  label={`${t("listings.properties.bathrooms")} *`}
+                  disabled={
+                    propertyType === ResidentialPremisesType.STUDIO ||
+                    isSubmitting
+                  }
+                  icon={<Bath className="w-5 h-5 fill-primary-content" />}
+                  inputContainerStyles="w-15"
+                />
+              </div>
             </div>
-
-            <MultilingualTextInput
-              name={"title"}
-              control={control}
-              label={`${t("listings.properties.title")} *`}
-              placeholder="Title"
-              {...{ selectedLocale: listingLocale, disabled: isSubmitting }}
-            />
-            <MultilingualTextarea
-              name={"description"}
-              control={control}
-              label={`${t("listings.properties.description")} *`}
-              placeholder="Description"
-              {...{ selectedLocale: listingLocale, disabled: isSubmitting }}
-            />
-            <div className={classNames("grid grid-cols-4 gap-2")}>
-              <MoneyInput
-                name={"price"}
-                control={control}
-                label={`${t("listings.properties.price")} *`}
-                disabled={isSubmitting}
-                icon={<Price className="w-5 h-5 fill-primary-content" />}
-                inputContainerStyles="w-40"
-              />
-              <NumericInput
-                name={"area"}
-                control={control}
-                label={`${t("listings.properties.area")} *`}
-                disabled={isSubmitting}
-                measurementUnitBadge={
-                  <>
-                    {t("measures.m")}
-                    <sup>2</sup>
-                  </>
-                }
-                icon={<Area className="w-5 h-5 fill-primary-content" />}
-                inputContainerStyles="w-30"
-              />
-              <NumericInput
-                name={"rooms"}
-                control={control}
-                label={`${t("listings.properties.rooms")} *`}
-                disabled={
-                  propertyType === ResidentialPremisesType.STUDIO ||
-                  isSubmitting
-                }
-                containerStyles="col-start-1"
-                icon={<Door className="w-5 h-5 fill-primary-content" />}
-                inputContainerStyles="w-10"
-              />
-              <NumericInput
-                name={"bedrooms"}
-                control={control}
-                label={`${t("listings.properties.bedrooms")} *`}
-                disabled={
-                  propertyType === ResidentialPremisesType.STUDIO ||
-                  isSubmitting
-                }
-                icon={<Bed className="w-5 h-5 fill-primary-content" />}
-                inputContainerStyles="w-10"
-              />
-              <NumericInput
-                name={"bathrooms"}
-                control={control}
-                label={`${t("listings.properties.bathrooms")} *`}
-                disabled={
-                  propertyType === ResidentialPremisesType.STUDIO ||
-                  isSubmitting
-                }
-                icon={<Bath className="w-5 h-5 fill-primary-content" />}
-                inputContainerStyles="w-10"
-              />
-
+            <div
+              className={classNames(
+                "grid grid-cols-2 gap-2",
+                "md:grid-cols-3",
+                "lg:pt-11"
+              )}
+            >
               <div className="col-start-1">
                 <label className="flex items-center gap-1.5 mb-1">
                   <Stairs className="w-5 h-5 stroke-primary-content" />
@@ -312,14 +318,14 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
                     name={"floor"}
                     control={control}
                     disabled={isHouse || isSubmitting}
-                    inputContainerStyles="w-10"
+                    inputContainerStyles="w-15"
                   />
                   <span>/</span>
                   <NumericInput
                     name={"totalFloors"}
                     control={control}
                     disabled={isHouse || isSubmitting}
-                    inputContainerStyles="w-10"
+                    inputContainerStyles="w-15"
                   />
                 </div>
               </div>
@@ -329,7 +335,7 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
                 label={t("listings.properties.buildingYear")}
                 disabled={isSubmitting}
                 icon={<Calendar className="w-5 h-5 stroke-primary-content" />}
-                inputContainerStyles="w-13"
+                inputContainerStyles="w-15"
               />
               <ControlledSwitcher
                 name={"furnished"}
@@ -356,7 +362,7 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
                 icon={<Parking className="w-5 h-5 fill-primary-content" />}
               />
             </div>
-          </>
+          </div>
         )}
 
         {step === 2 && (
@@ -388,17 +394,19 @@ export const ListingForm: FC<Props> = ({ onClose, initialListing }) => {
           </div>
         )}
 
-        <FormNavigation
-          currentStep={step}
-          totalSteps={TOTAL_FORM_STEPS}
-          stepFields={STEP_FIELDS}
-          isSubmitting={isSubmitting}
-          isUpdate={!!initialListing}
-          onStepChange={setStep}
-          onTrigger={trigger}
-          onSubmit={handleSubmit(onSubmit)}
-          t={t}
-        />
+        <div className={classNames("mt-auto pt-5 self-end", "lg:mt-10")}>
+          <FormNavigation
+            currentStep={step}
+            totalSteps={TOTAL_FORM_STEPS}
+            stepFields={STEP_FIELDS}
+            isSubmitting={isSubmitting}
+            isUpdate={!!initialListing}
+            onStepChange={setStep}
+            onTrigger={trigger}
+            onSubmit={handleSubmit(onSubmit)}
+            t={t}
+          />
+        </div>
       </div>
       {showUserContactModal && (
         <UserContactsModal handleClose={() => setShowUserModalContact(false)} />

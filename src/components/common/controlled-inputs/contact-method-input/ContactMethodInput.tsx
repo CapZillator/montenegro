@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, ReactNode } from "react";
-import { Control, Controller, useFieldArray, useWatch } from "react-hook-form";
+import { Control, Controller, useFieldArray } from "react-hook-form";
 import classNames from "classnames";
 import { twMerge } from "tailwind-merge";
 
@@ -10,12 +10,12 @@ import { ButtonIcon } from "@/components/common/button/enums";
 import { Dropdown } from "@/components/common/dropdown/Dropdown";
 import { Messengers } from "@/enums/user";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
+import { User } from "@/types/user";
 
 import { DeleteStroke } from "../../icons/actions/DeleteStroke";
 import { InputContainer } from "../input-container/InputContainer";
 import { TextInput } from "../text-input/TextInput";
 import { MESSENGER_OPTIONS } from "./constants";
-import { ContactMethod } from "./types";
 
 type Props = {
   name: string;
@@ -36,28 +36,22 @@ export const ContactMethodInput: FC<Props> = ({
   icon,
   submitButton,
 }) => {
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove } = useFieldArray<User, "contacts">({
     control,
-    name,
+    name: "contacts",
   });
-
-  const contacts = useWatch({
-    control,
-    name,
-    defaultValue: [],
-  }) as ContactMethod[];
 
   const { t } = useTranslation();
 
   const getAvailableOptions = (currentIndex: number) => {
-    const selectedTypes = contacts
+    const selectedTypes = fields
       .map((contact, index) => (index !== currentIndex ? contact?.type : null))
       .filter(Boolean) as Messengers[];
 
     return MESSENGER_OPTIONS.filter(
       (option) =>
         !selectedTypes.includes(option.value) ||
-        (currentIndex !== -1 && contacts[currentIndex]?.type === option.value)
+        fields[currentIndex]?.type === option.value
     );
   };
 
@@ -74,7 +68,7 @@ export const ContactMethodInput: FC<Props> = ({
       name={name}
       {...{ label, icon, styles: containerStyles }}
     >
-      <div className={twMerge(classNames("space-y-2"))}>
+      <div className={twMerge(classNames("space-y-3"))}>
         {fields.map((field, index) => (
           <div key={field.id} className="flex items-center gap-2">
             <Controller
@@ -111,7 +105,7 @@ export const ContactMethodInput: FC<Props> = ({
               )}
             />
             <button
-              className="w-5 h-5 cursor-pointer group"
+              className="w-6 h-6 shrink-0 cursor-pointer group"
               type="button"
               onClick={() => remove(index)}
               disabled={disabled}
@@ -121,15 +115,18 @@ export const ContactMethodInput: FC<Props> = ({
           </div>
         ))}
         <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            onClick={handleAddContact}
-            disabled={disabled || fields.length >= 3}
-            icon={ButtonIcon.ADD}
-            iconClassName="stroke-primary"
-          >
-            <span>{t("actions.add")}</span>
-          </Button>
+          {fields.length < 3 ? (
+            <Button
+              type="button"
+              onClick={handleAddContact}
+              disabled={disabled}
+              icon={ButtonIcon.ADD}
+              iconClassName="stroke-primary"
+            >
+              <span>{t("actions.add")}</span>
+            </Button>
+          ) : null}
+
           {submitButton}
         </div>
       </div>

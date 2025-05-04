@@ -4,6 +4,7 @@ export const fetchPaths = {
       MANAGE_LISTINGS: "/api/listing",
     },
     user: {
+      PROFILE: "/api/user",
       CHECK_USER: "/api/user/check",
       UPDATE_USER_CONTACT: "/api/user/contact",
     },
@@ -19,5 +20,6 @@ export const queryKeys = {
   },
   user: {
     status: "userStatus",
+    data: "userData",
   },
 };

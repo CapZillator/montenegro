@@ -10,6 +10,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ContactMethodInput } from "@/components/common/controlled-inputs/contact-method-input/ContactMethodInput";
 import { PhoneInput } from "@/components/common/controlled-inputs/phone-input/PhoneInput";
 import { GenericModal } from "@/components/common/generic-modal/GenericModal";
+import { queryKeys } from "@/constants/fetch";
 import { validationSchema } from "@/constants/validationSchemas";
 import { updateUserContactsFetcher } from "@/fetchers/user";
 import { useCurrentUser } from "@/hooks/use-current-user/useCurrentUser";
@@ -47,9 +48,8 @@ export const UserContactsModal: FC<Props> = ({ handleClose }) => {
 
   const onSubmit = async (data: UserContacts) => {
     try {
-      console.log("Form data:", data);
       await updateUserContactsFetcher(data);
-      queryClient.setQueryData(["user", user?.sub], () => {
+      queryClient.setQueryData([queryKeys.user.status, user?.sub], () => {
         return {
           ...userData,
           needsPhone: false,

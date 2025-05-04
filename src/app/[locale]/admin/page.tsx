@@ -62,6 +62,7 @@ export default function ListingManager() {
     : undefined;
 
   console.log("listings list", listings);
+  console.log(listingsError);
 
   if (error || listingsError) {
     return (
@@ -89,10 +90,9 @@ export default function ListingManager() {
   }
 
   return (
-    <div className="relative p-5 max-w-240 mx-auto">
-      <h1>Welcome to admin panel, {user.name}!</h1>
+    <>
       {componentToShow === AdminPanelContentComponents.LISTINGS_LIST && (
-        <>
+        <div className="relative">
           <ListingList
             {...{
               listings,
@@ -101,23 +101,25 @@ export default function ListingManager() {
               isDisabled: isListDisabled,
             }}
           />
-          <button
-            type="button"
-            className={classNames(
-              "absolute bottom-10 right-10 bg-primary-content text-primary p-2 rounded-sm shadow-sm shadow-primary-content/40 duration-300 cursor-pointer",
-              "hover:bg-secondary-content"
-            )}
-            onClick={() =>
-              setComponentToShow(AdminPanelContentComponents.LISTING_FORM)
-            }
-          >
-            <Add className="w-6 h-6 stroke-primary" />
-          </button>
-        </>
+          <div className="sticky bottom-8 w-full flex justify-end z-5">
+            <button
+              type="button"
+              className={classNames(
+                "mr-2 bg-primary-content text-primary p-2 rounded-sm shadow-sm shadow-primary-content/40 duration-300 cursor-pointer",
+                "hover:bg-secondary-content"
+              )}
+              onClick={() =>
+                setComponentToShow(AdminPanelContentComponents.LISTING_FORM)
+              }
+            >
+              <Add className="w-6 h-6 stroke-primary" />
+            </button>
+          </div>
+        </div>
       )}
       {componentToShow === AdminPanelContentComponents.LISTING_FORM && (
         <ListingForm onClose={onCloseListingForm} initialListing={formData} />
       )}
-    </div>
+    </>
   );
 }

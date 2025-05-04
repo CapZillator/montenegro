@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { neon } from "@neondatabase/serverless";
 import { z } from "zod";
 
+import { sqlFieldTypes } from "@/constants/sql";
 import { validationSchema } from "@/constants/validationSchemas";
 import { auth0 } from "@/lib/auth0";
+import { sql } from "@/lib/db";
 import { buildSqlQuery } from "@/utils/api";
 
 export async function POST(req: NextRequest) {
@@ -22,12 +23,17 @@ export async function POST(req: NextRequest) {
       contacts: validData.contacts ? JSON.stringify(validData.contacts) : null,
     };
 
-    const { query, values } = buildSqlQuery("users", updateData, "update", {
-      field: "sub",
-      value: session.user.sub,
-    });
+    const { query, values } = buildSqlQuery(
+      "users",
+      updateData,
+      "update",
+      {
+        field: "sub",
+        value: session.user.sub,
+      },
+      sqlFieldTypes.users
+    );
 
-    const sql = neon(process.env.DATABASE_URL!);
     await sql(query, values);
 
     return NextResponse.json({ ok: true });

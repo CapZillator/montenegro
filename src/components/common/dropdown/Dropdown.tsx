@@ -92,7 +92,7 @@ export const Dropdown: FC<Props> = ({
           classNames(
             "flex items-center justify-between gap-2 text-primary rounded-sm bg-secondary-content capitalize shadow-sm shadow-primary-content/40",
             "focus:outline-primary-content/80 focus:outline-2 disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30",
-            "px-3 py-1",
+            "px-3 py-1.5",
             controlButtonStyles
           )
         )}

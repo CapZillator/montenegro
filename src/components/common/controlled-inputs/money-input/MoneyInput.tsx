@@ -55,7 +55,7 @@ export const MoneyInput: FC<Props> = ({
             value={formatNumberToFinancialAmount(field.value)}
             className={twMerge(
               classNames(
-                "pl-2 pr-10 py-1 rounded-sm w-full inset-shadow-sm inset-shadow-primary-content/20",
+                "pl-2 pr-10 py-1.5 rounded-sm w-full inset-shadow-sm inset-shadow-primary-content/20",
                 "bg-secondary text-primary-content focus:outline-2 focus:outline-primary-content/80",
                 "disabled:bg-disable disabled:text-primary-content/30",
                 {

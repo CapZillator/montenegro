@@ -15,15 +15,23 @@ const contactMethodSchema = z.object({
   contact: z.string().min(1),
 });
 
-export const validationSchema = {
-  userContacts: z.object({
-    phone: z
-      .string()
-      .min(1, "Phone number is required")
-      .regex(regexPatterns.phone, "Please enter a valid phone number"),
-    contacts: z.array(contactMethodSchema).optional(),
-  }),
+const userContacts = z.object({
+  phone: z
+    .string()
+    .min(1, "Phone number is required")
+    .regex(regexPatterns.phone, "Please enter a valid phone number"),
+  contacts: z.array(contactMethodSchema).default([]),
+});
 
+export const validationSchema = {
+  user: z
+    .object({
+      name: z.string().min(1),
+      email: z.string().email("Invalid email address"),
+      id: z.string().uuid().optional(),
+    })
+    .merge(userContacts),
+  userContacts,
   residentialPremises: z
     .object({
       id: z.string().optional(),

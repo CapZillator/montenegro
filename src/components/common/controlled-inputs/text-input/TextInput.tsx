@@ -40,7 +40,7 @@ export const TextInput: FC<Props> = ({
           value={field.value ?? ""}
           {...{ disabled }}
           className={classNames(
-            "px-2 py-1 text-primary-content rounded-sm w-full inset-shadow-sm inset-shadow-primary-content/20",
+            "px-2 py-1.5 text-primary-content rounded-sm w-full inset-shadow-sm inset-shadow-primary-content/20",
             "bg-secondary text-primary-content focus:outline-2 focus:outline-primary-content/80",
             "disabled:bg-disable disabled:text-primary-content/30",
             {
