@@ -7,9 +7,12 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+
 COPY .env.production .env
 
 RUN npm run build
+
+RUN rm .env
 
 EXPOSE 3000
 
