@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useSession } from "next-auth/react";
 import classNames from "classnames";
 
 import { Add } from "@/components/common/icons/actions/Add";
@@ -8,10 +8,10 @@ import { navigationPaths } from "@/constants/navigation";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 
 export const AddListing: FC = () => {
-  const { user } = useUser();
+  const { data: session } = useSession();
   const { t } = useTranslation();
 
-  return user ? (
+  return session ? (
     <LocalizedLink
       href={navigationPaths.listings.ADD}
       className={classNames(

@@ -2,8 +2,8 @@
 
 import { FC } from "react";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useUser } from "@auth0/nextjs-auth0";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -27,7 +27,7 @@ type Props = {
 };
 
 export const UserContactsModal: FC<Props> = ({ handleClose }) => {
-  const { user } = useUser();
+  const { data: session } = useSession();
   const { data: userData } = useCurrentUser();
   const queryClient = useQueryClient();
   const { showToast } = useToast();
@@ -44,17 +44,19 @@ export const UserContactsModal: FC<Props> = ({ handleClose }) => {
       contacts: [],
     },
   });
-  console.log("userRes", userData);
 
   const onSubmit = async (data: UserContacts) => {
     try {
       await updateUserContactsFetcher(data);
-      queryClient.setQueryData([queryKeys.user.status, user?.sub], () => {
-        return {
-          ...userData,
-          needsPhone: false,
-        };
-      });
+      queryClient.setQueryData(
+        [queryKeys.user.status, session?.user?.id],
+        () => {
+          return {
+            ...userData,
+            needsPhone: false,
+          };
+        }
+      );
       handleClose();
     } catch (_error) {
       showToast(t("errors.genericRequest"), "error");

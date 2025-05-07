@@ -3,15 +3,15 @@ import { z } from "zod";
 
 import { sqlFieldTypes } from "@/constants/sql";
 import { validationSchema } from "@/constants/validationSchemas";
-import { auth0 } from "@/lib/auth0";
+import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { buildSqlQuery } from "@/utils/api";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
-    if (!session?.user?.sub) {
+    if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -27,10 +27,12 @@ export async function POST(req: NextRequest) {
       "users",
       updateData,
       "update",
-      {
-        field: "sub",
-        value: session.user.sub,
-      },
+      [
+        {
+          field: "id",
+          value: session.user.id,
+        },
+      ],
       sqlFieldTypes.users
     );
 

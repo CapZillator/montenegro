@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useSession } from "next-auth/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 
@@ -21,7 +20,7 @@ export default function ListingManager() {
     AdminPanelContentComponents.LISTINGS_LIST
   );
   const [listingIdToUpdate, setListingIdToUpdate] = useState("");
-  const { user, isLoading, error } = useUser();
+  const { data: session, status } = useSession();
   const {
     data: listings,
     error: listingsError,
@@ -64,15 +63,7 @@ export default function ListingManager() {
   console.log("listings list", listings);
   console.log(listingsError);
 
-  if (error || listingsError) {
-    return (
-      <main>
-        <h1>Error</h1>
-      </main>
-    );
-  }
-
-  if (isLoading || isListingsLoading) {
+  if (status === "loading" || isListingsLoading) {
     return (
       <main>
         <h1>Loading...</h1>
@@ -80,11 +71,10 @@ export default function ListingManager() {
     );
   }
 
-  if (!user) {
+  if (!session) {
     return (
       <main>
         <h1>Auth required!</h1>
-        <Link href="/auth/login">Login</Link>
       </main>
     );
   }

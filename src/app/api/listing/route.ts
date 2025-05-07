@@ -4,7 +4,7 @@ import { z } from "zod";
 import { sqlFieldTypes } from "@/constants/sql";
 import { validationSchema } from "@/constants/validationSchemas";
 import { getErrorMessage } from "@/helpers/guards";
-import { auth0 } from "@/lib/auth0";
+import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { deleteImagesByPublicIds } from "@/lib/images/deleteImagesByPublicIds";
 import { ResidentialPremises } from "@/types/realEstate";
@@ -12,36 +12,33 @@ import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from "@/utils/api";
 
 export async function GET(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const { email } = session.user;
+    const { id } = session.user;
 
-    const user = await sql`SELECT id FROM users WHERE email = ${email}`;
-
-    if (!user.length) {
+    if (!id) {
       return NextResponse.json(
-        { error: "User data is missing" },
-        { status: 409 }
+        { error: "User id is missing" },
+        { status: 403 }
       );
     }
 
-    const userId = user[0].id;
     const searchParams = req.nextUrl.searchParams;
     const listingId = searchParams.get("listingId");
 
     const listings = listingId
       ? await sql`
         SELECT * FROM residential_premises_listings
-        WHERE user_id = ${userId} AND id = ${listingId}
+        WHERE user_id = ${id} AND id = ${listingId}
         AND deleted_at IS NULL
       `
       : await sql`
         SELECT * FROM residential_premises_listings
-        WHERE user_id = ${userId} AND deleted_at IS NULL
+        WHERE user_id = ${id} AND deleted_at IS NULL
       `;
 
     return NextResponse.json(
@@ -64,24 +61,21 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const { email } = session.user;
+    const { id } = session.user;
 
-    const user = await sql`SELECT id, phone FROM users WHERE email = ${email}`;
-
-    if (!user.length || !user[0]?.phone) {
+    if (!id) {
       return NextResponse.json(
-        { error: "User data is missing" },
-        { status: 409 }
+        { error: "User id is missing" },
+        { status: 403 }
       );
     }
 
-    const userId = user[0].id;
     const listingData: Omit<
       ResidentialPremises,
       "id" | "userId" | "createdAt" | "updatedAt"
@@ -92,7 +86,7 @@ export async function POST(req: NextRequest) {
 
     const { query, values } = buildSqlQuery(
       "residential_premises_listings",
-      { ...validListingData, user_id: userId },
+      { ...validListingData, user_id: id },
       "insert",
       undefined,
       sqlFieldTypes.residentialPremisesListings
@@ -117,17 +111,13 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const { email } = session.user;
-
-    const user = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;
-
-    const userId = user[0]?.id;
+    const { id: userId } = session.user;
 
     const listingData: Omit<
       ResidentialPremises,
@@ -138,12 +128,7 @@ export async function PUT(req: NextRequest) {
     );
     const { id, ...validBaseListingData } = validListingData;
 
-    const listingToUpdate = await sql`
-    SELECT id FROM  residential_premises_listings
-    WHERE id = ${id} AND user_id = ${userId} LIMIT 1
-    `;
-
-    if (!id || !userId || listingToUpdate[0]?.id !== id) {
+    if (!id || !userId) {
       return NextResponse.json(
         { error: "Listing/user data is missing" },
         { status: 409 }
@@ -154,7 +139,10 @@ export async function PUT(req: NextRequest) {
       "residential_premises_listings",
       { ...validBaseListingData },
       "update",
-      { field: "id", value: id },
+      [
+        { field: "id", value: id },
+        { field: "user_id", value: userId },
+      ],
       sqlFieldTypes.residentialPremisesListings
     );
 
@@ -177,17 +165,13 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ exists: false }, { status: 401 });
     }
 
-    const { email } = session.user;
-
-    const user = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;
-
-    const userId = user[0]?.id;
+    const { id: userId } = session.user;
     const { id } = await req.json();
 
     const listingToDelete = await sql`

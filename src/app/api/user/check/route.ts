@@ -1,19 +1,19 @@
 import { NextResponse } from "next/server";
 
-import { auth0 } from "@/lib/auth0";
+import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
 
 export async function GET() {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { sub, email, name } = session.user;
+    const { id } = session.user;
     const existingUser = await sql`
-      SELECT id, phone FROM users WHERE sub = ${sub};
+      SELECT id, phone FROM users WHERE id = ${id};
     `;
 
     if (existingUser.length > 0) {
@@ -23,24 +23,11 @@ export async function GET() {
         userStatus: {
           id,
           needsPhone: !phone,
-          status: "existing",
         },
       });
     }
 
-    const insertedUser = await sql`
-      INSERT INTO users (sub, email, name, role)
-      VALUES (${sub}, ${email}, ${name}, 'owner')
-      RETURNING id;
-    `;
-
-    return NextResponse.json({
-      userStatus: {
-        id: insertedUser[0].id,
-        needsPhone: true,
-        status: "created",
-      },
-    });
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
   } catch (error: any) {
     console.error("Check or create user error:", error);
 

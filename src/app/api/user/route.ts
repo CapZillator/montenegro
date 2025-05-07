@@ -2,23 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { sqlFieldTypes } from "@/constants/sql";
 import { validationSchema } from "@/constants/validationSchemas";
-import { auth0 } from "@/lib/auth0";
+import { auth } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { User } from "@/types/user";
 import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from "@/utils/api";
 
 export async function GET() {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { sub, email, name } = session.user;
+    const { id } = session.user;
 
     const users = await sql`
-      SELECT email, name, role, phone, contacts, id FROM users WHERE sub = ${sub};
+      SELECT email, name, role, phone, contacts, id FROM users WHERE id = ${id};
     `;
 
     if (users.length > 0) {
@@ -29,15 +29,7 @@ export async function GET() {
       });
     }
 
-    const newUser = await sql`
-    INSERT INTO users (sub, email, name, role)
-    VALUES (${sub}, ${email}, ${name}, 'owner')
-    RETURNING id, email, name, role;
-  `;
-
-    return NextResponse.json({
-      data: safeParseJsonFields(newUser[0]),
-    });
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
   } catch (error: any) {
     console.error("Check or create user error:", error);
 
@@ -47,24 +39,22 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { email } = session.user;
-    const user = await sql`SELECT id FROM users WHERE email = ${email} LIMIT 1`;
-    const userId = user[0]?.id;
+    const { id: userId } = session.user;
 
     const userData: Omit<User, "created_at"> = await req.json();
     const validUserData = toSnakeCase(validationSchema.user.parse(userData));
     const { id, ...validBaseUserData } = validUserData;
 
-    if (id !== userId) {
+    if (!id) {
       return NextResponse.json(
-        { error: "User data is missing" },
-        { status: 409 }
+        { error: "User id is missing" },
+        { status: 403 }
       );
     }
 
@@ -72,7 +62,7 @@ export async function PUT(req: NextRequest) {
       "users",
       { ...validBaseUserData },
       "update",
-      { field: "id", value: id },
+      [{ field: "id", value: userId }],
       sqlFieldTypes.users
     );
 

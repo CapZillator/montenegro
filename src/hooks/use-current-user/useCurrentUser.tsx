@@ -1,18 +1,18 @@
 "use client";
 
-import { useUser } from "@auth0/nextjs-auth0";
+import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 
 import { queryKeys } from "@/constants/fetch";
 import { checkUserFetcher } from "@/fetchers/user";
 
 export const useCurrentUser = () => {
-  const { user } = useUser();
+  const { data: session } = useSession();
 
   return useQuery({
-    queryKey: [queryKeys.user.status, user?.sub],
+    queryKey: [queryKeys.user.status, session?.user?.id],
     queryFn: checkUserFetcher,
-    enabled: !!user?.sub,
+    enabled: !!session?.user?.id,
     retry: false,
     staleTime: 5 * 60 * 1000,
   });

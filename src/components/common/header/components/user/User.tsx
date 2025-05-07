@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
-import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0";
+import { signIn, signOut, useSession } from "next-auth/react";
 import classNames from "classnames";
 
 import { Login } from "@/components/common/icons/actions/Login";
@@ -20,16 +19,21 @@ type Props = {
 
 export const User = forwardRef<HTMLDivElement, Props>(
   ({ isOpen, onToggle }, ref) => {
-    const { user } = useUser();
+    const { data: session } = useSession();
     const { t } = useTranslation();
-    const rawUserName = user?.name ?? user?.given_name ?? user?.nickname;
-    const userNameShort = rawUserName ? rawUserName[0] : "?";
+    const userNameShort = session?.user?.name ? session?.user?.name[0] : "?";
 
     const onClose = () => onToggle(false);
+    const onLogOut = () => {
+      onClose();
+      signOut({ callbackUrl: "/" });
+    };
+
+    console.log("42U", session);
 
     return (
       <>
-        {user ? (
+        {session ? (
           <Dropdown
             ref={ref}
             buttonChildren={
@@ -38,7 +42,7 @@ export const User = forwardRef<HTMLDivElement, Props>(
                   "w-8 h-8 flex justify-center items-center text-primary bg-secondary-content rounded-full"
                 )}
               >
-                <span>{userNameShort}</span>
+                <span className="capitalize">{userNameShort}</span>
               </div>
             }
             menuChildren={
@@ -68,27 +72,26 @@ export const User = forwardRef<HTMLDivElement, Props>(
                   </LocalizedLink>
                 </li>
                 <li>
-                  <Link
-                    href={navigationPaths.auth.LOGOUT}
+                  <button
                     className={classNames(
                       "flex items-center gap-1.5 duration-300 hover:text-secondary-content whitespace-nowrap"
                     )}
-                    onClick={onClose}
+                    onClick={onLogOut}
                   >
                     <Logout className="w-4 h-4 stroke-primary-content" />
                     <span>{t("actions.logout")}</span>
-                  </Link>
+                  </button>
                 </li>
               </>
             }
             {...{ isOpen, onToggle }}
           />
         ) : (
-          <Link
-            href={navigationPaths.auth.LOGIN}
+          <button
             className={classNames(
               "group flex items-center gap-1.5 p-1 cursor-pointer"
             )}
+            onClick={() => signIn("google")}
           >
             <Login
               className={classNames(
@@ -102,7 +105,7 @@ export const User = forwardRef<HTMLDivElement, Props>(
             >
               {t("actions.login")}
             </span>
-          </Link>
+          </button>
         )}
       </>
     );

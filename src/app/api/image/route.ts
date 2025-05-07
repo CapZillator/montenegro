@@ -6,13 +6,13 @@ import {
   MAX_IMAGES,
 } from "@/components/common/controlled-inputs/image-uploader/constants";
 import { getErrorMessage } from "@/helpers/guards";
-import { auth0 } from "@/lib/auth0";
+import { auth } from "@/lib/auth";
 import { cloudinary } from "@/lib/cloudinary";
 import { deleteImagesByPublicIds } from "@/lib/images/deleteImagesByPublicIds";
 
 export async function POST(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const session = await auth0.getSession();
+    const session = await auth();
 
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

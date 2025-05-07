@@ -1,5 +1,10 @@
 import { SqlFieldTypes } from "@/types/sql";
 
+type WhereCondition = {
+  field: string;
+  value: any;
+};
+
 const arrayToPostgresLiteral = (arr: string[]) => {
   const escaped = arr.map(
     (item) =>
@@ -16,7 +21,7 @@ export const buildSqlQuery = (
   tableName: string,
   data: Record<string, any>,
   type: "insert" | "update",
-  whereCondition?: { field: string; value: any },
+  whereConditions: WhereCondition[] = [],
   fieldTypes: SqlFieldTypes = {}
 ) => {
   const sqlFields: string[] = [];
@@ -25,7 +30,6 @@ export const buildSqlQuery = (
   Object.entries(data).forEach(([key, value]) => {
     if (value !== undefined) {
       sqlFields.push(key);
-
       const fieldType = fieldTypes[key];
 
       if (fieldType === "textArray") {
@@ -47,24 +51,32 @@ export const buildSqlQuery = (
       `,
       values: sqlValues,
     };
-  } else if (type === "update" && whereCondition) {
+  }
+
+  if (type === "update" && whereConditions.length > 0) {
     const setClauses = sqlFields
       .map((field, i) => `${field} = $${i + 1}`)
       .join(", ");
-    sqlValues.push(whereCondition.value);
+
+    const whereClauses = whereConditions
+      .map((cond, i) => `${cond.field} = $${sqlValues.length + i + 1}`)
+      .join(" AND ");
+
+    const whereValues = whereConditions.map((cond) => cond.value);
+    const allValues = [...sqlValues, ...whereValues];
 
     return {
       query: `
         UPDATE ${tableName}
         SET ${setClauses}
-        WHERE ${whereCondition.field} = $${sqlValues.length}
+        WHERE ${whereClauses}
         RETURNING id;
       `,
-      values: sqlValues,
+      values: allValues,
     };
   }
 
-  throw new Error("Invalid SQL query type or missing condition for update.");
+  throw new Error("Invalid SQL query type or missing conditions for update.");
 };
 
 export const toSnakeCase = (obj: Record<string, any>): Record<string, any> => {
