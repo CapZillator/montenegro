@@ -29,8 +29,6 @@ export const User = forwardRef<HTMLDivElement, Props>(
       signOut({ callbackUrl: "/" });
     };
 
-    console.log("42U", session);
-
     return (
       <>
         {session ? (

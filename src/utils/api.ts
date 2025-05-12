@@ -1,3 +1,4 @@
+import { FilterCondition } from "@/types/filters";
 import { SqlFieldTypes } from "@/types/sql";
 
 type WhereCondition = {
@@ -77,6 +78,29 @@ export const buildSqlQuery = (
   }
 
   throw new Error("Invalid SQL query type or missing conditions for update.");
+};
+
+export const buildWhereClauseQuery = (conditions: FilterCondition[]) => {
+  const clauses: string[] = [];
+  const values: any[] = [];
+
+  conditions.forEach((cond) => {
+    const operator = cond.operator ?? "=";
+    const placeholder = `$${values.length + 1}`;
+
+    if (operator === "IN" && Array.isArray(cond.value)) {
+      clauses.push(`${cond.field} = ANY(${placeholder})`);
+    } else {
+      clauses.push(`${cond.field} ${operator} ${placeholder}`);
+    }
+
+    values.push(cond.value);
+  });
+
+  return {
+    clause: clauses.length > 0 ? `WHERE ${clauses.join(" AND ")}` : "",
+    values,
+  };
 };
 
 export const toSnakeCase = (obj: Record<string, any>): Record<string, any> => {

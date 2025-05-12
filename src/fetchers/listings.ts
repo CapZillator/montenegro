@@ -5,7 +5,7 @@ import { toCamelCase } from "@/utils/api";
 export const addListingFetcher = async (
   data: Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">
 ) => {
-  const response = await fetch(fetchPaths.internal.listings.MANAGE_LISTINGS, {
+  const response = await fetch(fetchPaths.internal.user.LISTINGS, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -23,7 +23,7 @@ export const addListingFetcher = async (
 export const updateListingFetcher = async (
   data: Omit<ResidentialPremises, "userId" | "createdAt" | "updatedAt">
 ) => {
-  const response = await fetch(fetchPaths.internal.listings.MANAGE_LISTINGS, {
+  const response = await fetch(fetchPaths.internal.user.LISTINGS, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -41,8 +41,8 @@ export const updateListingFetcher = async (
 export const userListingsFetcher = async (listingId?: string) => {
   const response = await fetch(
     listingId
-      ? `${fetchPaths.internal.listings.MANAGE_LISTINGS}?listingId=${listingId}`
-      : fetchPaths.internal.listings.MANAGE_LISTINGS
+      ? `${fetchPaths.internal.user.LISTINGS}?listingId=${listingId}`
+      : fetchPaths.internal.user.LISTINGS
   );
 
   if (!response.ok) {
@@ -57,7 +57,7 @@ export const userListingsFetcher = async (listingId?: string) => {
 };
 
 export const deleteListingFetcher = async (listingId: string) => {
-  const response = await fetch(fetchPaths.internal.listings.MANAGE_LISTINGS, {
+  const response = await fetch(fetchPaths.internal.user.LISTINGS, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

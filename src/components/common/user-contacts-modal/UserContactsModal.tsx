@@ -83,7 +83,7 @@ export const UserContactsModal: FC<Props> = ({ handleClose }) => {
             control={control}
             label={t("user.additionalContacts")}
             disabled={isSubmitting}
-            icon={<Contacts className="w-6 h-6 stroke-primary-content" />}
+            icon={<Contacts className="w-5 h-5 fill-primary-content" />}
             submitButton={
               <Button
                 type="submit"

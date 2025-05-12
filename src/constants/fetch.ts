@@ -1,9 +1,7 @@
 export const fetchPaths = {
   internal: {
-    listings: {
-      MANAGE_LISTINGS: "/api/listing",
-    },
     user: {
+      LISTINGS: "/api/user/listings",
       PROFILE: "/api/user",
       CHECK_USER: "/api/user/check",
       UPDATE_USER_CONTACT: "/api/user/contact",

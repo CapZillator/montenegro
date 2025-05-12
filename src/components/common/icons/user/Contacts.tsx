@@ -4,21 +4,10 @@ import { SVGProps } from "react";
 export const Contacts = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
+    xmlSpace="preserve"
+    viewBox="796 720.582 200 200"
     {...props}
   >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 12a9 9 0 1 1 4.873 8c-.771-.398-3.752 1.595-4.373 1-.613-.587 1.132-3.76.704-4.5A8.959 8.959 0 0 1 3 12Z"
-    />
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="m7 13 4-2.5 1.5 2.5 4-2.5"
-    />
+    <path d="m996 730.447-196.455 82.151a5.771 5.771 0 0 0-.421 10.455l49.678 25.639 6.244 54.77a8.148 8.148 0 0 0 5.98 6.969 8.284 8.284 0 0 0 2.153.287 8.233 8.233 0 0 0 6.537-3.258l26.032-34.537 61.196 31.582a5.774 5.774 0 0 0 8.327-4.103L996 730.447zm-142.185 107.11-36.861-19.024 131.591-55.027-94.73 74.051zm12.208 54.545-5.088-44.635 94.289-73.707-89.201 118.342zm37.171-29.059 74.251-98.507-22.628 125.152-51.623-26.645z" />
   </svg>
 );

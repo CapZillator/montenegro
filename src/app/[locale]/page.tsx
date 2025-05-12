@@ -1,24 +1,24 @@
-import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+// import { getTranslations } from "next-intl/server";
 
-import { auth } from "@/lib/auth";
+import { getListings } from "@/utils/db/listings";
+import { parseSearchParamsToFilters } from "@/utils/filters";
 
-export default async function Home() {
-  const session = await auth();
-  const t = await getTranslations("welcome");
+import { ListingsList } from "./components/listings-list/ListingsList";
 
-  if (!session) {
-    return (
-      <main>
-        <Link href="/api/auth/signin">Login</Link>
-      </main>
-    );
-  }
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
+  const filters = parseSearchParamsToFilters(searchParams);
+  // const t = await getTranslations("welcome");
+  const listings = await getListings(filters);
+  console.log("filters", filters);
+  console.log("listings", listings);
 
   return (
-    <main className="p-5 flex flex-col items-center justify-center gap-2">
-      <h1>Welcome, {session?.user?.name}!</h1>
-      <h2>{t("hi")}</h2>
-    </main>
+    <div>
+      <ListingsList data={listings} />
+    </div>
   );
 }
