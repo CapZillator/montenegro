@@ -6,7 +6,8 @@ import { getListingById } from "@/utils/db/listings";
 import { ParamsSchema } from "./constants";
 
 export default async function ListingPage({ params }: any) {
-  const parseResult = ParamsSchema.safeParse(params);
+  const resolvedParams = await Promise.resolve(params);
+  const parseResult = ParamsSchema.safeParse(resolvedParams);
 
   if (!parseResult.success) {
     notFound();
