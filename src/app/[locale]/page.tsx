@@ -5,11 +5,7 @@ import { parseSearchParamsToFilters } from "@/utils/filters";
 
 import { ListingsList } from "./components/listings-list/ListingsList";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[] | undefined>;
-}) {
+export default async function Home({ searchParams }: any) {
   const filters = parseSearchParamsToFilters(searchParams);
   // const t = await getTranslations("welcome");
   const listings = await getListings(filters);

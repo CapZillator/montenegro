@@ -5,12 +5,8 @@ import { getListingById } from "@/utils/db/listings";
 
 import { ParamsSchema } from "./constants";
 
-export default async function ListingPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const parseResult = ParamsSchema.safeParse({ ...params });
+export default async function ListingPage({ params }: any) {
+  const parseResult = ParamsSchema.safeParse(params);
 
   if (!parseResult.success) {
     notFound();

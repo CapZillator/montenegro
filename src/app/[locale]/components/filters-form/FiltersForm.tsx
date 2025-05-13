@@ -1,92 +1,118 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
+
+type FormValues = {
+  propertyType: string[];
+  priceFrom: number | null;
+  priceTo: number | null;
+};
+
+const defaultValues: FormValues = {
+  propertyType: [],
+  priceFrom: null,
+  priceTo: null,
+};
 
 export function FiltersForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
 
-  const [priceFrom, setPriceFrom] = useState<string>(
-    searchParams.get("priceFrom") || ""
-  );
-  const [priceTo, setPriceTo] = useState<string>(
-    searchParams.get("priceTo") || ""
-  );
-  const [propertyType, setPropertyType] = useState<string[]>(
-    searchParams.get("propertyType")?.split(",") || []
-  );
+  const { control, watch, setValue } = useForm<FormValues>({
+    defaultValues,
+  });
 
-  const handleChange = (name: string, value: string | string[]) => {
-    const params = new URLSearchParams(Array.from(searchParams.entries()));
+  // Заполнение из searchParams (если юзер перешёл по ссылке с фильтрами)
+  useEffect(() => {
+    const urlPropertyType = searchParams.get("propertyType");
+    const urlPriceFrom = searchParams.get("priceFrom");
+    const urlPriceTo = searchParams.get("priceTo");
 
-    if (Array.isArray(value)) {
-      if (value.length > 0) {
-        params.set(name, value.join(","));
-      } else {
-        params.delete(name);
-      }
-    } else {
-      if (value) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
-      }
+    if (urlPropertyType) {
+      setValue("propertyType", urlPropertyType.split(","));
+    }
+    if (urlPriceFrom) {
+      setValue("priceFrom", +urlPriceFrom);
+    }
+    if (urlPriceTo) {
+      setValue("priceTo", +urlPriceTo);
+    }
+  }, [searchParams, setValue]);
+
+  // Автоматическое обновление URL при изменении формы
+  const watchedValues = watch();
+
+  useEffect(() => {
+    const query = new URLSearchParams();
+
+    if (watchedValues.propertyType.length > 0) {
+      query.set("propertyType", watchedValues.propertyType.join(","));
     }
 
-    startTransition(() => {
-      router.push("?" + params.toString());
-    });
-  };
+    if (watchedValues.priceFrom != null) {
+      query.set("priceFrom", String(watchedValues.priceFrom));
+    }
+
+    if (watchedValues.priceTo != null) {
+      query.set("priceTo", String(watchedValues.priceTo));
+    }
+
+    router.push(`?${query.toString()}`);
+  }, [watchedValues, router]);
 
   return (
-    <form className="space-y-4">
-      <div>
-        <label>Property Type</label>
-        <select
-          multiple
-          value={propertyType}
-          onChange={(e) => {
-            const selected = Array.from(e.target.selectedOptions).map(
-              (o) => o.value
-            );
-            setPropertyType(selected);
-            handleChange("propertyType", selected);
-          }}
-          className="w-full border p-2 rounded"
-        >
-          <option value="apartment">Apartment</option>
-          <option value="house">House</option>
-          <option value="villa">Villa</option>
-        </select>
-      </div>
+    <form className="flex flex-col gap-4">
+      <Controller
+        name="propertyType"
+        control={control}
+        render={({ field }) => (
+          <select
+            multiple
+            value={field.value}
+            onChange={(e) =>
+              field.onChange(
+                Array.from(e.target.selectedOptions, (option) => option.value)
+              )
+            }
+          >
+            <option value="apartment">Apartment</option>
+            <option value="villa">Villa</option>
+            <option value="house">House</option>
+          </select>
+        )}
+      />
 
-      <div>
-        <label>Price from</label>
-        <input
-          type="number"
-          value={priceFrom}
-          onChange={(e) => {
-            setPriceFrom(e.target.value);
-            handleChange("priceFrom", e.target.value);
-          }}
-          className="w-full border p-2 rounded"
-        />
-      </div>
+      <Controller
+        name="priceFrom"
+        control={control}
+        render={({ field }) => (
+          <input
+            type="number"
+            placeholder="Price from"
+            value={field.value ?? ""}
+            onChange={(e) =>
+              field.onChange(e.target.value ? +e.target.value : null)
+            }
+          />
+        )}
+      />
 
-      <div>
-        <label>Price to</label>
-        <input
-          type="number"
-          value={priceTo}
-          onChange={(e) => {
-            setPriceTo(e.target.value);
-            handleChange("priceTo", e.target.value);
-          }}
-          className="w-full border p-2 rounded"
-        />
-      </div>
+      <Controller
+        name="priceTo"
+        control={control}
+        render={({ field }) => (
+          <input
+            type="number"
+            placeholder="Price to"
+            value={field.value ?? ""}
+            onChange={(e) =>
+              field.onChange(e.target.value ? +e.target.value : null)
+            }
+          />
+        )}
+      />
     </form>
   );
 }
