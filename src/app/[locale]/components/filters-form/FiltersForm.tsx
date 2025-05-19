@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import classNames from "classnames";
 
 import { Button } from "@/components/common/button/Button";
@@ -19,7 +19,6 @@ import { ListingType, ResidentialPremisesType } from "@/enums/listing";
 import { useLocale } from "@/hooks/use-locale/useLocale";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 import { useWindowSize } from "@/hooks/use-window-size/useWindowSize";
-import { ResidentialPremisesFilters } from "@/types/filters";
 
 import { DEFAULT_VALUES } from "./constants";
 
@@ -74,11 +73,11 @@ export function FiltersForm() {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={classNames(
-            "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md"
+            "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase"
           )}
         >
           <Filter className="w-4.5 h-4.5 stroke-primary-content" />
-          <span>FILTERS</span>
+          <span>{t("actions.filters")}</span>
         </button>
       )}
       <form
