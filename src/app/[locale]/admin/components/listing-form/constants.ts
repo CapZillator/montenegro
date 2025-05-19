@@ -12,7 +12,7 @@ export const DEFAULT_RESIDENTIAL_PREMISE_DATA = {
   rooms: 1,
   bedrooms: 1,
   bathrooms: 1,
-  area: 0,
+  area: undefined,
   location: "",
   images: [],
   floor: undefined,
@@ -37,7 +37,11 @@ export const HOUSES = [
   ResidentialPremisesType.VILLA,
 ];
 
-export const STEP_FIELDS: Array<Array<keyof Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">>> = [
+export const STEP_FIELDS: Array<
+  Array<
+    keyof Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">
+  >
+> = [
   [
     "title",
     "description",

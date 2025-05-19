@@ -52,7 +52,9 @@ export const MoneyInput: FC<Props> = ({
               const formattedValue = parseNumberFromString(event.target.value);
               field.onChange(formattedValue);
             }}
-            value={formatNumberToFinancialAmount(field.value)}
+            value={
+              field.value ? formatNumberToFinancialAmount(field.value) : ""
+            }
             className={twMerge(
               classNames(
                 "pl-2 pr-10 py-1.5 rounded-sm w-full inset-shadow-sm inset-shadow-primary-content/20",

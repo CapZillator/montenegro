@@ -15,7 +15,7 @@ import { getLabel } from "./utils";
 type Props = {
   values: { name: string; value: string | boolean }[];
   selectedValue: string | boolean | Array<string | boolean>;
-  onUpdate: (value: string | boolean) => void;
+  onUpdate: (value: string | boolean | Array<string | boolean>) => void;
   isOpenByDefault?: boolean;
   label?: string;
   frozenValues?: Array<string | boolean>;
@@ -58,9 +58,20 @@ export const Dropdown: FC<Props> = ({
 
   const onSelect = (value: string | boolean) => {
     if (frozenValues && frozenValues.includes(value)) return;
-    if (!isMultipleSelect) setIsOpen(false);
-    onUpdate(value);
     setSearchTerm("");
+    if (isMultipleSelect) {
+      onUpdate(
+        value === "any"
+          ? []
+          : selectedValue.includes(value)
+            ? selectedValue.filter((selected) => selected !== value)
+            : [...selectedValue, value]
+      );
+
+      return;
+    }
+    onUpdate(value === "any" ? "" : value);
+    setIsOpen(false);
   };
 
   const clickOutsideCallback = () => {
@@ -115,9 +126,18 @@ export const Dropdown: FC<Props> = ({
           {selectedValuesLabel ? (
             <span className="truncate">{selectedValuesLabel}</span>
           ) : (
-            <span className={classNames("h-5")} />
+            <span>{t("states.any")}</span>
           )}
         </div>
+        {isMultipleSelect && selectedValue.length > 1 ? (
+          <span
+            className={classNames(
+              "text-sm bg-primary/30 px-1.5 text-primary rounded-sm"
+            )}
+          >
+            {selectedValue.length}
+          </span>
+        ) : null}
         <ChevronDown
           className={twMerge(
             classNames("w-2.5 h-2.5 shrink-0 fill-primary duration-300", {
@@ -176,15 +196,17 @@ export const Dropdown: FC<Props> = ({
                     key={value.value.toString()}
                     onClick={() => onSelect(value.value)}
                     className={classNames(
-                      "cursor-pointer hover:text-primary-content duration-300",
+                      "relative cursor-pointer hover:text-primary-content duration-300",
+                      // {
+                      //   "flex items-center gap-2": isMultipleSelect,
+                      // }
                       {
-                        "flex items-center gap-2": isMultipleSelect,
-                        "ml-4.5": isMultipleSelect && !isShowCheckedIcon,
+                        "pl-5": isShowCheckedIcon,
                       }
                     )}
                   >
                     {isShowCheckedIcon && (
-                      <Checked className="w-2.5 h-2.5 fill-primary-content" />
+                      <Checked className="absolute left-0 top-1.5 w-2.5 h-2.5 fill-primary" />
                     )}
                     {value.name}
                   </li>

@@ -25,10 +25,12 @@ export const ListingsList: FC<Props> = async ({ data }) => {
   return (
     <div
       className={classNames(
-        "grid grid-cols-1 gap-2",
+        "grid grid-cols-1 gap-3",
         "sm:grid-cols-2",
         "md:grid-cols-3",
-        "lg:grid-cols-4 lg:gap-3"
+        "lg:pl-65",
+        "xl:pl-85",
+        "2xl:grid-cols-5"
       )}
     >
       {data.map((listing) => (

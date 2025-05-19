@@ -32,6 +32,7 @@
     "error": "Error",
     "yes": "Yes",
     "no": "No",
+    "any": "Any",
     "nothingFound": "Nothing found",
     "steps": {
       "basic": "Basic data",

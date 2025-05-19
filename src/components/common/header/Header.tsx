@@ -44,7 +44,7 @@ export const Header: FC = () => {
     >
       <div
         className={classNames(
-          "flex items-center justify-between w-full max-w-310"
+          "flex items-center justify-between w-full max-w-container-xl"
         )}
       >
         <div>

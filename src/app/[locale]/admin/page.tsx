@@ -80,7 +80,7 @@ export default function ListingManager() {
   }
 
   return (
-    <>
+    <div className={classNames("2xl:max-w-container-md 2xl:mx-auto")}>
       {componentToShow === AdminPanelContentComponents.LISTINGS_LIST && (
         <div className="relative">
           <ListingList
@@ -110,6 +110,6 @@ export default function ListingManager() {
       {componentToShow === AdminPanelContentComponents.LISTING_FORM && (
         <ListingForm onClose={onCloseListingForm} initialListing={formData} />
       )}
-    </>
+    </div>
   );
 }

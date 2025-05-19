@@ -176,8 +176,9 @@ export const ListingForm: FC<Props> = ({
     value: locale,
   }));
 
-  const onUpdateListingLocale = (locale: string | boolean) =>
-    setListingLocale(locale as string);
+  const onUpdateListingLocale = (
+    locale: string | boolean | Array<string | boolean>
+  ) => setListingLocale(locale as string);
 
   return (
     <>
