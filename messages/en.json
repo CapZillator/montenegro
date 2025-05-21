@@ -85,6 +85,12 @@
       "preview": "preview"
     }
   },
+  "filters": {
+    "label": "Filters",
+    "type": "Type",
+    "listingType": "Listing Type",
+    "place": "Place"
+  },
   "files": {
     "dragToAdd": "Drag and drop files here or click to select",
     "restriction": "Maximum of 24 files in .jpeg .png or .webp format, no larger than 5mb"

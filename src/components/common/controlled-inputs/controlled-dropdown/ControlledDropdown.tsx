@@ -11,6 +11,7 @@ type Props = {
   values: { name: string; value: string | boolean }[];
   frozenValues?: string[];
   icon?: ReactNode;
+  innerIcon?: ReactNode;
   useValueAsName?: boolean;
   disabled?: boolean;
   searchEnabled?: boolean;
@@ -25,6 +26,7 @@ export const ControlledDropdown: FC<Props> = ({
   values,
   frozenValues,
   icon,
+  innerIcon,
   useValueAsName,
   disabled,
   searchEnabled,
@@ -37,7 +39,7 @@ export const ControlledDropdown: FC<Props> = ({
     render={({ field, fieldState }) => (
       <InputContainer
         error={fieldState.error?.message}
-        {...{ name, label, styles: containerStyles }}
+        {...{ name, label, icon, styles: containerStyles }}
       >
         <Dropdown
           onUpdate={(value) => field.onChange(value)}
@@ -45,11 +47,11 @@ export const ControlledDropdown: FC<Props> = ({
           {...{
             values,
             frozenValues,
-            icon,
             useValueAsName,
             disabled,
             searchEnabled,
             controlButtonStyles,
+            icon: innerIcon,
           }}
         />
       </InputContainer>

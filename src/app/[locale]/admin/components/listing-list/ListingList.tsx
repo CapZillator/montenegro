@@ -7,8 +7,8 @@ import { Edit } from "@/components/common/icons/actions/Edit";
 import { Area } from "@/components/common/icons/realty/Area";
 import { Bed } from "@/components/common/icons/realty/Bed";
 import { Calendar } from "@/components/common/icons/realty/Calendar";
-import { City } from "@/components/common/icons/realty/City";
 import { Door } from "@/components/common/icons/realty/Door";
+import { Location } from "@/components/common/icons/realty/Location";
 import { isoUTCStringToLocaleString } from "@/formatters/date";
 import { formatNumberToFinancialAmount } from "@/formatters/finance";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
@@ -59,7 +59,7 @@ export const ListingList: FC<Props> = ({
               </p>
               <span
                 className={classNames(
-                  "lowercase py-0.5 px-2 bg-secondary-content text-primary text-sm rounded-sm"
+                  "lowercase py-0.5 px-2 bg-secondary-content text-primary rounded-sm"
                 )}
               >
                 {t(`listings.types.${listing.listingType}`)}
@@ -70,7 +70,9 @@ export const ListingList: FC<Props> = ({
               {getLocalizedStringValue(listing.title, locale)}
             </h3>
             <div className={classNames("flex items-center gap-1")}>
-              <City className={classNames("w-5 h-5 stroke-primary-content")} />
+              <Location
+                className={classNames("w-5 h-5 stroke-primary-content")}
+              />
               <span className="truncate">
                 {getFullAddress(listing.location, listing.address)}
               </span>

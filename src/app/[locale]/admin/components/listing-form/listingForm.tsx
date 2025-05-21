@@ -381,7 +381,7 @@ export const ListingForm: FC<Props> = ({
               control={control}
               values={locations}
               disabled={isSubmitting}
-              icon={<City className="w-5 h-5 stroke-primary" />}
+              icon={<City className="w-5 h-5 stroke-primary-content" />}
               controlButtonStyles="w-40"
               searchEnabled
             />

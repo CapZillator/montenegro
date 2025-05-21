@@ -23,7 +23,7 @@ export const InputContainer: FC<Props> = ({
 
   return (
     <div className={twMerge(classNames(styles))}>
-      {label?.length ? (
+      {label?.length || icon ? (
         <label
           htmlFor={name}
           className={classNames("block mb-1", {

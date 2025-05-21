@@ -13,6 +13,8 @@ import { Close } from "@/components/common/icons/actions/Close";
 import { Filter } from "@/components/common/icons/actions/Filter";
 import { Area } from "@/components/common/icons/realty/Area";
 import { City } from "@/components/common/icons/realty/City";
+import { Deal } from "@/components/common/icons/realty/Deal";
+import { Location } from "@/components/common/icons/realty/Location";
 import { Price } from "@/components/common/icons/realty/Price";
 import { LOCALIZED_CITIES } from "@/constants/location";
 import { ListingType, ResidentialPremisesType } from "@/enums/listing";
@@ -69,59 +71,74 @@ export function FiltersForm() {
 
   return (
     <>
-      {!isDesktop && !isLargeDesktop && (
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={classNames(
-            "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase"
-          )}
-        >
-          <Filter className="w-4.5 h-4.5 stroke-primary-content" />
-          <span>{t("actions.filters")}</span>
-        </button>
-      )}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={classNames(
+          "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase",
+          "lg:hidden"
+        )}
+      >
+        <Filter className="w-4.5 h-4.5 stroke-primary-content" />
+        <span>{t("actions.filters")}</span>
+      </button>
       <form
         className={classNames(
-          "fixed flex flex-col gap-3 bg-primary left-0 top-12 bottom-0 right-0 px-3 py-5 z-10 -translate-x-full duration-300",
-          "lg:w-60 lg:translate-x-0 lg:right-auto lg:left-auto lg:px-0 lg:top-19",
+          "fixed flex flex-col bg-primary left-0 top-12 bottom-0 right-0 px-3 py-5 z-10 -translate-x-full duration-300",
+          "lg:w-60 lg:translate-x-0 lg:right-auto lg:left-auto lg:px-0 lg:top-15",
           "xl:w-80",
           { "translate-x-0": isOpen }
         )}
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="flex w-full gap-2 items-center">
+        <div
+          className={classNames(
+            "flex items-center justify-between mb-1",
+            "lg:hidden"
+          )}
+        >
+          <h4 className="text-lg font-semibold">{t("filters.label")}</h4>
+          <button
+            type="button"
+            onClick={() => setIsOpen(false)}
+            className={classNames("cursor-pointer")}
+          >
+            <Close className="w-6 h-6 fill-primary-content duration-300 hover:fill-secondary-content" />
+          </button>
+        </div>
+
+        <div
+          className={classNames(
+            "grid grid-cols-2 gap-x-3 gap-y-2 max-w-100 mb-3"
+          )}
+        >
           <ControlledDropdown
             name={"propertyType"}
             control={control}
             values={realEstateTypeDropdownOptions}
+            controlButtonStyles="w-full"
+            label={t("filters.type")}
+            icon={<City className="w-5 h-5 stroke-primary-content" />}
           />
           <ControlledDropdown
             name={"listingType"}
             control={control}
             values={listingTypeDropdownOptions}
+            controlButtonStyles="w-full"
+            label={t("filters.listingType")}
+            icon={<Deal className="w-5 h-5 fill-primary-content" />}
           />
-          {!isDesktop && !isLargeDesktop && (
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="cursor-pointer ml-auto"
-            >
-              <Close className="w-6 h-6 fill-primary-content duration-300 hover:fill-secondary-content" />
-            </button>
-          )}
-        </div>
-
-        <div>
           <ControlledDropdown
             name={"location"}
             control={control}
             values={locations}
-            icon={<City className="w-5 h-5 stroke-primary" />}
+            controlButtonStyles="w-full"
+            label={t("filters.place")}
             searchEnabled
+            icon={<Location className="w-5 h-5 stroke-primary-content" />}
           />
         </div>
 
-        <div>
+        <div className="max-w-100 mb-3">
           <div className="flex gap-1.5 items-center mb-1">
             <Price className={classNames("w-5 h-5 fill-primary-content")} />
             <p>{t("listings.properties.price")}</p>
@@ -133,7 +150,7 @@ export function FiltersForm() {
           </div>
         </div>
 
-        <div>
+        <div className="max-w-100">
           <div className="flex gap-1.5 items-center mb-1">
             <Area className={classNames("w-5 h-5 fill-primary-content")} />
             <p>{t("listings.properties.area")}</p>

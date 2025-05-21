@@ -101,7 +101,7 @@ export const Dropdown: FC<Props> = ({
       <button
         className={twMerge(
           classNames(
-            "flex items-center justify-between gap-2 text-primary rounded-sm bg-secondary-content capitalize shadow-sm shadow-primary-content/40",
+            "flex items-center gap-2 text-primary rounded-sm bg-secondary-content capitalize shadow-sm shadow-primary-content/40",
             "focus:outline-primary-content/80 focus:outline-2 disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30",
             "px-3 py-1.5",
             controlButtonStyles
@@ -121,12 +121,12 @@ export const Dropdown: FC<Props> = ({
         type="button"
         {...{ disabled }}
       >
-        <div className="flex items-center gap-2 truncate">
-          {icon}
+        {icon && <div>{icon}</div>}
+        <div className="truncate grow text-start">
           {selectedValuesLabel ? (
-            <span className="truncate">{selectedValuesLabel}</span>
+            <>{selectedValuesLabel}</>
           ) : (
-            <span>{t("states.any")}</span>
+            <>{t("states.any")}</>
           )}
         </div>
         {isMultipleSelect && selectedValue.length > 1 ? (

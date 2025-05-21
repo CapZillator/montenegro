@@ -5,8 +5,8 @@ import classNames from "classnames";
 import { Area } from "@/components/common/icons/realty/Area";
 import { Bed } from "@/components/common/icons/realty/Bed";
 import { Calendar } from "@/components/common/icons/realty/Calendar";
-import { City } from "@/components/common/icons/realty/City";
 import { Door } from "@/components/common/icons/realty/Door";
+import { Location } from "@/components/common/icons/realty/Location";
 import { LocalizedLink } from "@/components/localized-link/LokalizedLink";
 import { isoUTCStringToLocaleString } from "@/formatters/date";
 import { formatNumberToFinancialAmount } from "@/formatters/finance";
@@ -67,7 +67,7 @@ export const ListingsList: FC<Props> = async ({ data }) => {
                 {getLocalizedStringValue(listing.title, locale)}
               </h3>
               <div className={classNames("flex items-center gap-1")}>
-                <City
+                <Location
                   className={classNames("w-5 h-5 stroke-primary-content")}
                 />
                 <span className="truncate">
