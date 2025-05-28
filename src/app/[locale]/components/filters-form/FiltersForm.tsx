@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import classNames from "classnames";
 
+import { ControlledRangeSlider } from "@/components/common//controlled-inputs/controlled-range-slider/ControlledRangeSlider";
 import { Button } from "@/components/common/button/Button";
 import { ControlledDropdown } from "@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown";
 import { MoneyInput } from "@/components/common/controlled-inputs/money-input/MoneyInput";
@@ -12,8 +13,11 @@ import { NumericInput } from "@/components/common/controlled-inputs/numeric-inpu
 import { Close } from "@/components/common/icons/actions/Close";
 import { Filter } from "@/components/common/icons/actions/Filter";
 import { Area } from "@/components/common/icons/realty/Area";
+import { Bath } from "@/components/common/icons/realty/Bath";
+import { Bed } from "@/components/common/icons/realty/Bed";
 import { City } from "@/components/common/icons/realty/City";
 import { Deal } from "@/components/common/icons/realty/Deal";
+import { Door } from "@/components/common/icons/realty/Door";
 import { Location } from "@/components/common/icons/realty/Location";
 import { Price } from "@/components/common/icons/realty/Price";
 import { LOCALIZED_CITIES } from "@/constants/location";
@@ -21,15 +25,17 @@ import { ListingType, ResidentialPremisesType } from "@/enums/listing";
 import { useLocale } from "@/hooks/use-locale/useLocale";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 import { useWindowSize } from "@/hooks/use-window-size/useWindowSize";
+import { ResidentialPremisesFilters } from "@/types/filters";
 
 import { DEFAULT_VALUES } from "./constants";
 
 export function FiltersForm() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { control, reset, handleSubmit } = useForm({
-    defaultValues: DEFAULT_VALUES,
-  });
+  const { control, reset, handleSubmit, setValue, watch } =
+    useForm<ResidentialPremisesFilters>({
+      defaultValues: DEFAULT_VALUES,
+    });
   const { isDesktop, isLargeDesktop } = useWindowSize();
   const [isOpen, setIsOpen] = useState(false);
   const currentLocale = useLocale();
@@ -66,6 +72,13 @@ export function FiltersForm() {
       value: value,
     })
   );
+
+  const roomsFrom = watch("roomsFrom");
+  const roomsTo = watch("roomsTo");
+  const bedroomsFrom = watch("bedroomsFrom");
+  const bedroomsTo = watch("bedroomsTo");
+  const bathroomsFrom = watch("bathroomsFrom");
+  const bathroomsTo = watch("bathroomsTo");
 
   const locations = LOCALIZED_CITIES[currentLocale];
 
@@ -150,7 +163,7 @@ export function FiltersForm() {
           </div>
         </div>
 
-        <div className="max-w-100">
+        <div className="max-w-100 mb-3">
           <div className="flex gap-1.5 items-center mb-1">
             <Area className={classNames("w-5 h-5 fill-primary-content")} />
             <p>{t("listings.properties.area")}</p>
@@ -180,6 +193,38 @@ export function FiltersForm() {
           </div>
         </div>
 
+        <div className="max-w-100 space-y-1">
+          <ControlledRangeSlider
+            max={12}
+            label={t("listings.properties.rooms")}
+            onChangeFrom={(val) => setValue("roomsFrom", val)}
+            onChangeTo={(val) => setValue("roomsTo", val)}
+            valueFrom={roomsFrom}
+            valueTo={roomsTo}
+            icon={<Door className="w-5 h-5 fill-primary-content" />}
+          />
+          <ControlledRangeSlider
+            min={1}
+            max={10}
+            label={t("listings.properties.bedrooms")}
+            onChangeFrom={(val) => setValue("bedroomsFrom", val)}
+            onChangeTo={(val) => setValue("bedroomsTo", val)}
+            valueFrom={bedroomsFrom}
+            valueTo={bedroomsTo}
+            icon={<Bed className="w-5 h-5 fill-primary-content" />}
+          />
+          <ControlledRangeSlider
+            min={1}
+            max={6}
+            label={t("listings.properties.bathrooms")}
+            onChangeFrom={(val) => setValue("bathroomsFrom", val)}
+            onChangeTo={(val) => setValue("bathroomsTo", val)}
+            valueFrom={bathroomsFrom}
+            valueTo={bathroomsTo}
+            icon={<Bath className="w-5 h-5 fill-primary-content" />}
+          />
+        </div>
+
         <div className="mt-3 flex gap-1.5 items-center">
           <Button type="button" onClick={onReset}>
             Reset
@@ -190,3 +235,9 @@ export function FiltersForm() {
     </>
   );
 }
+
+// bedroomsFrom?: number | null;
+// bedroomsTo?: number | null;
+
+// bathroomsFrom?: number | null;
+// bathroomsTo?: number | null;
