@@ -4,8 +4,8 @@ export type ResidentialPremisesFilters = {
   priceFrom?: number | null;
   priceTo?: number | null;
 
-  propertyType?: string[];
-  listingType?: string[];
+  propertyType?: string[] | null;
+  listingType?: string[] | null;
 
   roomsFrom?: number | null;
   roomsTo?: number | null;
@@ -19,7 +19,7 @@ export type ResidentialPremisesFilters = {
   areaFrom?: number | null;
   areaTo?: number | null;
 
-  location?: string[];
+  location?: string[] | null;
 
   floorFrom?: number | null;
   floorTo?: number | null;

@@ -32,10 +32,9 @@ import { DEFAULT_VALUES } from "./constants";
 export function FiltersForm() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { control, reset, handleSubmit, setValue, watch } =
-    useForm<ResidentialPremisesFilters>({
-      defaultValues: DEFAULT_VALUES,
-    });
+  const { control, reset, handleSubmit } = useForm<ResidentialPremisesFilters>({
+    defaultValues: DEFAULT_VALUES,
+  });
   const { isDesktop, isLargeDesktop } = useWindowSize();
   const [isOpen, setIsOpen] = useState(false);
   const currentLocale = useLocale();
@@ -72,13 +71,6 @@ export function FiltersForm() {
       value: value,
     })
   );
-
-  const roomsFrom = watch("roomsFrom");
-  const roomsTo = watch("roomsTo");
-  const bedroomsFrom = watch("bedroomsFrom");
-  const bedroomsTo = watch("bedroomsTo");
-  const bathroomsFrom = watch("bathroomsFrom");
-  const bathroomsTo = watch("bathroomsTo");
 
   const locations = LOCALIZED_CITIES[currentLocale];
 
@@ -195,32 +187,27 @@ export function FiltersForm() {
 
         <div className="max-w-100 space-y-1">
           <ControlledRangeSlider
-            max={12}
+            nameFrom="roomsFrom"
+            nameTo="roomsTo"
+            control={control}
             label={t("listings.properties.rooms")}
-            onChangeFrom={(val) => setValue("roomsFrom", val)}
-            onChangeTo={(val) => setValue("roomsTo", val)}
-            valueFrom={roomsFrom}
-            valueTo={roomsTo}
+            max={12}
             icon={<Door className="w-5 h-5 fill-primary-content" />}
           />
           <ControlledRangeSlider
-            min={1}
+            control={control}
             max={10}
             label={t("listings.properties.bedrooms")}
-            onChangeFrom={(val) => setValue("bedroomsFrom", val)}
-            onChangeTo={(val) => setValue("bedroomsTo", val)}
-            valueFrom={bedroomsFrom}
-            valueTo={bedroomsTo}
+            nameFrom="bedroomsFrom"
+            nameTo="bedroomsTo"
             icon={<Bed className="w-5 h-5 fill-primary-content" />}
           />
           <ControlledRangeSlider
-            min={1}
+            control={control}
             max={6}
             label={t("listings.properties.bathrooms")}
-            onChangeFrom={(val) => setValue("bathroomsFrom", val)}
-            onChangeTo={(val) => setValue("bathroomsTo", val)}
-            valueFrom={bathroomsFrom}
-            valueTo={bathroomsTo}
+            nameFrom="bathroomsFrom"
+            nameTo="bathroomsTo"
             icon={<Bath className="w-5 h-5 fill-primary-content" />}
           />
         </div>
@@ -235,9 +222,3 @@ export function FiltersForm() {
     </>
   );
 }
-
-// bedroomsFrom?: number | null;
-// bedroomsTo?: number | null;
-
-// bathroomsFrom?: number | null;
-// bathroomsTo?: number | null;

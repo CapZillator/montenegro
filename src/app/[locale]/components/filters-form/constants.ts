@@ -1,10 +1,15 @@
 export const DEFAULT_VALUES = {
   propertyType: [],
+  location: [],
+  listingType: null,
+  priceFrom: null,
+  priceTo: null,
+  areaFrom: null,
+  areaTo: null,
   roomsFrom: null,
   roomsTo: null,
   bedroomsFrom: null,
   bedroomsTo: null,
   bathroomsFrom: null,
   bathroomsTo: null,
-  // listingType: ListingType.LONG_TERM_RENT,
 };
