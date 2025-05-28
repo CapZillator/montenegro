@@ -32,8 +32,8 @@ export const RangeSlider: FC<Props> = ({
 
   const realMax = max + step;
 
-  const from = valueFrom ?? min;
-  const to = valueTo ?? realMax;
+  const from = valueFrom ? valueFrom : min;
+  const to = valueTo ? valueTo : realMax;
 
   const percent = (val: number) => ((val - min) / (realMax - min)) * 100;
   const roundToStep = (val: number) => Math.round(val / step) * step;
@@ -55,7 +55,7 @@ export const RangeSlider: FC<Props> = ({
         onChangeFrom(Math.min(val, to));
       } else if (dragging === "to") {
         if (val >= realMax - step / 2) {
-          onChangeTo(undefined);
+          onChangeTo(null);
         } else {
           onChangeTo(Math.max(val, from));
         }
@@ -101,7 +101,7 @@ export const RangeSlider: FC<Props> = ({
         ref={trackRef}
         className="relative mx-2 h-3 rounded bg-divider inset-shadow-sm inset-shadow-primary-content/30"
       >
-        {/* Активная зона */}
+        {/* Active Range */}
         <motion.div
           className="absolute top-1/2 h-3 bg-primary-content rounded"
           style={{
@@ -118,8 +118,8 @@ export const RangeSlider: FC<Props> = ({
           role="slider"
           aria-valuemin={min}
           aria-valuemax={max}
-          aria-valuenow={valueFrom ?? min}
-          className="absolute top-1/2 w-4 h-4 bg-primary rounded-sm cursor-pointer touch-none shadow-sm shadow-primary-content/50 border-1 border-primary-content/80"
+          aria-valuenow={valueFrom ? valueFrom : min}
+          className="absolute top-1/2 w-5 h-5 bg-primary rounded-sm cursor-pointer touch-none shadow-sm shadow-primary-content/50 border-1 border-primary-content/80"
           style={{
             left: `${percent(from)}%`,
             transform: "translate(-50%, -50%)",
@@ -136,8 +136,8 @@ export const RangeSlider: FC<Props> = ({
           role="slider"
           aria-valuemin={min}
           aria-valuemax={realMax}
-          aria-valuenow={valueTo ?? realMax}
-          className="absolute top-1/2 w-4 h-4 bg-primary rounded-sm cursor-pointer touch-none shadow-sm shadow-primary-content/50 border-1 border-primary-content/80"
+          aria-valuenow={valueTo ? valueTo : realMax}
+          className="absolute top-1/2 w-5 h-5 bg-primary rounded-sm cursor-pointer touch-none shadow-sm shadow-primary-content/50 border-1 border-primary-content/80"
           style={{
             left: `${percent(to)}%`,
             transform: "translate(-50%, -50%)",
