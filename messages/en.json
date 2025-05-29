@@ -24,7 +24,10 @@
     "upload": "Upload",
     "login": "Log in",
     "logout": "Log out",
-    "filters": "Filters"
+    "filters": "Filters",
+    "showMoreParams": "More options",
+    "showLessParams": "Less options",
+    "hide": "Hide"
   },
   "states": {
     "saved": "Saved",
@@ -73,7 +76,7 @@
       "floor": "Floor",
       "buildingYear": "Building year",
       "furnished": "Furnished",
-      "balcony": "Balcony?",
+      "balcony": "Balcony",
       "parking": "Parking",
       "heating": "Heating",
       "address": "Address",

@@ -6,19 +6,24 @@ import { useRouter } from "next/navigation";
 import classNames from "classnames";
 
 import { ControlledRangeSlider } from "@/components/common//controlled-inputs/controlled-range-slider/ControlledRangeSlider";
+import { Accordion } from "@/components/common/accordion/Accordion";
 import { Button } from "@/components/common/button/Button";
 import { ControlledDropdown } from "@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown";
+import { ControlledSwitcher } from "@/components/common/controlled-inputs/controlled-switcher/ControlledSwitcher";
 import { MoneyInput } from "@/components/common/controlled-inputs/money-input/MoneyInput";
 import { NumericInput } from "@/components/common/controlled-inputs/numeric-input/NumericInput";
 import { Close } from "@/components/common/icons/actions/Close";
 import { Filter } from "@/components/common/icons/actions/Filter";
+import { AirConditioner } from "@/components/common/icons/realty/AirConditioner";
 import { Area } from "@/components/common/icons/realty/Area";
+import { Armchair } from "@/components/common/icons/realty/Armchair";
 import { Bath } from "@/components/common/icons/realty/Bath";
 import { Bed } from "@/components/common/icons/realty/Bed";
 import { City } from "@/components/common/icons/realty/City";
 import { Deal } from "@/components/common/icons/realty/Deal";
 import { Door } from "@/components/common/icons/realty/Door";
 import { Location } from "@/components/common/icons/realty/Location";
+import { Parking } from "@/components/common/icons/realty/Parking";
 import { Price } from "@/components/common/icons/realty/Price";
 import { LOCALIZED_CITIES } from "@/constants/location";
 import { ListingType, ResidentialPremisesType } from "@/enums/listing";
@@ -27,16 +32,19 @@ import { useTranslation } from "@/hooks/use-translation/useTranslation";
 import { useWindowSize } from "@/hooks/use-window-size/useWindowSize";
 import { ResidentialPremisesFilters } from "@/types/filters";
 
-import { DEFAULT_VALUES } from "./constants";
+import { DEFAULT_FILTERS_BAR_STATE, DEFAULT_VALUES } from "./constants";
 
 export function FiltersForm() {
+  const [filtersBarState, setFiltersBarState] = useState(
+    DEFAULT_FILTERS_BAR_STATE
+  );
   const router = useRouter();
   const { t } = useTranslation();
   const { control, reset, handleSubmit } = useForm<ResidentialPremisesFilters>({
     defaultValues: DEFAULT_VALUES,
   });
   const { isDesktop, isLargeDesktop } = useWindowSize();
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const currentLocale = useLocale();
 
   const onSubmit = (data: any) => {
@@ -51,7 +59,8 @@ export function FiltersForm() {
     });
 
     if (!isDesktop && !isLargeDesktop) {
-      setIsOpen(false);
+      // setIsOpen(false);
+      setFiltersBarState({ ...filtersBarState, isMainOpen: false });
     }
     router.push(`?${params.toString()}`);
   };
@@ -77,7 +86,12 @@ export function FiltersForm() {
   return (
     <>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() =>
+          setFiltersBarState({
+            ...filtersBarState,
+            isMainOpen: !filtersBarState.isMainOpen,
+          })
+        }
         className={classNames(
           "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase",
           "lg:hidden"
@@ -88,10 +102,10 @@ export function FiltersForm() {
       </button>
       <form
         className={classNames(
-          "fixed flex flex-col bg-primary left-0 top-12 bottom-0 right-0 px-3 py-5 z-10 -translate-x-full duration-300",
+          "fixed flex flex-col bg-primary left-0 top-12 bottom-0 right-0 px-3 py-5 z-10 -translate-x-full duration-300 overflow-y-auto max-w-full",
           "lg:w-60 lg:translate-x-0 lg:right-auto lg:left-auto lg:px-0 lg:top-15",
           "xl:w-80",
-          { "translate-x-0": isOpen }
+          { "translate-x-0": filtersBarState.isMainOpen }
         )}
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -104,7 +118,9 @@ export function FiltersForm() {
           <h4 className="text-lg font-semibold">{t("filters.label")}</h4>
           <button
             type="button"
-            onClick={() => setIsOpen(false)}
+            onClick={() =>
+              setFiltersBarState({ ...filtersBarState, isMainOpen: false })
+            }
             className={classNames("cursor-pointer")}
           >
             <Close className="w-6 h-6 fill-primary-content duration-300 hover:fill-secondary-content" />
@@ -185,7 +201,7 @@ export function FiltersForm() {
           </div>
         </div>
 
-        <div className="max-w-100 space-y-1">
+        <div className="max-w-100 space-y-1 mb-3">
           <ControlledRangeSlider
             nameFrom="roomsFrom"
             nameTo="roomsTo"
@@ -210,6 +226,46 @@ export function FiltersForm() {
             nameTo="bathroomsTo"
             icon={<Bath className="w-5 h-5 fill-primary-content" />}
           />
+        </div>
+
+        <div className="w-full">
+          <Accordion
+            title={
+              filtersBarState.isAdditionalOpen
+                ? t("actions.showLessParams")
+                : t("actions.showMoreParams")
+            }
+            isOpen={filtersBarState.isAdditionalOpen}
+            onOpenChange={() =>
+              setFiltersBarState({
+                ...filtersBarState,
+                isAdditionalOpen: !filtersBarState.isAdditionalOpen,
+              })
+            }
+          >
+            <div className={classNames("grid grid-cols-2 gap-x-3 gap-y-2")}>
+              <ControlledSwitcher
+                control={control}
+                name="furnished"
+                label={t("listings.properties.furnished")}
+                icon={<Armchair className="w-5 h-5 fill-primary-content" />}
+              />
+              <ControlledSwitcher
+                control={control}
+                name="parking"
+                label={t("listings.properties.parking")}
+                icon={<Parking className="w-5 h-5 fill-primary-content" />}
+              />
+              <ControlledSwitcher
+                control={control}
+                name="airConditioner"
+                label={t("listings.properties.ac")}
+                icon={
+                  <AirConditioner className="w-5 h-5 fill-primary-content" />
+                }
+              />
+            </div>
+          </Accordion>
         </div>
 
         <div className="mt-3 flex gap-1.5 items-center">

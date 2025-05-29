@@ -24,7 +24,10 @@
     "upload": "Загрузить",
     "login": "Войти",
     "logout": "Выйти",
-    "filters": "Фильтры"
+    "filters": "Фильтры",
+    "showMoreParams": "Больше параметров",
+    "showLessParams": "Меньше параметров",
+    "hide": "Скрыть"
   },
   "states": {
     "saved": "Сохранено",
