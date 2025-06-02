@@ -38,7 +38,7 @@ export const Header: FC = () => {
   return (
     <header
       className={classNames(
-        "fixed flex justify-center shadow-md left-0 right-0 px-3 py-2 bg-primary z-50",
+        "fixed flex justify-center shadow-md left-0 right-0 px-4 py-2 bg-primary z-50",
         "lg:px-5"
       )}
     >

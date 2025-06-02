@@ -45,7 +45,7 @@ export default async function RootLayout({
             <Header />
             <main
               className={classNames(
-                "relative pt-15 px-3 w-full flex-1 flex flex-col",
+                "relative pt-15 px-4 w-full flex-1 flex flex-col",
                 "lg:px-5 lg:pt-20 lg:max-w-container-xl lg:mx-auto"
               )}
             >

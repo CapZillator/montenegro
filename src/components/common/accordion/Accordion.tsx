@@ -1,5 +1,6 @@
 "use client";
 
+import { FC } from "react";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -10,9 +11,14 @@ type Props = {
   onOpenChange: (isOpen: boolean) => void;
 };
 
-export const Accordion = ({ title, children, isOpen, onOpenChange }: Props) => {
+export const Accordion: FC<Props> = ({
+  title,
+  children,
+  isOpen,
+  onOpenChange,
+}) => {
   return (
-    <div className="overflow-hidden">
+    <div>
       <button
         type="button"
         onClick={() => onOpenChange(!isOpen)}
@@ -39,7 +45,7 @@ export const Accordion = ({ title, children, isOpen, onOpenChange }: Props) => {
               collapsed: { height: 0, opacity: 0 },
             }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="mt-2 overflow-hidden"
+            className="mt-2"
           >
             <div>{children}</div>
           </motion.div>

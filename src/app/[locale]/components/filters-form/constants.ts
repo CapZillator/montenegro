@@ -15,6 +15,10 @@ export const DEFAULT_VALUES = {
   furnished: null,
   parking: null,
   airConditioner: null,
+  floorFrom: null,
+  floorTo: null,
+  buildingYearFrom: null,
+  buildingYearTo: null,
 };
 
 export const DEFAULT_FILTERS_BAR_STATE = {

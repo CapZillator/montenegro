@@ -19,12 +19,14 @@ import { Area } from "@/components/common/icons/realty/Area";
 import { Armchair } from "@/components/common/icons/realty/Armchair";
 import { Bath } from "@/components/common/icons/realty/Bath";
 import { Bed } from "@/components/common/icons/realty/Bed";
+import { Calendar } from "@/components/common/icons/realty/Calendar";
 import { City } from "@/components/common/icons/realty/City";
 import { Deal } from "@/components/common/icons/realty/Deal";
 import { Door } from "@/components/common/icons/realty/Door";
 import { Location } from "@/components/common/icons/realty/Location";
 import { Parking } from "@/components/common/icons/realty/Parking";
 import { Price } from "@/components/common/icons/realty/Price";
+import { Stairs } from "@/components/common/icons/realty/Stairs";
 import { LOCALIZED_CITIES } from "@/constants/location";
 import { ListingType, ResidentialPremisesType } from "@/enums/listing";
 import { useLocale } from "@/hooks/use-locale/useLocale";
@@ -102,8 +104,8 @@ export function FiltersForm() {
       </button>
       <form
         className={classNames(
-          "fixed flex flex-col bg-primary left-0 top-12 bottom-0 right-0 px-3 py-5 z-10 -translate-x-full duration-300 overflow-y-auto max-w-full",
-          "lg:w-60 lg:translate-x-0 lg:right-auto lg:left-auto lg:px-0 lg:top-15",
+          "fixed flex flex-col bg-primary left-0 top-12 bottom-0 right-0 px-4 py-5 z-10 -translate-x-full duration-300 overflow-y-auto max-w-100",
+          "lg:w-70 lg:-translate-x-2 lg:right-auto lg:left-auto lg:pl-2 lg:pr-5 lg:top-15",
           "xl:w-80",
           { "translate-x-0": filtersBarState.isMainOpen }
         )}
@@ -127,11 +129,7 @@ export function FiltersForm() {
           </button>
         </div>
 
-        <div
-          className={classNames(
-            "grid grid-cols-2 gap-x-3 gap-y-2 max-w-100 mb-3"
-          )}
-        >
+        <div className={classNames("grid grid-cols-2 gap-x-3 gap-y-2  mb-3")}>
           <ControlledDropdown
             name={"propertyType"}
             control={control}
@@ -159,7 +157,7 @@ export function FiltersForm() {
           />
         </div>
 
-        <div className="max-w-100 mb-3">
+        <div className="mb-3">
           <div className="flex gap-1.5 items-center mb-1">
             <Price className={classNames("w-5 h-5 fill-primary-content")} />
             <p>{t("listings.properties.price")}</p>
@@ -171,7 +169,7 @@ export function FiltersForm() {
           </div>
         </div>
 
-        <div className="max-w-100 mb-3">
+        <div className="mb-3">
           <div className="flex gap-1.5 items-center mb-1">
             <Area className={classNames("w-5 h-5 fill-primary-content")} />
             <p>{t("listings.properties.area")}</p>
@@ -201,7 +199,7 @@ export function FiltersForm() {
           </div>
         </div>
 
-        <div className="max-w-100 space-y-1 mb-3">
+        <div className="space-y-1 mb-3">
           <ControlledRangeSlider
             nameFrom="roomsFrom"
             nameTo="roomsTo"
@@ -243,6 +241,34 @@ export function FiltersForm() {
               })
             }
           >
+            <div className="mb-3">
+              <div className="flex gap-1.5 items-center mb-1">
+                <Stairs
+                  className={classNames("w-5 h-5 fill-primary-content")}
+                />
+                <p>{t("listings.properties.floor")}</p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <NumericInput name={"floorFrom"} control={control} />
+                <div className="w-5 h-0.5 bg-primary-content" />
+                <NumericInput name={"floorTo"} control={control} />
+              </div>
+            </div>
+
+            <div className="mb-3">
+              <div className="flex gap-1.5 items-center mb-1">
+                <Calendar
+                  className={classNames("w-5 h-5 stroke-primary-content")}
+                />
+                <p>{t("listings.properties.buildingYear")}</p>
+              </div>
+              <div className="flex gap-2 items-center">
+                <NumericInput name={"buildingYearFrom"} control={control} />
+                <div className="w-5 h-0.5 bg-primary-content" />
+                <NumericInput name={"buildingYearTo"} control={control} />
+              </div>
+            </div>
+
             <div className={classNames("grid grid-cols-2 gap-x-3 gap-y-2")}>
               <ControlledSwitcher
                 control={control}
