@@ -26,8 +26,8 @@ import { Calendar } from "@/components/common/icons/realty/Calendar";
 import { City } from "@/components/common/icons/realty/City";
 import { Door } from "@/components/common/icons/realty/Door";
 import { Parking } from "@/components/common/icons/realty/Parking";
-import { Price } from "@/components/common/icons/realty/Price";
 import { Stairs } from "@/components/common/icons/realty/Stairs";
+import { Wallet } from "@/components/common/icons/realty/Wallet";
 import { UserContactsModal } from "@/components/common/user-contacts-modal/UserContactsModal";
 import { queryKeys } from "@/constants/fetch";
 import { AVAILABLE_LOCALES } from "@/constants/i18n";
@@ -249,7 +249,7 @@ export const ListingForm: FC<Props> = ({
                   control={control}
                   label={`${t("listings.properties.price")} *`}
                   disabled={isSubmitting}
-                  icon={<Price className="w-5 h-5 fill-primary-content" />}
+                  icon={<Wallet className="w-5 h-5 stroke-primary-content" />}
                   inputContainerStyles="w-40"
                 />
                 <NumericInput

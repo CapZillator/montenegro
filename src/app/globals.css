@@ -43,9 +43,9 @@
   html[data-theme="default"] {
     --primary: oklch(0.98 0.005 100);
     --primary-content: oklch(0.17 0.01 80);
-    --secondary: oklch(0.9 0.042 25.41);
-    --secondary-content: oklch(0.6 0.1628 25.41);
-    --accent: oklch(0.55 0.23 30);
+    --secondary: oklch(0.9 0 25.41);
+    --secondary-content: oklch(0.35 0 25.41);
+    --accent: oklch(0.6 0.1628 25.41);
     --error: oklch(0.74 0.185 30);
     --success: oklch(0.68 0.123 139.76);
     --warning: oklch(0.88 0.123 94.24);

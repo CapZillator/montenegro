@@ -101,8 +101,8 @@ export const Dropdown: FC<Props> = ({
       <button
         className={twMerge(
           classNames(
-            "flex items-center gap-2 text-primary rounded-sm bg-secondary-content capitalize shadow-sm shadow-primary-content/40",
-            "focus:outline-primary-content/80 focus:outline-2 disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30",
+            "flex items-center gap-2 text-primary rounded-sm bg-primary-content capitalize shadow-sm shadow-primary-content/40 duration-300 cursor-pointer",
+            "hover:bg-secondary-content focus:bg-secondary-content focus:outline-primary-content/90 focus:outline-2 disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30",
             "px-3 py-1.5",
             controlButtonStyles
           )
@@ -152,7 +152,7 @@ export const Dropdown: FC<Props> = ({
         <div className="relative">
           <div
             className={classNames(
-              "absolute bg-secondary-content/90 rounded-sm text-primary shadow-sm shadow-primary-content/40",
+              "absolute bg-primary/90 rounded-sm text-primary-content shadow-sm shadow-primary-content/75",
               "backdrop-blur-sm min-w-full z-20",
               {
                 "top-1.5": !openUpwards,
@@ -169,7 +169,7 @@ export const Dropdown: FC<Props> = ({
                   placeholder={`${t("actions.search")}...`}
                   className={classNames(
                     "w-full pl-2 pr-7 py-1 text-sm bg-secondary rounded text-primary-content inset-shadow-sm inset-shadow-primary-content/20",
-                    "focus:outline-2 focus:outline-primary-content/80 placeholder:text-secondary-content/80"
+                    "focus:outline-2 focus:outline-primary-content/80 placeholder:text-primary-content/80"
                   )}
                 />
                 <button
@@ -181,7 +181,7 @@ export const Dropdown: FC<Props> = ({
                 >
                   <Close
                     className={classNames(
-                      "fill-secondary-content duration-300 group-hover:fill-primary-content"
+                      "fill-primary-content duration-300 group-hover:fill-accent"
                     )}
                   />
                 </button>
@@ -196,7 +196,7 @@ export const Dropdown: FC<Props> = ({
                     key={value.value.toString()}
                     onClick={() => onSelect(value.value)}
                     className={classNames(
-                      "relative cursor-pointer hover:text-primary-content duration-300",
+                      "relative cursor-pointer hover:text-accent duration-300",
                       // {
                       //   "flex items-center gap-2": isMultipleSelect,
                       // }
@@ -206,7 +206,7 @@ export const Dropdown: FC<Props> = ({
                     )}
                   >
                     {isShowCheckedIcon && (
-                      <Checked className="absolute left-0 top-1.5 w-2.5 h-2.5 fill-primary" />
+                      <Checked className="absolute left-0 top-1.5 w-2.5 h-2.5 fill-primary-content" />
                     )}
                     {value.name}
                   </li>

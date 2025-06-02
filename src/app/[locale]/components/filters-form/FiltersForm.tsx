@@ -25,8 +25,8 @@ import { Deal } from "@/components/common/icons/realty/Deal";
 import { Door } from "@/components/common/icons/realty/Door";
 import { Location } from "@/components/common/icons/realty/Location";
 import { Parking } from "@/components/common/icons/realty/Parking";
-import { Price } from "@/components/common/icons/realty/Price";
 import { Stairs } from "@/components/common/icons/realty/Stairs";
+import { Wallet } from "@/components/common/icons/realty/Wallet";
 import { LOCALIZED_CITIES } from "@/constants/location";
 import { ListingType, ResidentialPremisesType } from "@/enums/listing";
 import { useLocale } from "@/hooks/use-locale/useLocale";
@@ -159,7 +159,7 @@ export function FiltersForm() {
 
         <div className="mb-3">
           <div className="flex gap-1.5 items-center mb-1">
-            <Price className={classNames("w-5 h-5 fill-primary-content")} />
+            <Wallet className={classNames("w-5 h-5 stroke-primary-content")} />
             <p>{t("listings.properties.price")}</p>
           </div>
           <div className="flex gap-2 items-center">

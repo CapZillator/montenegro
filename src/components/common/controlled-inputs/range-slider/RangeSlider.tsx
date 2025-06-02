@@ -99,7 +99,7 @@ export const RangeSlider: FC<Props> = ({
 
       <div
         ref={trackRef}
-        className="relative mx-2 h-3 rounded bg-divider inset-shadow-sm inset-shadow-primary-content/30"
+        className="relative mx-2 h-3 rounded bg-secondary inset-shadow-sm inset-shadow-primary-content/30"
       >
         {/* Active Range */}
         <motion.div
