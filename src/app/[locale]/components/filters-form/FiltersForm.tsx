@@ -15,7 +15,6 @@ import { MoneyInput } from "@/components/common/controlled-inputs/money-input/Mo
 import { NumericInput } from "@/components/common/controlled-inputs/numeric-input/NumericInput";
 import { Close } from "@/components/common/icons/actions/Close";
 import { Filter } from "@/components/common/icons/actions/Filter";
-import { Reset } from "@/components/common/icons/actions/Reset";
 import { AirConditioner } from "@/components/common/icons/realty/AirConditioner";
 import { Area } from "@/components/common/icons/realty/Area";
 import { Armchair } from "@/components/common/icons/realty/Armchair";
