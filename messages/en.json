@@ -27,7 +27,9 @@
     "filters": "Filters",
     "showMoreParams": "More options",
     "showLessParams": "Less options",
-    "hide": "Hide"
+    "hide": "Hide",
+    "reset": "Reset",
+    "apply": "Apply"
   },
   "states": {
     "saved": "Saved",

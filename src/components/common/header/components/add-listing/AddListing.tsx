@@ -15,17 +15,21 @@ export const AddListing: FC = () => {
     <LocalizedLink
       href={navigationPaths.listings.ADD}
       className={classNames(
-        "flex items-center gap-1.5 rounded-sm duration-300",
-        "md:px-2 md:py-1 md:border-1 md:border-primary-content md:hover:bg-secondary/40"
+        "group flex items-center gap-1 rounded-sm duration-300 border-2 border-primary-content",
+        "md:pr-3 md:pl-1 md:py-1 md:hover:bg-primary-content md:border-1"
       )}
     >
       <Add
         className={classNames(
-          "stroke-primary-content w-6 h-6",
-          "md:w-4 md:h-4"
+          "stroke-primary-content w-6 h-6 duration-300 group-hover:stroke-primary"
         )}
       />
-      <span className={classNames("text-sm uppercase hidden", "md:block")}>
+      <span
+        className={classNames(
+          "text-sm uppercase hidden duration-300",
+          "md:block md:group-hover:text-primary"
+        )}
+      >
         {t("actions.add")}
       </span>
     </LocalizedLink>

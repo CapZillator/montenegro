@@ -7,13 +7,13 @@ import { twMerge } from "tailwind-merge";
 
 import { Button } from "@/components/common/button/Button";
 import { ButtonIcon } from "@/components/common/button/enums";
-import { Dropdown } from "@/components/common/dropdown/Dropdown";
+import { Dropdown } from "@/components/common/inputs/dropdown/Dropdown";
 import { Messengers } from "@/enums/user";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 import { User } from "@/types/user";
 
 import { DeleteStroke } from "../../icons/actions/DeleteStroke";
-import { InputContainer } from "../input-container/InputContainer";
+import { InputContainer } from "../../inputs/input-container/InputContainer";
 import { TextInput } from "../text-input/TextInput";
 import { MESSENGER_OPTIONS } from "./constants";
 

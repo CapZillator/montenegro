@@ -8,12 +8,14 @@ import classNames from "classnames";
 import { ControlledRangeSlider } from "@/components/common//controlled-inputs/controlled-range-slider/ControlledRangeSlider";
 import { Accordion } from "@/components/common/accordion/Accordion";
 import { Button } from "@/components/common/button/Button";
+import { ButtonIcon } from "@/components/common/button/enums";
 import { ControlledDropdown } from "@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown";
 import { ControlledSwitcher } from "@/components/common/controlled-inputs/controlled-switcher/ControlledSwitcher";
 import { MoneyInput } from "@/components/common/controlled-inputs/money-input/MoneyInput";
 import { NumericInput } from "@/components/common/controlled-inputs/numeric-input/NumericInput";
 import { Close } from "@/components/common/icons/actions/Close";
 import { Filter } from "@/components/common/icons/actions/Filter";
+import { Reset } from "@/components/common/icons/actions/Reset";
 import { AirConditioner } from "@/components/common/icons/realty/AirConditioner";
 import { Area } from "@/components/common/icons/realty/Area";
 import { Armchair } from "@/components/common/icons/realty/Armchair";
@@ -46,11 +48,9 @@ export function FiltersForm() {
     defaultValues: DEFAULT_VALUES,
   });
   const { isDesktop, isLargeDesktop } = useWindowSize();
-  // const [isOpen, setIsOpen] = useState(false);
   const currentLocale = useLocale();
 
   const onSubmit = (data: any) => {
-    console.log("Filters Data", data);
     const params = new URLSearchParams();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -61,7 +61,6 @@ export function FiltersForm() {
     });
 
     if (!isDesktop && !isLargeDesktop) {
-      // setIsOpen(false);
       setFiltersBarState({ ...filtersBarState, isMainOpen: false });
     }
     router.push(`?${params.toString()}`);
@@ -104,8 +103,8 @@ export function FiltersForm() {
       </button>
       <form
         className={classNames(
-          "fixed flex flex-col bg-primary left-0 top-12 bottom-0 right-0 px-4 py-5 z-10 -translate-x-full duration-300 overflow-y-auto max-w-100",
-          "lg:w-70 lg:-translate-x-2 lg:right-auto lg:left-auto lg:pl-2 lg:pr-5 lg:top-15",
+          "fixed flex flex-col bg-neutral left-0 top-12 bottom-0 right-0 px-4 pt-5 pb-5 z-10 -translate-x-full duration-300 overflow-y-auto max-w-100 scrollbar",
+          "lg:w-70 lg:-translate-x-2 lg:right-auto lg:left-auto lg:pl-2 lg:pr-5 lg:pt-8",
           "xl:w-80",
           { "translate-x-0": filtersBarState.isMainOpen }
         )}
@@ -294,11 +293,22 @@ export function FiltersForm() {
           </Accordion>
         </div>
 
-        <div className="mt-3 flex gap-1.5 items-center">
-          <Button type="button" onClick={onReset}>
-            Reset
+        <div className="mt-3 flex gap-3 items-center">
+          <Button
+            type="button"
+            onClick={onReset}
+            icon={ButtonIcon.RESET}
+            iconClassName="w-4.5 h-4.5 fill-primary"
+          >
+            {t("actions.reset")}
           </Button>
-          <Button type="submit">Filter</Button>
+          <Button
+            type="submit"
+            icon={ButtonIcon.FILTER}
+            iconClassName="w-4.5 h-4.5 stroke-primary"
+          >
+            {t("actions.apply")}
+          </Button>
         </div>
       </form>
     </>

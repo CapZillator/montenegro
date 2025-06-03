@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
 import { Control, Controller } from "react-hook-form";
 
-import { Switcher } from "../../switcher/Switcher";
-import { InputContainer } from "../input-container/InputContainer";
+import { InputContainer } from "../../inputs/input-container/InputContainer";
+import { Switcher } from "../../inputs/switcher/Switcher";
 
 type Props = {
   name: string;

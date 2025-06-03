@@ -26,7 +26,7 @@ export const FormNavigation = <T extends Record<string, any>>({
   onSubmit,
   t,
 }: Props<T>) => (
-  <div className="flex gap-2">
+  <div className="flex gap-3">
     {currentStep > 1 && (
       <Button
         type="button"

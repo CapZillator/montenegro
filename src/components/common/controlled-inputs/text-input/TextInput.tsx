@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { Control, Controller } from "react-hook-form";
 import classNames from "classnames";
 
-import { InputContainer } from "../input-container/InputContainer";
+import { InputContainer } from "../../inputs/input-container/InputContainer";
 
 type Props = {
   name: string;

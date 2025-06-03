@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Control, Controller } from "react-hook-form";
 
-import { RangeSlider } from "../range-slider/RangeSlider";
+import { RangeSlider } from "../../inputs/range-slider/RangeSlider";
 
 type Props = {
   nameFrom: string;

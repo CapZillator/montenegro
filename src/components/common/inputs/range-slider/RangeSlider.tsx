@@ -5,10 +5,10 @@ import classNames from "classnames";
 import { motion } from "framer-motion";
 
 type Props = {
-  valueFrom?: number | null;
-  valueTo?: number | null;
   onChangeFrom: (val: number | undefined | null) => void;
   onChangeTo: (val: number | undefined | null) => void;
+  valueFrom?: number | null;
+  valueTo?: number | null;
   min?: number;
   max?: number;
   step?: number;
@@ -17,10 +17,10 @@ type Props = {
 };
 
 export const RangeSlider: FC<Props> = ({
-  valueFrom,
-  valueTo,
   onChangeFrom,
   onChangeTo,
+  valueFrom,
+  valueTo,
   min = 1,
   max = 10,
   step = 1,

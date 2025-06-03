@@ -9,6 +9,7 @@ import { Bed } from "@/components/common/icons/realty/Bed";
 import { Calendar } from "@/components/common/icons/realty/Calendar";
 import { Door } from "@/components/common/icons/realty/Door";
 import { Location } from "@/components/common/icons/realty/Location";
+import { ImageButton } from "@/components/common/image-button/ImageButton";
 import { isoUTCStringToLocaleString } from "@/formatters/date";
 import { formatNumberToFinancialAmount } from "@/formatters/finance";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
@@ -43,7 +44,7 @@ export const ListingList: FC<Props> = ({
       {listings?.map((listing) => (
         <div
           key={listing.id}
-          className="relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-md"
+          className="relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-md bg-primary"
         >
           <img
             src={listing.images[0]}
@@ -59,7 +60,7 @@ export const ListingList: FC<Props> = ({
               </p>
               <span
                 className={classNames(
-                  "lowercase py-0.5 px-2 bg-secondary-content text-primary rounded-sm"
+                  "lowercase py-0.5 px-2 bg-primary-content text-primary rounded-sm"
                 )}
               >
                 {t(`listings.types.${listing.listingType}`)}
@@ -108,26 +109,26 @@ export const ListingList: FC<Props> = ({
               "absolute top-4 left-4 right-4 flex justify-end gap-2"
             )}
           >
-            <button
+            <ImageButton
               onClick={() => onOpenListing(listing.id)}
-              disabled={isDisabled}
-              className={classNames(
-                "p-1.5 bg-primary/80 rounded-sm shadow-sm shadow-primary-content/40 cursor-pointer duration-300 backdrop-blur-sm hover:bg-secondary"
-              )}
+              isDisabled={isDisabled}
             >
-              <Edit className={classNames("w-5 h-5 fill-primary-content")} />
-            </button>
-            <button
+              <Edit
+                className={classNames(
+                  "w-5 h-5 fill-primary-content duration-300 group-hover:fill-primary"
+                )}
+              />
+            </ImageButton>
+            <ImageButton
               onClick={() => onDeleteListing(listing.id)}
-              disabled={isDisabled}
-              className={classNames(
-                "p-1.5 bg-primary/80 rounded-sm shadow-sm shadow-primary-content/40 cursor-pointer duration-300 backdrop-blur-sm hover:bg-secondary"
-              )}
+              isDisabled={isDisabled}
             >
               <DeleteStroke
-                className={classNames("w-5 h-5 stroke-primary-content")}
+                className={classNames(
+                  "w-5 h-5 stroke-primary-content duration-300 group-hover:stroke-primary"
+                )}
               />
-            </button>
+            </ImageButton>
           </div>
         </div>
       ))}

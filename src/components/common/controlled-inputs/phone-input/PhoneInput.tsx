@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 
 import { formatPhoneNumber } from "@/formatters/contacts";
 
-import { InputContainer } from "../input-container/InputContainer";
+import { InputContainer } from "../../inputs/input-container/InputContainer";
 
 type Props = {
   name: string;

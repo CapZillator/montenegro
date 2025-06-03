@@ -37,7 +37,7 @@ export const ListingsList: FC<Props> = async ({ data }) => {
         <LocalizedLink key={listing.id} href={`/listings/${listing.id}`}>
           <div
             className={classNames(
-              "relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-md"
+              "relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-md bg-primary"
             )}
           >
             <img
@@ -56,7 +56,7 @@ export const ListingsList: FC<Props> = async ({ data }) => {
                 </p>
                 <span
                   className={classNames(
-                    "lowercase px-2 bg-secondary-content text-primary rounded-sm"
+                    "lowercase px-2 bg-primary-content text-primary rounded-sm"
                   )}
                 >
                   {t(`listings.types.${listing.listingType}`)}

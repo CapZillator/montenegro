@@ -8,9 +8,10 @@ export enum ButtonIcon {
   NEXT = "next",
   BACK = "back",
   // SEARCH = "search",
-  // FILTER = "filter",
+  FILTER = "filter",
   // SORT = "sort",
   // REFRESH = "refresh",
   // DOWNLOAD = "download",
+  RESET = "reset",
   UPLOAD = "upload",
 }

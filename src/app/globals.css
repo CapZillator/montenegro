@@ -12,6 +12,7 @@
   --color-secondary: var(--secondary);
   --color-secondary-content: var(--secondary-content);
   --color-accent: var(--accent);
+  --color-neutral: var(--neutral);
   --color-error: var(--error);
   --color-success: var(--success);
   --color-warning: var(--warning);
@@ -46,6 +47,7 @@
     --secondary: oklch(0.9 0 25.41);
     --secondary-content: oklch(0.35 0 25.41);
     --accent: oklch(0.6 0.1628 25.41);
+    --neutral: oklch(0.95 0 25.41);
     --error: oklch(0.74 0.185 30);
     --success: oklch(0.68 0.123 139.76);
     --warning: oklch(0.88 0.123 94.24);
@@ -68,7 +70,7 @@
 
 body {
   color: var(--primary-content);
-  background: var(--primary);
+  background: var(--neutral);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -80,7 +82,7 @@ body {
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--color-secondary);
+    background-color: var(--color-divider);
     border-radius: 4px;
   }
 
@@ -95,6 +97,6 @@ body {
   /* Firefox support */
   .scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-secondary) transparent;
+    scrollbar-color: var(--color-divider) transparent;
   }
 }

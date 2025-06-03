@@ -3,6 +3,7 @@ import { ReactSortable } from "react-sortablejs";
 import classNames from "classnames";
 
 import { DeleteStroke } from "@/components/common/icons/actions/DeleteStroke";
+import { ImageButton } from "@/components/common/image-button/ImageButton";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 
 type ReactSortableItem = { id: number; url: string };
@@ -44,7 +45,7 @@ export const ImagePreview: FC<Props> = ({
             alt="Uploaded"
             className="relative w-full aspect-square object-cover rounded-md cursor-move"
           />
-          <button
+          {/* <button
             onClick={() => handleDelete(urlItem.url!)}
             type="button"
             className={classNames(
@@ -54,7 +55,16 @@ export const ImagePreview: FC<Props> = ({
             {...{ disabled }}
           >
             <DeleteStroke className="w-5 h-5 stroke-primary-content" />
-          </button>
+          </button> */}
+          <div className="absolute top-1.5 right-1.5 ">
+            <ImageButton
+              onClick={() => handleDelete(urlItem.url!)}
+              isDisabled={disabled}
+            >
+              <DeleteStroke className="w-5 h-5 stroke-primary-content duration-300 group-hover:stroke-primary" />
+            </ImageButton>
+          </div>
+
           {index === 0 && (
             <span
               className={classNames(

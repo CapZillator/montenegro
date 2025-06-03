@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
 import { Control, Controller } from "react-hook-form";
 
-import { Dropdown } from "../../dropdown/Dropdown";
-import { InputContainer } from "../input-container/InputContainer";
+import { Dropdown } from "../../inputs/dropdown/Dropdown";
+import { InputContainer } from "../../inputs/input-container/InputContainer";
 
 type Props = {
   name: string;

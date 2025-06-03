@@ -13,7 +13,6 @@ import { MultilingualTextInput } from "@/components/common/controlled-inputs/mul
 import { MultilingualTextarea } from "@/components/common/controlled-inputs/multilingual-textarea/MultilingualTextarea";
 import { NumericInput } from "@/components/common/controlled-inputs/numeric-input/NumericInput";
 import { TextInput } from "@/components/common/controlled-inputs/text-input/TextInput";
-import { Dropdown } from "@/components/common/dropdown/Dropdown";
 import { FormNavigation } from "@/components/common/form-navigation/FormNavigation";
 import { Language } from "@/components/common/icons/Language";
 import { Address } from "@/components/common/icons/realty/Address";
@@ -28,6 +27,7 @@ import { Door } from "@/components/common/icons/realty/Door";
 import { Parking } from "@/components/common/icons/realty/Parking";
 import { Stairs } from "@/components/common/icons/realty/Stairs";
 import { Wallet } from "@/components/common/icons/realty/Wallet";
+import { Dropdown } from "@/components/common/inputs/dropdown/Dropdown";
 import { UserContactsModal } from "@/components/common/user-contacts-modal/UserContactsModal";
 import { queryKeys } from "@/constants/fetch";
 import { AVAILABLE_LOCALES } from "@/constants/i18n";
@@ -182,7 +182,12 @@ export const ListingForm: FC<Props> = ({
 
   return (
     <>
-      <div className={classNames("flex flex-1 flex-col w-full mb-5")}>
+      <div
+        className={classNames(
+          "flex flex-col w-full mb-5",
+          "lg:max-w-[1200px] lg:mx-auto"
+        )}
+      >
         <HeaderNavigation
           {...{ steps, step, isDisabled: isSubmitting, onGoBack: onClose }}
         />
@@ -195,7 +200,7 @@ export const ListingForm: FC<Props> = ({
             )}
           >
             <div className={classNames("space-y-2")}>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
                 <ControlledDropdown
                   name={"propertyType"}
                   control={control}
@@ -395,7 +400,7 @@ export const ListingForm: FC<Props> = ({
           </div>
         )}
 
-        <div className={classNames("mt-auto pt-5 self-end", "lg:mt-10")}>
+        <div className={classNames("mt-auto pt-5", "lg:mt-10")}>
           <FormNavigation
             currentStep={step}
             totalSteps={TOTAL_FORM_STEPS}

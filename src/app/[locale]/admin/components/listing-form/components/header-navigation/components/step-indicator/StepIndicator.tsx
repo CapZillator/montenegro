@@ -37,10 +37,9 @@ export const StepIndicator: FC<Props> = ({
               className={classNames(
                 "w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold",
                 {
-                  "bg-secondary-content text-primary border-secondary-content":
-                    isActive,
                   "bg-primary-content text-primary border-primary-content":
-                    isCompleted,
+                    isActive,
+                  "bg-divider text-primary border-divider": isCompleted,
                   "bg-transparent text-disable border-disable":
                     !isActive && !isCompleted,
                 }

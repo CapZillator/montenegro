@@ -6,9 +6,9 @@ import { useClickOutside } from "@/hooks/use-click-outside/useOutsideClick";
 import { useDebounce } from "@/hooks/use-debounce/useDebounce";
 import { useTranslation } from "@/hooks/use-translation/useTranslation";
 
-import { Close } from "../icons/actions/Close";
-import { ChevronDown } from "../icons/navigation/ChevronDown";
-import { Checked } from "../icons/state/Checked";
+import { Close } from "../../icons/actions/Close";
+import { ChevronDown } from "../../icons/navigation/ChevronDown";
+import { Checked } from "../../icons/state/Checked";
 import { DROPDOWN_HEIGHT } from "./constants";
 import { getLabel } from "./utils";
 
@@ -102,7 +102,7 @@ export const Dropdown: FC<Props> = ({
         className={twMerge(
           classNames(
             "flex items-center gap-2 text-primary rounded-sm bg-primary-content capitalize shadow-sm shadow-primary-content/40 duration-300 cursor-pointer",
-            "hover:bg-secondary-content focus:bg-secondary-content focus:outline-primary-content/90 focus:outline-2 disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30",
+            "hover:bg-secondary-content focus:bg-secondary-content disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30",
             "px-3 py-1.5",
             controlButtonStyles
           )
