@@ -47,7 +47,7 @@ export const LanguageSwitcher = forwardRef<HTMLDivElement, Props>(
               <li
                 key={locale}
                 onClick={() => handleLocaleChange(locale)}
-                className="cursor-pointer capitalize duration-300 hover:text-secondary-content"
+                className="cursor-pointer capitalize duration-300 hover:text-divider"
               >
                 {locale}
               </li>

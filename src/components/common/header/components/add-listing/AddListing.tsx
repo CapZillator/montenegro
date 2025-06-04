@@ -15,13 +15,14 @@ export const AddListing: FC = () => {
     <LocalizedLink
       href={navigationPaths.listings.ADD}
       className={classNames(
-        "group flex items-center gap-1 rounded-sm duration-300 border-2 border-primary-content",
-        "md:pr-3 md:pl-1 md:py-1 md:hover:bg-primary-content md:border-1"
+        "group flex items-center gap-1 rounded-sm duration-300 border-1 border-secondary-content",
+        "md:pr-3 md:pl-1 md:py-1 md:hover:bg-primary-content"
       )}
     >
       <Add
         className={classNames(
-          "stroke-primary-content w-6 h-6 duration-300 group-hover:stroke-primary"
+          "stroke-primary-content w-6 h-6 duration-300 group-hover:stroke-primary",
+          "md:h-5 md:w-5"
         )}
       />
       <span

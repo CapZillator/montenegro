@@ -93,7 +93,7 @@ export function FiltersForm() {
           })
         }
         className={classNames(
-          "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase",
+          "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase bg-primary",
           "lg:hidden"
         )}
       >

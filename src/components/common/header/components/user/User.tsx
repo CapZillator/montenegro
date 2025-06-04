@@ -49,7 +49,7 @@ export const User = forwardRef<HTMLDivElement, Props>(
                   <LocalizedLink
                     href={navigationPaths.user.PROFILE}
                     className={classNames(
-                      "flex items-center gap-1.5 duration-300 hover:text-secondary-content whitespace-nowrap"
+                      "flex items-center gap-1.5 duration-300 hover:text-divider whitespace-nowrap"
                     )}
                     onClick={onClose}
                   >
@@ -61,7 +61,7 @@ export const User = forwardRef<HTMLDivElement, Props>(
                   <LocalizedLink
                     href={navigationPaths.LISTING_ADMIN}
                     className={classNames(
-                      "flex items-center gap-1.5 duration-300 hover:text-secondary-content whitespace-nowrap"
+                      "flex items-center gap-1.5 duration-300 hover:text-divider whitespace-nowrap"
                     )}
                     onClick={onClose}
                   >
@@ -72,7 +72,7 @@ export const User = forwardRef<HTMLDivElement, Props>(
                 <li>
                   <button
                     className={classNames(
-                      "flex items-center gap-1.5 duration-300 hover:text-secondary-content whitespace-nowrap"
+                      "flex items-center gap-1.5 duration-300 hover:text-divider whitespace-nowrap"
                     )}
                     onClick={onLogOut}
                   >

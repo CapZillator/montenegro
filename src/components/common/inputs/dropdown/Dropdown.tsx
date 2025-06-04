@@ -181,7 +181,7 @@ export const Dropdown: FC<Props> = ({
                 >
                   <Close
                     className={classNames(
-                      "fill-primary-content duration-300 group-hover:fill-accent"
+                      "fill-primary-content duration-300 group-hover:fill-divider"
                     )}
                   />
                 </button>
@@ -196,7 +196,7 @@ export const Dropdown: FC<Props> = ({
                     key={value.value.toString()}
                     onClick={() => onSelect(value.value)}
                     className={classNames(
-                      "relative cursor-pointer hover:text-accent duration-300",
+                      "relative cursor-pointer hover:text-divider duration-300",
                       // {
                       //   "flex items-center gap-2": isMultipleSelect,
                       // }

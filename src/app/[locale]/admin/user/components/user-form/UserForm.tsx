@@ -117,7 +117,7 @@ export const UserForm: FC<Props> = ({ user }) => {
           </div>
         </div>
 
-        <div className={classNames("mt-auto pt-5 self-end", "lg:mt-0")}>
+        <div className={classNames("mt-auto pt-5", "lg:mt-0")}>
           <Button
             type="submit"
             disabled={isSubmitting}

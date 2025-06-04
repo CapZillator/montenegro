@@ -52,7 +52,7 @@
     --success: oklch(0.68 0.123 139.76);
     --warning: oklch(0.88 0.123 94.24);
     --disable: oklch(0.85 0 25);
-    --divider: oklch(0.7 0 25);
+    --divider: oklch(0.55 0 25);
   }
 
   html[data-theme="neon"] {

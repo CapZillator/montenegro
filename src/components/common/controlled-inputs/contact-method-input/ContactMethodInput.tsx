@@ -70,7 +70,7 @@ export const ContactMethodInput: FC<Props> = ({
     >
       <div className={twMerge(classNames("space-y-3"))}>
         {fields.map((field, index) => (
-          <div key={field.id} className="flex items-center gap-2">
+          <div key={field.id} className="flex items-center gap-3">
             <Controller
               name={`${name}.${index}.type`}
               control={control}
@@ -121,7 +121,7 @@ export const ContactMethodInput: FC<Props> = ({
               onClick={handleAddContact}
               disabled={disabled}
               icon={ButtonIcon.ADD}
-              iconClassName="stroke-primary"
+              iconClassName="w-5 h-5 stroke-primary"
             >
               <span>{t("actions.add")}</span>
             </Button>
