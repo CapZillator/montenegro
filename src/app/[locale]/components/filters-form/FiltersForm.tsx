@@ -26,6 +26,7 @@ import { Deal } from "@/components/common/icons/realty/Deal";
 import { Door } from "@/components/common/icons/realty/Door";
 import { Location } from "@/components/common/icons/realty/Location";
 import { Parking } from "@/components/common/icons/realty/Parking";
+import { Pets } from "@/components/common/icons/realty/Pets";
 import { Stairs } from "@/components/common/icons/realty/Stairs";
 import { Wallet } from "@/components/common/icons/realty/Wallet";
 import { LOCALIZED_CITIES } from "@/constants/location";
@@ -43,16 +44,22 @@ export function FiltersForm() {
   );
   const router = useRouter();
   const { t } = useTranslation();
-  const { control, reset, handleSubmit } = useForm<ResidentialPremisesFilters>({
-    defaultValues: DEFAULT_VALUES,
-  });
+  const { control, reset, watch, handleSubmit } =
+    useForm<ResidentialPremisesFilters>({
+      defaultValues: DEFAULT_VALUES,
+    });
   const { isDesktop, isLargeDesktop } = useWindowSize();
   const currentLocale = useLocale();
+  const listingType = watch("listingType");
+  const isLongTermRent =
+    listingType && listingType === ListingType.LONG_TERM_RENT;
 
   const onSubmit = (data: any) => {
     const params = new URLSearchParams();
 
-    Object.entries(data).forEach(([key, value]) => {
+    Object.entries(
+      isLongTermRent ? data : { ...data, petsAllowed: null }
+    ).forEach(([key, value]) => {
       if (Array.isArray(value) && !value.length) return;
       if (value) {
         params.set(key, value.toString());
@@ -94,7 +101,7 @@ export function FiltersForm() {
         }
         className={classNames(
           "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase bg-primary",
-          "lg:hidden"
+          "xl:hidden"
         )}
       >
         <Filter className="w-4.5 h-4.5 stroke-primary-content" />
@@ -103,8 +110,7 @@ export function FiltersForm() {
       <form
         className={classNames(
           "fixed flex flex-col bg-neutral left-0 top-12 bottom-0 right-0 px-4 pt-5 pb-5 z-10 -translate-x-full duration-300 overflow-y-auto max-w-100 scrollbar",
-          "lg:w-70 lg:-translate-x-2 lg:right-auto lg:left-auto lg:pl-2 lg:pr-5 lg:pt-8",
-          "xl:w-80",
+          "xl:w-80 xl:-translate-x-2 xl:right-auto xl:left-auto xl:pl-2 xl:pr-5 xl:pt-8",
           { "translate-x-0": filtersBarState.isMainOpen }
         )}
         onSubmit={handleSubmit(onSubmit)}
@@ -112,7 +118,7 @@ export function FiltersForm() {
         <div
           className={classNames(
             "flex items-center justify-between mb-1",
-            "lg:hidden"
+            "xl:hidden"
           )}
         >
           <h4 className="text-lg font-semibold">{t("filters.label")}</h4>
@@ -203,12 +209,12 @@ export function FiltersForm() {
             nameTo="roomsTo"
             control={control}
             label={t("listings.properties.rooms")}
-            max={12}
+            max={9}
             icon={<Door className="w-5 h-5 fill-primary-content" />}
           />
           <ControlledRangeSlider
             control={control}
-            max={10}
+            max={7}
             label={t("listings.properties.bedrooms")}
             nameFrom="bedroomsFrom"
             nameTo="bedroomsTo"
@@ -216,7 +222,7 @@ export function FiltersForm() {
           />
           <ControlledRangeSlider
             control={control}
-            max={6}
+            max={5}
             label={t("listings.properties.bathrooms")}
             nameFrom="bathroomsFrom"
             nameTo="bathroomsTo"
@@ -267,7 +273,7 @@ export function FiltersForm() {
               </div>
             </div>
 
-            <div className={classNames("grid grid-cols-2 gap-x-3 gap-y-2")}>
+            <div className={classNames("grid grid-cols-2 gap-x-8 gap-y-2")}>
               <ControlledSwitcher
                 control={control}
                 name="furnished"
@@ -288,6 +294,14 @@ export function FiltersForm() {
                   <AirConditioner className="w-5 h-5 fill-primary-content" />
                 }
               />
+              {isLongTermRent ? (
+                <ControlledSwitcher
+                  name={"petsAllowed"}
+                  control={control}
+                  label={t("listings.properties.petsAllowed")}
+                  icon={<Pets className="w-5 h-5 fill-primary-content" />}
+                />
+              ) : null}
             </div>
           </Accordion>
         </div>

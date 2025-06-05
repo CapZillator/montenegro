@@ -114,10 +114,14 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
                 className="flex items-center justify-center border-dashed border-2 border-secondary-content p-6 text-center cursor-pointer rounded-sm"
               >
                 <input {...getInputProps()} {...{ disabled }} />
-                <div className={classNames("flex items-center gap-4")}>
-                  <Upload className="w-15 h-15 stroke-secondary-content" />
+                <div className={classNames("flex gap-4")}>
+                  <Upload
+                    className={classNames(
+                      "w-12 h-12 stroke-secondary-content shrink-0"
+                    )}
+                  />
                   <div className="text-start">
-                    <p>{t("files.dragToAdd")}</p>
+                    <p className="font-semibold">{t("files.dragToAdd")}</p>
                     <p className={classNames("text-sm")}>
                       {t("files.restriction")}
                     </p>

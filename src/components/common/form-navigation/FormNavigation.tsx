@@ -43,10 +43,10 @@ export const FormNavigation = <T extends Record<string, any>>({
         type="submit"
         disabled={isSubmitting}
         onClick={onSubmit}
-        icon={isUpdate ? ButtonIcon.SAVE : ButtonIcon.ADD}
+        icon={ButtonIcon.SAVE}
         iconClassName="stroke-primary"
       >
-        <span>{t(isUpdate ? "actions.save" : "actions.add")}</span>
+        <span>{t(isUpdate ? "actions.save" : "actions.done")}</span>
       </Button>
     ) : null}
     {currentStep < totalSteps && (

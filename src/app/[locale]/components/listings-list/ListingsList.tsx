@@ -28,8 +28,8 @@ export const ListingsList: FC<Props> = async ({ data }) => {
         "grid grid-cols-1 gap-3",
         "sm:grid-cols-2",
         "md:grid-cols-3",
-        "lg:pl-70",
-        "xl:pl-85",
+        "lg:grid-cols-4",
+        "xl:pl-82",
         "2xl:grid-cols-5"
       )}
     >

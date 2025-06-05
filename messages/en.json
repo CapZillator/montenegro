@@ -29,7 +29,8 @@
     "showLessParams": "Less options",
     "hide": "Hide",
     "reset": "Reset",
-    "apply": "Apply"
+    "apply": "Apply",
+    "done": "Done"
   },
   "states": {
     "saved": "Saved",

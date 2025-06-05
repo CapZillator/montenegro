@@ -22,9 +22,11 @@ import { Armchair } from "@/components/common/icons/realty/Armchair";
 import { Bath } from "@/components/common/icons/realty/Bath";
 import { Bed } from "@/components/common/icons/realty/Bed";
 import { Calendar } from "@/components/common/icons/realty/Calendar";
-import { City } from "@/components/common/icons/realty/City";
 import { Door } from "@/components/common/icons/realty/Door";
+import { Location } from "@/components/common/icons/realty/Location";
 import { Parking } from "@/components/common/icons/realty/Parking";
+import { Pets } from "@/components/common/icons/realty/Pets";
+import { Price } from "@/components/common/icons/realty/Price";
 import { Stairs } from "@/components/common/icons/realty/Stairs";
 import { Wallet } from "@/components/common/icons/realty/Wallet";
 import { Dropdown } from "@/components/common/inputs/dropdown/Dropdown";
@@ -108,6 +110,8 @@ export const ListingForm: FC<Props> = ({
   const queryClient = useQueryClient();
   const propertyType = watch("propertyType");
   const isHouse = HOUSES.includes(propertyType);
+  const listingType = watch("listingType");
+  const isLongTermRent = listingType === ListingType.LONG_TERM_RENT;
 
   useEffect(() => {
     if (propertyType === ResidentialPremisesType.STUDIO) {
@@ -343,6 +347,16 @@ export const ListingForm: FC<Props> = ({
                 icon={<Calendar className="w-5 h-5 stroke-primary-content" />}
                 inputContainerStyles="w-15"
               />
+              {isLongTermRent ? (
+                <MoneyInput
+                  name={"deposit"}
+                  control={control}
+                  label={`${t("listings.properties.deposit")}`}
+                  disabled={isSubmitting}
+                  icon={<Price className="w-5 h-5 stroke-primary-content" />}
+                  inputContainerStyles="w-40"
+                />
+              ) : null}
               <ControlledSwitcher
                 name={"furnished"}
                 control={control}
@@ -367,6 +381,15 @@ export const ListingForm: FC<Props> = ({
                 disabled={isSubmitting}
                 icon={<Parking className="w-5 h-5 fill-primary-content" />}
               />
+              {isLongTermRent ? (
+                <ControlledSwitcher
+                  name={"petsAllowed"}
+                  control={control}
+                  label={t("listings.properties.petsAllowed")}
+                  disabled={isSubmitting}
+                  icon={<Pets className="w-5 h-5 fill-primary-content" />}
+                />
+              ) : null}
             </div>
           </div>
         )}
@@ -386,7 +409,7 @@ export const ListingForm: FC<Props> = ({
               control={control}
               values={locations}
               disabled={isSubmitting}
-              icon={<City className="w-5 h-5 stroke-primary-content" />}
+              icon={<Location className="w-5 h-5 stroke-primary-content" />}
               controlButtonStyles="w-40"
               searchEnabled
             />
