@@ -27,7 +27,7 @@ export const filterConfig: readonly FilterConfigItem<
     key: key as keyof ResidentialPremisesFilters,
     field: key.replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`),
     operator: "IN" as SqlOperator,
-    test: (v: number | boolean | string[] | null | undefined) =>
+    test: (v: number | boolean | string | string[] | null | undefined) =>
       Array.isArray(v) && v.length > 0,
     parse: (raw: string | string[] | undefined) =>
       typeof raw === "string" ? raw.split(",") : Array.isArray(raw) ? raw : [],
