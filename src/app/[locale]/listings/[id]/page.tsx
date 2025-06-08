@@ -3,6 +3,7 @@ import classNames from "classnames";
 
 import { getListingById } from "@/utils/db/listings";
 
+import { Gallery } from "./components/gallery/Gallery";
 import { ParamsSchema } from "./constants";
 
 export default async function ListingPage({ params }: any) {
@@ -20,15 +21,16 @@ export default async function ListingPage({ params }: any) {
   }
 
   return (
-    <div>
-      <img
-        src={listing.images[0]}
-        alt="Preview image"
-        className={classNames(
-          "relative w-full aspect-4/3 object-cover rounded-md",
-          "lg:max-w-100"
-        )}
-      />
+    <div
+      className={classNames(
+        "w-full pt-5",
+        "lg:grid lg:grid-cols-3",
+        "xl:max-w-container-md xl:mx-auto"
+      )}
+    >
+      <div className={classNames("lg:col-span-2")}>
+        <Gallery images={listing.images} />
+      </div>
     </div>
   );
 }

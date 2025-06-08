@@ -37,7 +37,7 @@ export const ListingsList: FC<Props> = async ({ data }) => {
         <LocalizedLink key={listing.id} href={`/listings/${listing.id}`}>
           <div
             className={classNames(
-              "relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-md bg-primary"
+              "relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-lg bg-primary"
             )}
           >
             <img

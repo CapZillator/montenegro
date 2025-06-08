@@ -44,7 +44,7 @@ export const ListingList: FC<Props> = ({
       {listings?.map((listing) => (
         <div
           key={listing.id}
-          className="relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-md bg-primary"
+          className="relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-lg bg-primary"
         >
           <img
             src={listing.images[0]}
