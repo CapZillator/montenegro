@@ -11,10 +11,10 @@ type Props = {
 };
 
 export const Modal: FC<Props> = ({ isOpen, children, onClose }) => {
-  const [render, setRender] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setRender(true);
+    setIsClient(true);
   }, []);
 
   useEffect(() => {
@@ -40,21 +40,25 @@ export const Modal: FC<Props> = ({ isOpen, children, onClose }) => {
     };
   }, [onClose]);
 
-  return render
-    ? createPortal(
-        <div
-          className={classNames("fixed top-0 right-0 left-0 bottom-0 ", {
-            block: isOpen,
-            hidden: !isOpen,
-          })}
-        >
-          <div
-            onClick={onClose}
-            className="absolute top-0 right-0 left-0 bottom-0 bg-primary-content/75 backdrop-blur-sm"
-          />
-          {children}
-        </div>,
-        document.querySelector("#modal-container")!
-      )
-    : null;
+  // ⛑️ НЕ используем document, пока компонент не смонтирован на клиенте
+  if (!isClient) return null;
+
+  const container = document.querySelector("#modal-container");
+  if (!container) return null;
+
+  return createPortal(
+    <div
+      className={classNames("fixed top-0 right-0 left-0 bottom-0 z-50", {
+        block: isOpen,
+        hidden: !isOpen,
+      })}
+    >
+      <div
+        onClick={onClose}
+        className="absolute top-0 right-0 left-0 bottom-0 bg-primary-content/75 backdrop-blur-sm"
+      />
+      {children}
+    </div>,
+    container
+  );
 };

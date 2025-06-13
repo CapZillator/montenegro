@@ -18,8 +18,6 @@ export default function ListingManager() {
     queryFn: userProfileFetcher,
   });
 
-  console.log("U", user);
-
   if (error) {
     return (
       <main>

@@ -1,9 +1,19 @@
+"use client";
+
 import { FC } from "react";
+import dynamic from "next/dynamic";
 import classNames from "classnames";
 import { twMerge } from "tailwind-merge";
 
 import { InfoBar } from "./components/info-bar/InfoBar";
 import { MAX_IMAGES_IN_GRID } from "./constants";
+
+const GalleryTrigger = dynamic(
+  () => import("./components/gallery-trigger/GalleryTrigger"),
+  {
+    ssr: false,
+  }
+);
 
 type Props = {
   images: string[];
@@ -15,15 +25,16 @@ export const Gallery: FC<Props> = ({ images }) => {
   return (
     <>
       <div className="relative aspect-video md:hidden">
-        <img
-          src={images[0]}
-          alt="Preview image"
+        <GalleryTrigger
+          images={images}
+          index={0}
           className={classNames(
             "shadow-lg relative w-full h-full object-cover rounded-lg border-solid border-divider/25 border-1"
           )}
         />
         <InfoBar imageCount={images.length} />
       </div>
+
       <div
         className={twMerge(
           classNames("hidden", "md:block md:grid md:gap-2 md:w-full", {
@@ -38,16 +49,16 @@ export const Gallery: FC<Props> = ({ images }) => {
             key={index}
             className={twMerge(
               classNames("relative", {
-                "col-span-2 row-span-2 ": !index && primaryImages.length > 2,
+                "col-span-2 row-span-2": !index && primaryImages.length > 2,
                 "md:hidden xl:block": index > 2,
                 "hidden xl:hidden": primaryImages.length === 4 && index === 3,
                 "aspect-video": primaryImages.length === 1,
               })
             )}
           >
-            <img
-              src={image}
-              alt="Preview image"
+            <GalleryTrigger
+              images={images}
+              index={index}
               className={twMerge(
                 classNames(
                   "object-cover w-full h-full shadow-lg border-solid border-divider/25 border-1",

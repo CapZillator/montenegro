@@ -15,7 +15,7 @@ import { ListingForm } from "./components/listing-form/listingForm";
 import { ListingList } from "./components/listing-list/ListingList";
 import { AdminPanelContentComponents } from "./enums";
 
-export default function ListingManager() {
+export default function AdminDashboard() {
   const [componentToShow, setComponentToShow] = useState(
     AdminPanelContentComponents.LISTINGS_LIST
   );

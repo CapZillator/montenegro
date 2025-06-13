@@ -27,7 +27,10 @@ export const GenericModal: FC<Props> = ({ id, children, onClose }) => {
         )}
       >
         {children}
-        <button onClick={handleClose} className={classNames("cursor-pointer absolute top-2.5 right-2.5")}>
+        <button
+          onClick={handleClose}
+          className={classNames("cursor-pointer absolute top-2.5 right-2.5")}
+        >
           <Close className={classNames("w-5 h-5 fill-primary-content")} />
         </button>
       </div>
