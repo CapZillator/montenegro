@@ -100,7 +100,7 @@ export function FiltersForm() {
           })
         }
         className={classNames(
-          "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider rounded-sm text-sm shadow-md uppercase bg-primary",
+          "mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider/25 rounded-sm text-sm shadow-md uppercase bg-primary",
           "xl:hidden"
         )}
       >
@@ -109,7 +109,8 @@ export function FiltersForm() {
       </button>
       <form
         className={classNames(
-          "fixed flex flex-col bg-neutral left-0 top-12 bottom-0 right-0 px-4 pt-5 pb-5 z-10 -translate-x-full duration-300 overflow-y-auto max-w-100 scrollbar",
+          "fixed flex flex-col bg-neutral left-0 top-12 bottom-0 right-0 px-4 pt-5 pb-5 z-10 -translate-x-full duration-300 overflow-y-auto scrollbar",
+          "md:max-w-100",
           "xl:w-80 xl:-translate-x-2 xl:right-auto xl:left-auto xl:pl-2 xl:pr-5 xl:pt-8",
           { "translate-x-0": filtersBarState.isMainOpen }
         )}

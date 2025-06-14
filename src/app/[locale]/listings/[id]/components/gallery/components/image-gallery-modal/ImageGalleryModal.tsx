@@ -4,7 +4,9 @@ import { FC, useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
 import useEmblaCarousel from "embla-carousel-react";
 
-import { Modal } from "@/components/common/modal/Modal"; // твоя обёртка
+import { Close } from "@/components/common/icons/actions/Close";
+import { Modal } from "@/components/common/modal/Modal";
+
 type Props = {
   images: string[];
   initialIndex: number;
@@ -62,6 +64,14 @@ export const ImageGalleryModal: FC<Props> = ({
           ))}
         </div>
       </div>
+      <button
+        className={classNames(
+          "absolute flex items-center justify-center top-5 right-5 h-7 w-7 bg-primary-content cursor-pointer duration-300 hover:bg-secondary-content rounded-md"
+        )}
+        onClick={onClose}
+      >
+        <Close className="h-5 w-5 fill-primary" />
+      </button>
     </Modal>
   );
 };

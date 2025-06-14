@@ -40,10 +40,10 @@ export const Modal: FC<Props> = ({ isOpen, children, onClose }) => {
     };
   }, [onClose]);
 
-  // ⛑️ НЕ используем document, пока компонент не смонтирован на клиенте
   if (!isClient) return null;
 
   const container = document.querySelector("#modal-container");
+
   if (!container) return null;
 
   return createPortal(
