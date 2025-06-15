@@ -37,7 +37,7 @@ export const Gallery: FC<Props> = ({ images }) => {
 
       <div
         className={twMerge(
-          classNames("hidden", "md:block md:grid md:gap-2 md:w-full", {
+          classNames("hidden", "md:block md:grid md:gap-1 md:w-full", {
             "md:grid-cols-2": primaryImages.length > 1,
             "md:grid-cols-3": primaryImages.length > 2,
             "xl:grid-cols-4": primaryImages.length > 4,
