@@ -6,8 +6,8 @@ import { getListingById } from "@/utils/db/listings";
 import { getLocalizedStringValue } from "@/utils/listings";
 
 import { Gallery } from "./components/gallery/Gallery";
-import { Summary } from "./components/summary/Summary";
 import { Price } from "./components/price/Price";
+import { Summary } from "./components/summary/Summary";
 import { ParamsSchema } from "./constants";
 
 export default async function ListingPage({ params }: any) {

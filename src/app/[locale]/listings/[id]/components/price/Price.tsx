@@ -1,6 +1,7 @@
 import { FC } from "react";
-import classNames from "classnames";
 import { getTranslations } from "next-intl/server";
+import classNames from "classnames";
+
 import { formatNumberToFinancialAmount } from "@/formatters/finance";
 
 type Props = {
