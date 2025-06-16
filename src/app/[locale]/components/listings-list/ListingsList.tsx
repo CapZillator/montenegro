@@ -29,8 +29,9 @@ export const ListingsList: FC<Props> = async ({ data }) => {
         "sm:grid-cols-2",
         "md:grid-cols-3",
         "lg:grid-cols-4",
-        "xl:pl-82",
-        "2xl:grid-cols-5"
+        "xl:pl-82 xl:grid-cols-3",
+        "2xl:grid-cols-4",
+        "3xl:grid-cols-5"
       )}
     >
       {data.map((listing) => (

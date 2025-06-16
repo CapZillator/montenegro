@@ -7,6 +7,7 @@ import { getLocalizedStringValue } from "@/utils/listings";
 
 import { Gallery } from "./components/gallery/Gallery";
 import { Summary } from "./components/summary/Summary";
+import { Price } from "./components/price/Price";
 import { ParamsSchema } from "./constants";
 
 export default async function ListingPage({ params }: any) {
@@ -27,8 +28,8 @@ export default async function ListingPage({ params }: any) {
   return (
     <div
       className={classNames(
-        "w-full space-y-3",
-        "lg:grid lg:grid-cols-3 lg:gap-4",
+        "w-full space-y-2 ",
+        "lg:grid lg:grid-cols-3 lg:gap-2 lg:space-y-0",
         "xl:max-w-container-md xl:mx-auto"
       )}
     >
@@ -38,11 +39,17 @@ export default async function ListingPage({ params }: any) {
         </h1>
       </div>
       <div className={classNames("lg:col-span-2")}>
+        <Price price={listing.price} area={listing.area}/>
+      </div>
+      <div className={classNames("lg:col-span-2")}>
         <Gallery images={listing.images} />
       </div>
       <div className={classNames("lg:col-span-2")}>
         <Summary {...listing} />
       </div>
+      <p className={classNames("lg:col-span-2")}>
+        {getLocalizedStringValue(listing.description, locale)}
+      </p>
     </div>
   );
 }

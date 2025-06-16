@@ -28,11 +28,11 @@ export const Summary: FC<ResidentialPremises> = async ({
         "grid border-solid border-divider/25 border-1 py-2 px-3 rounded-lg bg-primary text-sm",
         "md:text-lg",
         {
-          "grid-cols-[1.2fr_repeat(3,1fr)] md:grid-cols-4 xl:grid-cols-5":
+          "grid-cols-[1.2fr_repeat(3,1fr)] md:grid-cols-4 2xl:grid-cols-5":
             !floor || !totalFloors,
-          "grid-cols-[1.5fr_repeat(4,1fr)] md:grid-cols-5 xl:grid-cols-6":
+          "grid-cols-[1.5fr_repeat(4,1fr)] md:grid-cols-5 2xl:grid-cols-6":
             floor && totalFloors && area < 100,
-          "grid-cols-[1.75fr_repeat(4,1fr)] md:grid-cols-5 xl:grid-cols-6":
+          "grid-cols-[1.75fr_repeat(4,1fr)] md:grid-cols-5 2xl:grid-cols-6":
             floor && totalFloors && area > 100,
         }
       )}
