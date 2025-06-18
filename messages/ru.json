@@ -67,6 +67,10 @@
       "sale": "Продажа",
       "longTermRent": "Аренда"
     },
+    "benefits": {
+      "pets": "Можно с питомцами"
+    },
+    "features": "Особенности",
     "properties": {
       "title": "Заголовок",
       "description": "Описание",

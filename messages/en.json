@@ -67,6 +67,10 @@
       "sale": "Sale",
       "longTermRent": "Rent"
     },
+    "benefits": {
+      "pets": "Pets are allowed"
+    },
+    "features": "Features",
     "properties": {
       "title": "Title",
       "description": "Description",

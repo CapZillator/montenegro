@@ -5,10 +5,11 @@ import classNames from "classnames";
 import { getListingById } from "@/utils/db/listings";
 import { getLocalizedStringValue } from "@/utils/listings";
 
+import { AdditionalBenefits } from "./components/additional-benefits/AdditionalBenefits";
 import { Gallery } from "./components/gallery/Gallery";
 import { Price } from "./components/price/Price";
 import { Summary } from "./components/summary/Summary";
-import { ParamsSchema } from "./constants";
+import { ADDITIONAL_BENEFIT_NAMES,ParamsSchema } from "./constants";
 
 export default async function ListingPage({ params }: any) {
   const resolvedParams = await Promise.resolve(params);
@@ -25,6 +26,8 @@ export default async function ListingPage({ params }: any) {
     notFound();
   }
 
+  const additionalBenefits = Object.entries(listing).filter((entry) => ADDITIONAL_BENEFIT_NAMES.includes(entry[0]) && entry[1]).map((entry) => entry[0]);
+
   return (
     <div
       className={classNames(
@@ -39,7 +42,7 @@ export default async function ListingPage({ params }: any) {
         </h1>
       </div>
       <div className={classNames("lg:col-span-2")}>
-        <Price price={listing.price} area={listing.area}/>
+        <Price price={listing.price} area={listing.area} />
       </div>
       <div className={classNames("lg:col-span-2")}>
         <Gallery images={listing.images} />
@@ -50,6 +53,9 @@ export default async function ListingPage({ params }: any) {
       <p className={classNames("lg:col-span-2")}>
         {getLocalizedStringValue(listing.description, locale)}
       </p>
+      <div className={classNames("lg:col-span-2")}>
+        <AdditionalBenefits benefits={additionalBenefits} />
+      </div>
     </div>
   );
 }
