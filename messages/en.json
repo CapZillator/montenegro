@@ -117,5 +117,13 @@
   },
   "measures": {
     "m": "m"
+  }, 
+  "date": {
+    "today": "today",
+    "yesterday": "yesterday",
+    "dayAgo": "day(s) ago",
+    "weekAgo": "week(s) ago",
+    "monthAgo": "month(s) ago",
+    "yearAgo": "year(s) ago"
   }
 }

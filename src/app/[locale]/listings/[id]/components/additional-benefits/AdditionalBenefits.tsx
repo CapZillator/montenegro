@@ -1,4 +1,4 @@
-import { createElement,FC } from "react";
+import { createElement, FC } from "react";
 import { getTranslations } from "next-intl/server";
 import classNames from "classnames";
 
