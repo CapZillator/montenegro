@@ -42,5 +42,6 @@ export const getRelativeDate = (date: string | Date): {
   }
 
   const diffInYears = now.getFullYear() - inputDate.getFullYear();
+
   return { i18nKey: "yearAgo", ago: diffInYears };
 };

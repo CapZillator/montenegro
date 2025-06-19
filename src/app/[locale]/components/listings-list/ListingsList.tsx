@@ -8,12 +8,11 @@ import { Calendar } from "@/components/common/icons/realty/Calendar";
 import { Door } from "@/components/common/icons/realty/Door";
 import { Location } from "@/components/common/icons/realty/Location";
 import { LocalizedLink } from "@/components/localized-link/LokalizedLink";
-import { isoUTCStringToLocaleString } from "@/formatters/date";
 import { formatNumberToFinancialAmount } from "@/formatters/finance";
 import { ResidentialPremises } from "@/types/realEstate";
 import { getLocalizedStringValue } from "@/utils/listings";
-import { getRelativeDate } from "@/utils/time";
 import { getFullAddress } from "@/utils/listings";
+import { getRelativeDate } from "@/utils/time";
 
 type Props = {
   data: ResidentialPremises[];
