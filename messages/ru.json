@@ -27,6 +27,7 @@
     "filters": "Фильтры",
     "showMoreParams": "Больше параметров",
     "showLessParams": "Меньше параметров",
+    "showContacts": "Показать контакты",
     "hide": "Скрыть",
     "reset": "Сбросить",
     "apply": "Применить",
@@ -34,6 +35,7 @@
   },
   "states": {
     "saved": "Сохранено",
+    "copied": "Скопировано",
     "added": "Успешно добавлено",
     "updated": "Успешно обновлено",
     "error": "Ошибка",
@@ -70,7 +72,7 @@
     "benefits": {
       "pets": "Можно с питомцами"
     },
-    "features": "Особенности",
+    "features": "Удобства",
     "properties": {
       "title": "Заголовок",
       "description": "Описание",
@@ -92,7 +94,8 @@
       "ac": "Кондиционер"
     },
     "elements": {
-      "preview": "превью"
+      "preview": "превью",
+      "description": "Описание"
     }
   },
   "filters": {
@@ -113,7 +116,13 @@
     "myListings": "Мои объявления",
     "profile": "Профиль",
     "name": "Имя",
-    "email": "Email"
+    "email": "Email",
+    "contactWays": {
+      "phone": "Телефон",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "viber": "Viber"
+    }
   },
   "measures": {
     "m": "м"

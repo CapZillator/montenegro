@@ -27,6 +27,7 @@
     "filters": "Filters",
     "showMoreParams": "More options",
     "showLessParams": "Less options",
+    "showContacts": "Show contacts",
     "hide": "Hide",
     "reset": "Reset",
     "apply": "Apply",
@@ -34,6 +35,7 @@
   },
   "states": {
     "saved": "Saved",
+    "copied": "Copied",
     "added": "Successfully added",
     "updated": "Successfully updated",
     "error": "Error",
@@ -92,7 +94,8 @@
       "ac": "A/C"
     },
     "elements": {
-      "preview": "preview"
+      "preview": "preview",
+      "description": "Description"
     }
   },
   "filters": {
@@ -113,11 +116,17 @@
     "myListings": "My ads",
     "profile": "Profile",
     "name": "Name",
-    "email": "Email"
+    "email": "Email",
+    "contactWays": {
+      "phone": "Phone",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "viber": "Viber"
+    }
   },
   "measures": {
     "m": "m"
-  }, 
+  },
   "date": {
     "today": "today",
     "yesterday": "yesterday",

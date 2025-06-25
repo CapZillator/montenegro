@@ -3,6 +3,7 @@ import { cache } from "react";
 import { sql } from "@/lib/db";
 import { ResidentialPremisesFilters } from "@/types/filters";
 import { ResidentialPremises } from "@/types/realEstate";
+import { User } from "@/types/user";
 
 import { buildWhereClauseQuery } from "../api";
 import { toCamelCase } from "../api";
@@ -40,5 +41,19 @@ export const getListingById = cache(
     if (result.length === 0) return null;
 
     return toCamelCase(result[0]) as ResidentialPremises;
+  }
+);
+
+export const getListingOwnerById = cache(
+  async (id: string): Promise<Pick<User, "name" | "phone" | "contacts"> | null> => {
+    const result = await sql`
+      SELECT name, phone, contacts FROM users
+      WHERE id = ${id}
+      LIMIT 1
+    `;
+
+    if (result.length === 0) return null;
+
+    return toCamelCase(result[0]) as Pick<User, "name" | "phone" | "contacts">;
   }
 );
