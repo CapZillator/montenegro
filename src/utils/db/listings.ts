@@ -1,10 +1,10 @@
 import { cache } from 'react';
 
+import { ListingState } from '@/enums/listing';
 import { sql } from '@/lib/db';
 import { ResidentialPremisesFilters } from '@/types/filters';
 import { ResidentialPremises } from '@/types/realEstate';
 import { User } from '@/types/user';
-import { ListingState } from '@/enums/listing';
 
 import { buildWhereClauseQuery } from '../api';
 import { toCamelCase } from '../api';

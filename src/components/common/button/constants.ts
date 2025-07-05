@@ -1,3 +1,4 @@
+import { FindOnMapIcon } from '../icons';
 import { Add } from '../icons/actions/Add';
 import { Close } from '../icons/actions/Close';
 import { DeleteStroke } from '../icons/actions/DeleteStroke';
@@ -6,7 +7,6 @@ import { Reset } from '../icons/actions/Reset';
 import { Save } from '../icons/actions/Save';
 import { UploadArrow } from '../icons/actions/UploadArrow';
 import { ChevronRight } from '../icons/navigation/ChevronRight';
-import { FindOnMapIcon } from '../icons';
 import { ButtonIcon } from './enums';
 
 export const IconMap = {
