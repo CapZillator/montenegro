@@ -1,6 +1,6 @@
 'use client';
 
-import { createElement,FC, useRef, useState } from 'react';
+import { createElement, FC, useRef, useState } from 'react';
 import classNames from 'classnames';
 
 import { CopyToClipboard } from '@/components/common/copy-to-clipboard/CopyToClipboard';
@@ -39,7 +39,7 @@ export const Contacts: FC<UserContacts> = ({ phone, contacts }) => {
         {t('actions.showContacts')}
       </button>
       {isShow ? (
-        <div className="absolute py-2 px-3 bg-primary border-divider/25 border rounded-md space-y-2 -bottom-2 translate-y-full shadow-md">
+        <div className="absolute py-2 px-3 bg-primary border-divider/25 border rounded-md space-y-2 -bottom-2 translate-y-full shadow-md z-20">
           {allContacts.map((contact, index) => (
             <div
               key={contact.type}

@@ -1,7 +1,8 @@
-@import "tailwindcss";
+@import 'leaflet/dist/leaflet.css';
+@import 'tailwindcss';
 
 @theme {
-  --breakpoint-sm: 480px;
+  --breakpoint-sm: 520px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
@@ -42,7 +43,7 @@
 }
 
 @layer base {
-  html[data-theme="default"] {
+  html[data-theme='default'] {
     --primary: oklch(0.98 0.005 100);
     --primary-content: oklch(0.17 0.01 80);
     --secondary: oklch(0.9 0 25.41);
@@ -56,7 +57,7 @@
     --divider: oklch(0.55 0 25);
   }
 
-  html[data-theme="neon"] {
+  html[data-theme='neon'] {
     --primary: oklch(0.98 0.005 100);
     --primary-content: oklch(0.17 0.01 80);
     --secondary-content: oklch(0.7 0.2 40);

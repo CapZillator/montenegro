@@ -9,7 +9,8 @@
     },
     "genericRequest": "Ошибка запроса к БД",
     "deleteFailed": "Deletion failed, try again",
-    "uploadFailed": "Uploading failed, try again"
+    "uploadFailed": "Uploading failed, try again",
+    "geocoding": "Couldn't find the location"
   },
   "actions": {
     "add": "Добавить",
@@ -31,7 +32,8 @@
     "hide": "Скрыть",
     "reset": "Сбросить",
     "apply": "Применить",
-    "done": "Готово"
+    "done": "Готово",
+    "findOnMap": "Найти на карте"
   },
   "states": {
     "saved": "Сохранено",
@@ -85,7 +87,7 @@
       "floor": "Этаж",
       "buildingYear": "Год постройки",
       "furnished": "Мебель",
-      "balcony": "Балкон?",
+      "balcony": "Балкон",
       "parking": "Парковка",
       "heating": "Отопление",
       "address": "Адрес",

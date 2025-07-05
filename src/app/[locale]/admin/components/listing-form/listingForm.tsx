@@ -1,63 +1,70 @@
-import { FC, useEffect, useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
-import classNames from "classnames";
-import { twMerge } from "tailwind-merge";
+import { FC, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from '@tanstack/react-query';
+import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-import { ControlledDropdown } from "@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown";
-import { ControlledSwitcher } from "@/components/common/controlled-inputs/controlled-switcher/ControlledSwitcher";
-import { ImageUploader } from "@/components/common/controlled-inputs/image-uploader/ImageUploader";
-import { MoneyInput } from "@/components/common/controlled-inputs/money-input/MoneyInput";
-import { MultilingualTextInput } from "@/components/common/controlled-inputs/multilingual-text-input/MultilingualTextInput";
-import { MultilingualTextarea } from "@/components/common/controlled-inputs/multilingual-textarea/MultilingualTextarea";
-import { NumericInput } from "@/components/common/controlled-inputs/numeric-input/NumericInput";
-import { TextInput } from "@/components/common/controlled-inputs/text-input/TextInput";
-import { FormNavigation } from "@/components/common/form-navigation/FormNavigation";
-import { Language } from "@/components/common/icons/Language";
-import { Address } from "@/components/common/icons/realty/Address";
-import { AirConditioner } from "@/components/common/icons/realty/AirConditioner";
-import { Area } from "@/components/common/icons/realty/Area";
-import { Armchair } from "@/components/common/icons/realty/Armchair";
-import { Bath } from "@/components/common/icons/realty/Bath";
-import { Bed } from "@/components/common/icons/realty/Bed";
-import { Calendar } from "@/components/common/icons/realty/Calendar";
-import { Door } from "@/components/common/icons/realty/Door";
-import { Location } from "@/components/common/icons/realty/Location";
-import { Parking } from "@/components/common/icons/realty/Parking";
-import { Pets } from "@/components/common/icons/realty/Pets";
-import { Price } from "@/components/common/icons/realty/Price";
-import { Stairs } from "@/components/common/icons/realty/Stairs";
-import { Wallet } from "@/components/common/icons/realty/Wallet";
-import { Dropdown } from "@/components/common/inputs/dropdown/Dropdown";
-import { UserContactsModal } from "@/components/common/user-contacts-modal/UserContactsModal";
-import { queryKeys } from "@/constants/fetch";
-import { AVAILABLE_LOCALES } from "@/constants/i18n";
-import { LOCALIZED_CITIES } from "@/constants/location";
-import { validationSchema } from "@/constants/validationSchemas";
-import { ListingType, ResidentialPremisesType } from "@/enums/listing";
-import { addListingFetcher, updateListingFetcher } from "@/fetchers/listings";
-import { useCurrentUser } from "@/hooks/use-current-user/useCurrentUser";
-import { useLocale } from "@/hooks/use-locale/useLocale";
-import { useToast } from "@/hooks/use-toast/useToast";
-import { useTranslation } from "@/hooks/use-translation/useTranslation";
-import { ResidentialPremises } from "@/types/realEstate";
+import { Button } from '@/components/common/button/Button';
+import { ControlledDropdown } from '@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown';
+import { ControlledMapInput } from '@/components/common/controlled-inputs/controlled-map-input/ControlledMapInput';
+import { ControlledSwitcher } from '@/components/common/controlled-inputs/controlled-switcher/ControlledSwitcher';
+import { ImageUploader } from '@/components/common/controlled-inputs/image-uploader/ImageUploader';
+import { MoneyInput } from '@/components/common/controlled-inputs/money-input/MoneyInput';
+import { MultilingualTextInput } from '@/components/common/controlled-inputs/multilingual-text-input/MultilingualTextInput';
+import { MultilingualTextarea } from '@/components/common/controlled-inputs/multilingual-textarea/MultilingualTextarea';
+import { NumericInput } from '@/components/common/controlled-inputs/numeric-input/NumericInput';
+import { TextInput } from '@/components/common/controlled-inputs/text-input/TextInput';
+import { FormNavigation } from '@/components/common/form-navigation/FormNavigation';
+import { Language } from '@/components/common/icons/Language';
+import { Address } from '@/components/common/icons/realty/Address';
+import { AirConditioner } from '@/components/common/icons/realty/AirConditioner';
+import { Area } from '@/components/common/icons/realty/Area';
+import { Armchair } from '@/components/common/icons/realty/Armchair';
+import { Bath } from '@/components/common/icons/realty/Bath';
+import { Bed } from '@/components/common/icons/realty/Bed';
+import { Calendar } from '@/components/common/icons/realty/Calendar';
+import { Door } from '@/components/common/icons/realty/Door';
+import { Location } from '@/components/common/icons/realty/Location';
+import { Parking } from '@/components/common/icons/realty/Parking';
+import { Pets } from '@/components/common/icons/realty/Pets';
+import { Price } from '@/components/common/icons/realty/Price';
+import { Stairs } from '@/components/common/icons/realty/Stairs';
+import { Wallet } from '@/components/common/icons/realty/Wallet';
+import { Dropdown } from '@/components/common/inputs/dropdown/Dropdown';
+import { UserContactsModal } from '@/components/common/user-contacts-modal/UserContactsModal';
+import { queryKeys } from '@/constants/fetch';
+import { AVAILABLE_LOCALES } from '@/constants/i18n';
+import { LOCALIZED_CITIES } from '@/constants/location';
+import { validationSchema } from '@/constants/validationSchemas';
+import { ListingType, ResidentialPremisesType } from '@/enums/listing';
+import { geocodeAddress } from '@/fetchers/geo';
+import { addListingFetcher, updateListingFetcher } from '@/fetchers/listings';
+import { useCurrentUser } from '@/hooks/use-current-user/useCurrentUser';
+import { useLocale } from '@/hooks/use-locale/useLocale';
+import { useToast } from '@/hooks/use-toast/useToast';
+import { useTranslation } from '@/hooks/use-translation/useTranslation';
+import { ResidentialPremises } from '@/types/realEstate';
 
-import { HeaderNavigation } from "./components/header-navigation/HeaderNavigation";
+import { HeaderNavigation } from './components/header-navigation/HeaderNavigation';
 import {
   DEFAULT_RESIDENTIAL_PREMISE_DATA,
   HOUSES,
   INIT_FORM_STEP,
   STEP_FIELDS,
   TOTAL_FORM_STEPS,
-} from "./constants";
-import { normalizeListingData } from "./utils";
+} from './constants';
+import { normalizeListingData } from './utils';
 
 type Props = {
   onClose: () => void;
   initialListing?: Omit<
     ResidentialPremises,
-    "userId" | "createdAt" | "updatedAt"
+    'userId' | 'createdAt' | 'updatedAt'
   >;
   onSuccess?: () => void;
 };
@@ -72,7 +79,7 @@ export const ListingForm: FC<Props> = ({
   const defaultValues = useMemo(
     () => ({
       ...DEFAULT_RESIDENTIAL_PREMISE_DATA,
-      location: locations[0]?.value ?? "",
+      location: locations[0]?.value ?? '',
     }),
     [locations]
   );
@@ -86,42 +93,59 @@ export const ListingForm: FC<Props> = ({
     watch,
     trigger,
   } = useForm<
-    Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">
+    Omit<ResidentialPremises, 'id' | 'userId' | 'createdAt' | 'updatedAt'>
   >({
     defaultValues: initialListing
       ? normalizeListingData(initialListing)
       : defaultValues,
     resolver: zodResolver(validationSchema.residentialPremises),
-    mode: "onChange",
+    mode: 'onChange',
     shouldUnregister: false,
   });
   const { t } = useTranslation();
   const [step, setStep] = useState(INIT_FORM_STEP);
   const steps = useMemo(
     () => [
-      t("states.steps.basic"),
-      t("states.steps.images"),
-      t("states.steps.location"),
+      t('states.steps.basic'),
+      t('states.steps.images'),
+      t('states.steps.location'),
     ],
     [t]
   );
   const [showUserContactModal, setShowUserModalContact] = useState(false);
   const { data: userData } = useCurrentUser();
   const queryClient = useQueryClient();
-  const propertyType = watch("propertyType");
+  const propertyType = watch('propertyType');
   const isHouse = HOUSES.includes(propertyType);
-  const listingType = watch("listingType");
+  const listingType = watch('listingType');
+  const location = watch('location');
+  const address = watch('address');
+  const fullAddress = address ? `${location}, ${address}` : location;
   const isLongTermRent = listingType === ListingType.LONG_TERM_RENT;
+
+  const {
+    data: coords,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: [queryKeys.geo.geocode, fullAddress],
+    queryFn: () => geocodeAddress(fullAddress),
+    enabled: false,
+    staleTime: 1000 * 60 * 15,
+    onError: () => {
+      showToast(t('errors.geocoding'), 'error');
+    },
+  } as UseQueryOptions<[number, number], Error>);
 
   useEffect(() => {
     if (propertyType === ResidentialPremisesType.STUDIO) {
-      setValue("rooms", 1);
-      setValue("bathrooms", 1);
-      setValue("bedrooms", 1);
+      setValue('rooms', 1);
+      setValue('bathrooms', 1);
+      setValue('bedrooms', 1);
     }
     if (isHouse) {
-      setValue("floor", undefined);
-      setValue("totalFloors", undefined);
+      setValue('floor', undefined);
+      setValue('totalFloors', undefined);
     }
   }, [propertyType, isHouse, setValue]);
 
@@ -131,8 +155,15 @@ export const ListingForm: FC<Props> = ({
     }
   }, [userData?.needsPhone]);
 
+  useEffect(() => {
+    if (coords) {
+      setValue('latitude', coords[0]);
+      setValue('longitude', coords[1]);
+    }
+  }, [coords]);
+
   const onSubmit = async (
-    data: Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">
+    data: Omit<ResidentialPremises, 'id' | 'userId' | 'createdAt' | 'updatedAt'>
   ) => {
     if (userData?.needsPhone) {
       setShowUserModalContact(true);
@@ -149,8 +180,8 @@ export const ListingForm: FC<Props> = ({
         queryKey: [queryKeys.listings.userListings],
       });
       showToast(
-        t(initialListing ? "states.updated" : "states.added"),
-        "success"
+        t(initialListing ? 'states.updated' : 'states.added'),
+        'success'
       );
       if (onSuccess) {
         onSuccess();
@@ -159,7 +190,17 @@ export const ListingForm: FC<Props> = ({
       }
       onClose();
     } catch (_error) {
-      showToast(t("errors.genericRequest"), "error");
+      showToast(t('errors.genericRequest'), 'error');
+    }
+  };
+
+  const onUpdateListingLocale = (
+    locale: string | boolean | Array<string | boolean>
+  ) => setListingLocale(locale as string);
+
+  const onFindLocationOnMap = () => {
+    if (location) {
+      refetch();
     }
   };
 
@@ -169,6 +210,7 @@ export const ListingForm: FC<Props> = ({
     name: t(`realEstate.types.${value}`),
     value: value,
   }));
+
   const listingTypeDropdownOptions = Object.values(ListingType).map(
     (value) => ({
       name: t(`listings.types.${value}`),
@@ -180,16 +222,12 @@ export const ListingForm: FC<Props> = ({
     value: locale,
   }));
 
-  const onUpdateListingLocale = (
-    locale: string | boolean | Array<string | boolean>
-  ) => setListingLocale(locale as string);
-
   return (
     <>
       <div
         className={classNames(
-          "flex flex-col w-full mb-5",
-          "lg:max-w-[1200px] lg:mx-auto"
+          'flex flex-col w-full mb-5',
+          'lg:max-w-[1200px] lg:mx-auto'
         )}
       >
         <HeaderNavigation
@@ -199,20 +237,20 @@ export const ListingForm: FC<Props> = ({
         {step === 1 && (
           <div
             className={classNames(
-              "grid grid-cols-1 gap-2 items-start",
-              "lg:grid-cols-2 lg:gap-5"
+              'grid grid-cols-1 gap-2 items-start',
+              'lg:grid-cols-2 lg:gap-5'
             )}
           >
-            <div className={classNames("space-y-2")}>
+            <div className={classNames('space-y-2')}>
               <div className="flex items-center gap-3">
                 <ControlledDropdown
-                  name={"propertyType"}
+                  name={'propertyType'}
                   control={control}
                   values={realEstateTypeDropdownOptions}
                   disabled={isSubmitting}
                 />
                 <ControlledDropdown
-                  name={"listingType"}
+                  name={'listingType'}
                   control={control}
                   values={listingTypeDropdownOptions}
                   disabled={isSubmitting}
@@ -224,8 +262,8 @@ export const ListingForm: FC<Props> = ({
                   icon={
                     <Language
                       className={twMerge(
-                        classNames("w-4 h-4 fill-primary", {
-                          "fill-primary-content/30": isSubmitting,
+                        classNames('w-4 h-4 fill-primary', {
+                          'fill-primary-content/30': isSubmitting,
                         })
                       )}
                     />
@@ -234,41 +272,41 @@ export const ListingForm: FC<Props> = ({
                 />
               </div>
               <MultilingualTextInput
-                name={"title"}
+                name={'title'}
                 control={control}
-                label={`${t("listings.properties.title")} *`}
+                label={`${t('listings.properties.title')} *`}
                 placeholder="Title"
                 {...{ selectedLocale: listingLocale, disabled: isSubmitting }}
               />
               <MultilingualTextarea
-                name={"description"}
+                name={'description'}
                 control={control}
-                label={`${t("listings.properties.description")} *`}
+                label={`${t('listings.properties.description')} *`}
                 placeholder="Description"
                 {...{ selectedLocale: listingLocale, disabled: isSubmitting }}
               />
               <div
                 className={classNames(
-                  "grid grid-cols-2 gap-2",
-                  "md:grid-cols-3"
+                  'grid grid-cols-2 gap-2',
+                  'md:grid-cols-3'
                 )}
               >
                 <MoneyInput
-                  name={"price"}
+                  name={'price'}
                   control={control}
-                  label={`${t("listings.properties.price")} *`}
+                  label={`${t('listings.properties.price')} *`}
                   disabled={isSubmitting}
                   icon={<Wallet className="w-5 h-5 stroke-primary-content" />}
                   inputContainerStyles="w-40"
                 />
                 <NumericInput
-                  name={"area"}
+                  name={'area'}
                   control={control}
-                  label={`${t("listings.properties.area")} *`}
+                  label={`${t('listings.properties.area')} *`}
                   disabled={isSubmitting}
                   measurementUnitBadge={
                     <>
-                      {t("measures.m")}
+                      {t('measures.m')}
                       <sup>2</sup>
                     </>
                   }
@@ -276,9 +314,9 @@ export const ListingForm: FC<Props> = ({
                   inputContainerStyles="w-40"
                 />
                 <NumericInput
-                  name={"rooms"}
+                  name={'rooms'}
                   control={control}
-                  label={`${t("listings.properties.rooms")} *`}
+                  label={`${t('listings.properties.rooms')} *`}
                   disabled={
                     propertyType === ResidentialPremisesType.STUDIO ||
                     isSubmitting
@@ -288,9 +326,9 @@ export const ListingForm: FC<Props> = ({
                   inputContainerStyles="w-15"
                 />
                 <NumericInput
-                  name={"bedrooms"}
+                  name={'bedrooms'}
                   control={control}
-                  label={`${t("listings.properties.bedrooms")} *`}
+                  label={`${t('listings.properties.bedrooms')} *`}
                   disabled={
                     propertyType === ResidentialPremisesType.STUDIO ||
                     isSubmitting
@@ -299,9 +337,9 @@ export const ListingForm: FC<Props> = ({
                   inputContainerStyles="w-15"
                 />
                 <NumericInput
-                  name={"bathrooms"}
+                  name={'bathrooms'}
                   control={control}
-                  label={`${t("listings.properties.bathrooms")} *`}
+                  label={`${t('listings.properties.bathrooms')} *`}
                   disabled={
                     propertyType === ResidentialPremisesType.STUDIO ||
                     isSubmitting
@@ -313,26 +351,26 @@ export const ListingForm: FC<Props> = ({
             </div>
             <div
               className={classNames(
-                "grid grid-cols-2 gap-2",
-                "md:grid-cols-3",
-                "lg:pt-11"
+                'grid grid-cols-2 gap-2',
+                'md:grid-cols-3',
+                'lg:pt-11'
               )}
             >
               <div className="col-start-1">
                 <label className="flex items-center gap-1.5 mb-1">
                   <Stairs className="w-5 h-5 stroke-primary-content" />
-                  <span>{t("listings.properties.floor")}</span>
+                  <span>{t('listings.properties.floor')}</span>
                 </label>
-                <div className={classNames("flex items-center gap-2")}>
+                <div className={classNames('flex items-center gap-2')}>
                   <NumericInput
-                    name={"floor"}
+                    name={'floor'}
                     control={control}
                     disabled={isHouse || isSubmitting}
                     inputContainerStyles="w-15"
                   />
                   <span>/</span>
                   <NumericInput
-                    name={"totalFloors"}
+                    name={'totalFloors'}
                     control={control}
                     disabled={isHouse || isSubmitting}
                     inputContainerStyles="w-15"
@@ -340,52 +378,52 @@ export const ListingForm: FC<Props> = ({
                 </div>
               </div>
               <NumericInput
-                name={"buildingYear"}
+                name={'buildingYear'}
                 control={control}
-                label={t("listings.properties.buildingYear")}
+                label={t('listings.properties.buildingYear')}
                 disabled={isSubmitting}
                 icon={<Calendar className="w-5 h-5 stroke-primary-content" />}
                 inputContainerStyles="w-15"
               />
               {isLongTermRent ? (
                 <MoneyInput
-                  name={"deposit"}
+                  name={'deposit'}
                   control={control}
-                  label={`${t("listings.properties.deposit")}`}
+                  label={`${t('listings.properties.deposit')}`}
                   disabled={isSubmitting}
                   icon={<Price className="w-5 h-5 stroke-primary-content" />}
                   inputContainerStyles="w-40"
                 />
               ) : null}
               <ControlledSwitcher
-                name={"furnished"}
+                name={'furnished'}
                 control={control}
-                label={t("listings.properties.furnished")}
+                label={t('listings.properties.furnished')}
                 disabled={isSubmitting}
                 icon={<Armchair className="w-5 h-5 fill-primary-content" />}
                 containerStyles="col-start-1"
               />
               <ControlledSwitcher
-                name={"airConditioner"}
+                name={'airConditioner'}
                 control={control}
-                label={t("listings.properties.ac")}
+                label={t('listings.properties.ac')}
                 disabled={isSubmitting}
                 icon={
                   <AirConditioner className="w-5 h-5 fill-primary-content" />
                 }
               />
               <ControlledSwitcher
-                name={"parking"}
+                name={'parking'}
                 control={control}
-                label={t("listings.properties.parking")}
+                label={t('listings.properties.parking')}
                 disabled={isSubmitting}
                 icon={<Parking className="w-5 h-5 fill-primary-content" />}
               />
               {isLongTermRent ? (
                 <ControlledSwitcher
-                  name={"petsAllowed"}
+                  name={'petsAllowed'}
                   control={control}
-                  label={t("listings.properties.petsAllowed")}
+                  label={t('listings.properties.petsAllowed')}
                   disabled={isSubmitting}
                   icon={<Pets className="w-5 h-5 fill-primary-content" />}
                 />
@@ -397,33 +435,55 @@ export const ListingForm: FC<Props> = ({
         {step === 2 && (
           <ImageUploader
             control={control}
-            name={"images"}
+            name={'images'}
             disabled={isSubmitting}
           />
         )}
 
         {step === 3 && (
-          <div className={classNames("flex items-end gap-2")}>
-            <ControlledDropdown
-              name={"location"}
+          <div className={classNames('space-y-5')}>
+            <div className={classNames('flex gap-2 items-end flex-wrap')}>
+              <div className={classNames('flex gap-2 flex-wrap')}>
+                <ControlledDropdown
+                  name={'location'}
+                  control={control}
+                  label={t('listings.properties.location')}
+                  values={locations}
+                  disabled={isSubmitting}
+                  icon={<Location className="w-5 h-5 stroke-primary-content" />}
+                  controlButtonStyles="w-40"
+                  searchEnabled
+                />
+                <TextInput
+                  name={'address'}
+                  control={control}
+                  label={t('listings.properties.address')}
+                  disabled={isSubmitting}
+                  icon={<Address className="w-5 h-5 fill-primary-content" />}
+                />
+              </div>
+
+              <Button
+                onClick={onFindLocationOnMap}
+                disabled={isLoading}
+                className="mt-2"
+              >
+                {t('actions.findOnMap')}
+              </Button>
+            </div>
+            <ControlledMapInput
               control={control}
-              values={locations}
-              disabled={isSubmitting}
-              icon={<Location className="w-5 h-5 stroke-primary-content" />}
-              controlButtonStyles="w-40"
-              searchEnabled
-            />
-            <TextInput
-              name={"address"}
-              control={control}
-              label={t("listings.properties.address")}
-              disabled={isSubmitting}
-              icon={<Address className="w-5 h-5 fill-primary-content" />}
+              nameLat={'latitude'}
+              nameLon={'longitude'}
+              className={classNames(
+                'relative z-10 aspect-square w-full border-solid border-divider/25 border-1 rounded-lg',
+                'md:aspect-auto md:h-96'
+              )}
             />
           </div>
         )}
 
-        <div className={classNames("mt-auto pt-5", "lg:mt-10")}>
+        <div className={classNames('mt-auto pt-5', 'lg:mt-10')}>
           <FormNavigation
             currentStep={step}
             totalSteps={TOTAL_FORM_STEPS}

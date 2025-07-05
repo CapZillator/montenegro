@@ -1,13 +1,16 @@
 import { notFound } from 'next/navigation';
 import { getLocale } from 'next-intl/server';
 import classNames from 'classnames';
+import { LatLngTuple } from 'leaflet';
 
 import { getListingById } from '@/utils/db/listings';
 import { getLocalizedStringValue } from '@/utils/listings';
 
 import { AdditionalBenefits } from './components/additional-benefits/AdditionalBenefits';
+import { Address } from './components/addresse/Address';
 import { Description } from './components/description/Description';
 import { Gallery } from './components/gallery/Gallery';
+import { Map } from './components/map/Map';
 import { Owner } from './components/owner/Owner';
 import { Price } from './components/price/Price';
 import { Summary } from './components/summary/Summary';
@@ -32,6 +35,8 @@ export default async function ListingPage({ params }: any) {
     .filter((entry) => ADDITIONAL_BENEFIT_NAMES.includes(entry[0]) && entry[1])
     .map((entry) => entry[0]);
 
+  const location = [listing.latitude, listing.longitude] as LatLngTuple;
+
   return (
     <div
       className={classNames(
@@ -40,31 +45,41 @@ export default async function ListingPage({ params }: any) {
         'xl:max-w-container-md xl:mx-auto'
       )}
     >
-      <div className={classNames('lg:col-span-3')}>
+      <div className={classNames('order-1', 'lg:col-span-3')}>
         <h1 className={classNames('font-semibold text-xl', 'lg:text-2xl')}>
           {getLocalizedStringValue(listing.title, locale)}
         </h1>
       </div>
-      <div className={classNames('lg:col-span-2')}>
+      <div className={classNames('order-2', 'lg:col-span-2')}>
         <Price price={listing.price} area={listing.area} />
       </div>
-      <div className={classNames('hidden', 'lg:block')}>
-        <Owner userId={listing.userId} />
-      </div>
-      <div className={classNames('lg:col-span-2')}>
+
+      <div className={classNames('order-3', 'lg:col-span-2 lg:order-4')}>
         <Gallery images={listing.images} />
       </div>
-      <div className={classNames('lg:col-span-2')}>
+
+      <div className={classNames('order-4', 'lg:col-span-2 lg:order-6')}>
         <Summary {...listing} />
       </div>
-      <div className={classNames('lg:hidden')}>
-        <Owner userId={listing.userId} />
-      </div>
-      <div className={classNames('lg:col-span-2')}>
+      <div className={classNames('order-5', 'lg:col-span-2 lg:order-7')}>
         <AdditionalBenefits benefits={additionalBenefits} />
       </div>
-      <div className={classNames('lg:col-span-2')}>
+      <div className={classNames('order-6', 'lg:col-span-2 lg:order-9')}>
         <Description text={listing.description} locale={locale} />
+      </div>
+      <div className={classNames('order-7', 'lg:order-8')}>
+        <Owner userId={listing.userId} />
+      </div>
+      <div className={classNames('order-8', 'lg:order-3 lg:self-end')}>
+        <Address location={listing.location} address={listing.address} />
+      </div>
+      <div
+        className={classNames(
+          'w-full aspect-square relative z-10 border-solid border-divider/25 border-1 rounded-lg overflow-hidden order-9',
+          'lg:row-span-2 lg:h-full lg:aspect-auto lg:order-5'
+        )}
+      >
+        <Map className={classNames('w-full h-full')} location={location} />
       </div>
     </div>
   );
