@@ -1,6 +1,6 @@
-import { Currency } from "@/enums/currencies";
-import { ListingType, ResidentialPremisesType } from "@/enums/listing";
-import { ResidentialPremises } from "@/types/realEstate";
+import { Currency } from '@/enums/currencies';
+import { ListingType, ResidentialPremisesType } from '@/enums/listing';
+import { ResidentialPremises } from '@/types/realEstate';
 
 export const DEFAULT_RESIDENTIAL_PREMISE_DATA = {
   title: {},
@@ -13,7 +13,7 @@ export const DEFAULT_RESIDENTIAL_PREMISE_DATA = {
   bedrooms: 1,
   bathrooms: 1,
   area: undefined,
-  location: "",
+  location: '',
   images: [],
   floor: undefined,
   totalFloors: undefined,
@@ -22,8 +22,8 @@ export const DEFAULT_RESIDENTIAL_PREMISE_DATA = {
   airConditioner: undefined,
   balcony: undefined,
   parking: undefined,
-  heating: "",
-  address: "",
+  heating: '',
+  address: '',
   latitude: undefined,
   longitude: undefined,
   deposit: undefined,
@@ -39,22 +39,25 @@ export const HOUSES = [
 
 export const STEP_FIELDS: Array<
   Array<
-    keyof Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">
+    keyof Omit<
+      ResidentialPremises,
+      'id' | 'state' | 'userId' | 'createdAt' | 'updatedAt'
+    >
   >
 > = [
   [
-    "title",
-    "description",
-    "price",
-    "propertyType",
-    "listingType",
-    "rooms",
-    "bedrooms",
-    "bathrooms",
-    "area",
+    'title',
+    'description',
+    'price',
+    'propertyType',
+    'listingType',
+    'rooms',
+    'bedrooms',
+    'bathrooms',
+    'area',
   ],
-  ["images"],
-  ["location", "address"],
+  ['images'],
+  ['location', 'address'],
 ];
 
 export const TOTAL_FORM_STEPS = 3;

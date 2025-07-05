@@ -1,22 +1,22 @@
-import { FC, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { Control, Controller } from "react-hook-form";
-import classNames from "classnames";
+import { FC, useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { Control, Controller } from 'react-hook-form';
+import classNames from 'classnames';
 
-import { deleteListingImageFetcher } from "@/fetchers/images";
-import { uploadImageFetcher } from "@/fetchers/images";
-import { useToast } from "@/hooks/use-toast/useToast";
-import { useTranslation } from "@/hooks/use-translation/useTranslation";
-import { truncateFileName } from "@/utils/files";
+import { deleteListingImageFetcher } from '@/fetchers/images';
+import { uploadImageFetcher } from '@/fetchers/images';
+import { useToast } from '@/hooks/use-toast/useToast';
+import { useTranslation } from '@/hooks/use-translation/useTranslation';
+import { truncateFileName } from '@/utils/files';
 
-import { Button } from "../../button/Button";
-import { ButtonIcon } from "../../button/enums";
-import { Close } from "../../icons/actions/Close";
-import { Upload } from "../../icons/actions/Upload";
-import { Image } from "../../icons/Image";
-import { Photo } from "../../icons/Photo";
-import { ImagePreview } from "./components/image-preview/ImagePreview";
-import { ALLOWED_TYPES, MAX_FILE_SIZE_MB, MAX_IMAGES } from "./constants";
+import { Button } from '../../button/Button';
+import { ButtonIcon } from '../../button/enums';
+import { Close } from '../../icons/actions/Close';
+import { Upload } from '../../icons/actions/Upload';
+import { Image } from '../../icons/Image';
+import { Photo } from '../../icons/Photo';
+import { ImagePreview } from './components/image-preview/ImagePreview';
+import { ALLOWED_TYPES, MAX_FILE_SIZE_MB, MAX_IMAGES } from './constants';
 
 type Props = {
   name: string;
@@ -39,7 +39,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
       );
 
       if (filteredFiles.length < acceptedFiles.length) {
-        showToast(t("warnings.wrongFile"), "info");
+        showToast(t('warnings.wrongFile'), 'info');
       }
 
       setImages((prev) => [...prev, ...filteredFiles]);
@@ -56,7 +56,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
 
         const handleUpload = async () => {
           if (images.length + uploadedUrls.length > MAX_IMAGES) {
-            showToast(t("warnings.tooMany"), "info");
+            showToast(t('warnings.tooMany'), 'info');
 
             return;
           }
@@ -65,7 +65,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
 
           try {
             const formData = new FormData();
-            images.forEach((image) => formData.append("file", image));
+            images.forEach((image) => formData.append('file', image));
             const uploadedImages = await uploadImageFetcher(formData);
 
             if (uploadedImages.results) {
@@ -76,7 +76,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
               setImages([]);
             }
           } catch (_error) {
-            showToast(t("errors.uploadFailed"), "error");
+            showToast(t('errors.uploadFailed'), 'error');
           }
 
           setUploading(false);
@@ -91,7 +91,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
               uploadedUrls.filter((url: string) => !url.includes(publicId))
             );
           } catch (_error) {
-            showToast(t("errors.deleteFailed"), "error");
+            showToast(t('errors.deleteFailed'), 'error');
           } finally {
             setUploading(false);
           }
@@ -103,9 +103,9 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
         return (
           <div
             className={classNames(
-              "grid grid-cols-1 gap-5",
-              "lg:grid-cols-3",
-              "2xl:grid-cols-3"
+              'grid grid-cols-1 gap-5',
+              'lg:grid-cols-3',
+              '2xl:grid-cols-3'
             )}
           >
             <div>
@@ -114,16 +114,16 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
                 className="flex items-center justify-center border-dashed border-2 border-secondary-content p-6 text-center cursor-pointer rounded-sm"
               >
                 <input {...getInputProps()} {...{ disabled }} />
-                <div className={classNames("flex gap-4")}>
+                <div className={classNames('flex gap-4')}>
                   <Upload
                     className={classNames(
-                      "w-12 h-12 stroke-secondary-content shrink-0"
+                      'w-12 h-12 stroke-secondary-content shrink-0'
                     )}
                   />
                   <div className="text-start">
-                    <p className="font-semibold">{t("files.dragToAdd")}</p>
-                    <p className={classNames("text-sm")}>
-                      {t("files.restriction")}
+                    <p className="font-semibold">{t('files.dragToAdd')}</p>
+                    <p className={classNames('text-sm')}>
+                      {t('files.restriction')}
                     </p>
                   </div>
                 </div>
@@ -154,9 +154,8 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
                     disabled={isLimitReached || uploading}
                     onClick={handleUpload}
                     icon={ButtonIcon.UPLOAD}
-                    iconClassName="stroke-primary"
                   >
-                    <span>{t("actions.upload")}</span>
+                    <span>{t('actions.upload')}</span>
                   </Button>
                 </div>
               )}
@@ -164,7 +163,7 @@ export const ImageUploader: FC<Props> = ({ name, control, disabled }) => {
 
             {uploadedUrls.length > 0 && (
               <div
-                className={classNames("space-y-3 rounded-lg", "lg:col-span-2")}
+                className={classNames('space-y-3 rounded-lg', 'lg:col-span-2')}
               >
                 <ImagePreview
                   uploadedUrls={uploadedUrls}

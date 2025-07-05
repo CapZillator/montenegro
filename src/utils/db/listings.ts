@@ -1,20 +1,28 @@
-import { cache } from "react";
+import { cache } from 'react';
 
-import { sql } from "@/lib/db";
-import { ResidentialPremisesFilters } from "@/types/filters";
-import { ResidentialPremises } from "@/types/realEstate";
-import { User } from "@/types/user";
+import { sql } from '@/lib/db';
+import { ResidentialPremisesFilters } from '@/types/filters';
+import { ResidentialPremises } from '@/types/realEstate';
+import { User } from '@/types/user';
+import { ListingState } from '@/enums/listing';
 
-import { buildWhereClauseQuery } from "../api";
-import { toCamelCase } from "../api";
-import { buildFilterConditions } from "../filters";
+import { buildWhereClauseQuery } from '../api';
+import { toCamelCase } from '../api';
+import { buildFilterConditions } from '../filters';
 
 export const getListings = cache(
   async (
     filters: ResidentialPremisesFilters
   ): Promise<ResidentialPremises[]> => {
     const conditions = buildFilterConditions(filters);
-    const { clause, values } = buildWhereClauseQuery(conditions);
+    const { clause, values } = buildWhereClauseQuery([
+      ...conditions,
+      {
+        field: 'state',
+        operator: '=',
+        value: ListingState.ACTIVE,
+      },
+    ]);
 
     const query = `
     SELECT *
@@ -34,7 +42,8 @@ export const getListingById = cache(
   async (id: string): Promise<ResidentialPremises | null> => {
     const result = await sql`
       SELECT * FROM residential_premises_listings
-      WHERE id = ${id}
+      WHERE id = ${id} 
+      AND state != ${ListingState.DELETED}
       LIMIT 1
     `;
 
@@ -45,7 +54,9 @@ export const getListingById = cache(
 );
 
 export const getListingOwnerById = cache(
-  async (id: string): Promise<Pick<User, "name" | "phone" | "contacts"> | null> => {
+  async (
+    id: string
+  ): Promise<Pick<User, 'name' | 'phone' | 'contacts'> | null> => {
     const result = await sql`
       SELECT name, phone, contacts FROM users
       WHERE id = ${id}
@@ -54,6 +65,6 @@ export const getListingOwnerById = cache(
 
     if (result.length === 0) return null;
 
-    return toCamelCase(result[0]) as Pick<User, "name" | "phone" | "contacts">;
+    return toCamelCase(result[0]) as Pick<User, 'name' | 'phone' | 'contacts'>;
   }
 );

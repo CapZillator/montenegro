@@ -1,5 +1,5 @@
-import * as React from "react";
-import { SVGProps } from "react";
+import * as React from 'react';
+import { SVGProps } from 'react';
 
 export const UploadArrow = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -9,6 +9,7 @@ export const UploadArrow = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
+      fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

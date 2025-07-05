@@ -9,7 +9,7 @@ import {
 import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
-import { Button } from '@/components/common/button/Button';
+import { Button, ButtonIcon } from '@/components/common/button';
 import { ControlledDropdown } from '@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown';
 import { ControlledMapInput } from '@/components/common/controlled-inputs/controlled-map-input/ControlledMapInput';
 import { ControlledSwitcher } from '@/components/common/controlled-inputs/controlled-switcher/ControlledSwitcher';
@@ -64,7 +64,7 @@ type Props = {
   onClose: () => void;
   initialListing?: Omit<
     ResidentialPremises,
-    'userId' | 'createdAt' | 'updatedAt'
+    'userId' | 'state' | 'createdAt' | 'updatedAt'
   >;
   onSuccess?: () => void;
 };
@@ -93,7 +93,10 @@ export const ListingForm: FC<Props> = ({
     watch,
     trigger,
   } = useForm<
-    Omit<ResidentialPremises, 'id' | 'userId' | 'createdAt' | 'updatedAt'>
+    Omit<
+      ResidentialPremises,
+      'id' | 'state' | 'userId' | 'createdAt' | 'updatedAt'
+    >
   >({
     defaultValues: initialListing
       ? normalizeListingData(initialListing)
@@ -163,7 +166,10 @@ export const ListingForm: FC<Props> = ({
   }, [coords]);
 
   const onSubmit = async (
-    data: Omit<ResidentialPremises, 'id' | 'userId' | 'createdAt' | 'updatedAt'>
+    data: Omit<
+      ResidentialPremises,
+      'id' | 'state' | 'userId' | 'createdAt' | 'updatedAt'
+    >
   ) => {
     if (userData?.needsPhone) {
       setShowUserModalContact(true);
@@ -465,6 +471,7 @@ export const ListingForm: FC<Props> = ({
 
               <Button
                 onClick={onFindLocationOnMap}
+                icon={ButtonIcon.FIND_ON_MAP}
                 disabled={isLoading}
                 className="mt-2"
               >

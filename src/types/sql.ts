@@ -1,3 +1,3 @@
-export type SqlFieldTypes = Record<string, "textArray" | "json" | "primitive">;
+export type SqlFieldTypes = Record<string, 'textArray' | 'json' | 'primitive'>;
 
-export type SqlOperator = "=" | ">" | ">=" | "<" | "<=" | "ILIKE" | "IN";
+export type SqlOperator = '=' | '>' | '>=' | '<' | '<=' | '!=' | 'ILIKE' | 'IN';

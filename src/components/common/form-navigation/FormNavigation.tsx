@@ -1,7 +1,7 @@
-import { Path, UseFormTrigger } from "react-hook-form";
+import { Path, UseFormTrigger } from 'react-hook-form';
 
-import { Button } from "../button/Button";
-import { ButtonIcon } from "../button/enums";
+import { Button } from '../button/Button';
+import { ButtonIcon } from '../button/enums';
 
 type Props<T extends Record<string, any>> = {
   currentStep: number;
@@ -33,9 +33,9 @@ export const FormNavigation = <T extends Record<string, any>>({
         onClick={() => onStepChange(currentStep - 1)}
         disabled={isSubmitting}
         icon={ButtonIcon.BACK}
-        iconClassName="fill-primary scale-x-[-1] h-3 w-3"
+        iconClassName="scale-x-[-1] h-3 w-3"
       >
-        {t("actions.back")}
+        {t('actions.back')}
       </Button>
     )}
     {currentStep === totalSteps || isUpdate ? (
@@ -44,9 +44,8 @@ export const FormNavigation = <T extends Record<string, any>>({
         disabled={isSubmitting}
         onClick={onSubmit}
         icon={ButtonIcon.SAVE}
-        iconClassName="stroke-primary"
       >
-        <span>{t(isUpdate ? "actions.save" : "actions.done")}</span>
+        <span>{t(isUpdate ? 'actions.save' : 'actions.done')}</span>
       </Button>
     ) : null}
     {currentStep < totalSteps && (
@@ -62,10 +61,10 @@ export const FormNavigation = <T extends Record<string, any>>({
         }}
         disabled={isSubmitting}
         icon={ButtonIcon.NEXT}
-        iconClassName="fill-primary h-3 w-3"
+        iconClassName="h-3 w-3"
         iconSide="right"
       >
-        {t("actions.next")}
+        {t('actions.next')}
       </Button>
     )}
   </div>

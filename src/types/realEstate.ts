@@ -1,7 +1,8 @@
-import { ListingType, ResidentialPremisesType } from "@/enums/listing";
+import { ListingType, ResidentialPremisesType } from '@/enums/listing';
 
 export type ResidentialPremises = {
   id: string;
+  state: string;
   userId: string;
   title: Record<string, string>;
   description: Record<string, string>;

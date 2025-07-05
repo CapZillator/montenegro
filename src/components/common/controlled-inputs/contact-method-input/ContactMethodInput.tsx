@@ -1,21 +1,21 @@
-"use client";
+'use client';
 
-import { FC, ReactNode } from "react";
-import { Control, Controller, useFieldArray } from "react-hook-form";
-import classNames from "classnames";
-import { twMerge } from "tailwind-merge";
+import { FC, ReactNode } from 'react';
+import { Control, Controller, useFieldArray } from 'react-hook-form';
+import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-import { Button } from "@/components/common/button/Button";
-import { ButtonIcon } from "@/components/common/button/enums";
-import { Dropdown } from "@/components/common/inputs/dropdown/Dropdown";
-import { Messengers } from "@/enums/user";
-import { useTranslation } from "@/hooks/use-translation/useTranslation";
-import { User } from "@/types/user";
+import { Button } from '@/components/common/button/Button';
+import { ButtonIcon } from '@/components/common/button/enums';
+import { Dropdown } from '@/components/common/inputs/dropdown/Dropdown';
+import { Messengers } from '@/enums/user';
+import { useTranslation } from '@/hooks/use-translation/useTranslation';
+import { User } from '@/types/user';
 
-import { DeleteStroke } from "../../icons/actions/DeleteStroke";
-import { InputContainer } from "../../inputs/input-container/InputContainer";
-import { TextInput } from "../text-input/TextInput";
-import { MESSENGER_OPTIONS } from "./constants";
+import { DeleteStroke } from '../../icons/actions/DeleteStroke';
+import { InputContainer } from '../../inputs/input-container/InputContainer';
+import { TextInput } from '../text-input/TextInput';
+import { MESSENGER_OPTIONS } from './constants';
 
 type Props = {
   name: string;
@@ -36,9 +36,9 @@ export const ContactMethodInput: FC<Props> = ({
   icon,
   submitButton,
 }) => {
-  const { fields, append, remove } = useFieldArray<User, "contacts">({
+  const { fields, append, remove } = useFieldArray<User, 'contacts'>({
     control,
-    name: "contacts",
+    name: 'contacts',
   });
 
   const { t } = useTranslation();
@@ -58,7 +58,7 @@ export const ContactMethodInput: FC<Props> = ({
   const handleAddContact = () => {
     const availableTypes = getAvailableOptions(-1);
     if (availableTypes.length > 0) {
-      append({ type: availableTypes[0].value, contact: "" });
+      append({ type: availableTypes[0].value, contact: '' });
     }
   };
 
@@ -68,7 +68,7 @@ export const ContactMethodInput: FC<Props> = ({
       name={name}
       {...{ label, icon, styles: containerStyles }}
     >
-      <div className={twMerge(classNames("space-y-3"))}>
+      <div className={twMerge(classNames('space-y-3'))}>
         {fields.map((field, index) => (
           <div key={field.id} className="flex items-center gap-3">
             <Controller
@@ -121,9 +121,9 @@ export const ContactMethodInput: FC<Props> = ({
               onClick={handleAddContact}
               disabled={disabled}
               icon={ButtonIcon.ADD}
-              iconClassName="w-5 h-5 stroke-primary"
+              iconClassName="w-5 h-5"
             >
-              <span>{t("actions.add")}</span>
+              <span>{t('actions.add')}</span>
             </Button>
           ) : null}
 

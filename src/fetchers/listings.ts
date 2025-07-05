@@ -1,14 +1,17 @@
-import { fetchPaths } from "@/constants/fetch";
-import { ResidentialPremises } from "@/types/realEstate";
-import { toCamelCase } from "@/utils/api";
+import { fetchPaths } from '@/constants/fetch';
+import { ResidentialPremises } from '@/types/realEstate';
+import { toCamelCase } from '@/utils/api';
 
 export const addListingFetcher = async (
-  data: Omit<ResidentialPremises, "id" | "userId" | "createdAt" | "updatedAt">
+  data: Omit<
+    ResidentialPremises,
+    'id' | 'userId' | 'state' | 'createdAt' | 'updatedAt'
+  >
 ) => {
   const response = await fetch(fetchPaths.internal.user.LISTINGS, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });
@@ -21,12 +24,15 @@ export const addListingFetcher = async (
 };
 
 export const updateListingFetcher = async (
-  data: Omit<ResidentialPremises, "userId" | "createdAt" | "updatedAt">
+  data: Omit<
+    ResidentialPremises,
+    'userId' | 'state' | 'createdAt' | 'updatedAt'
+  >
 ) => {
   const response = await fetch(fetchPaths.internal.user.LISTINGS, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });
@@ -58,9 +64,9 @@ export const userListingsFetcher = async (listingId?: string) => {
 
 export const deleteListingFetcher = async (listingId: string) => {
   const response = await fetch(fetchPaths.internal.user.LISTINGS, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({ id: listingId }),
   });

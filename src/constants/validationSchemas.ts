@@ -1,10 +1,10 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { MAX_IMAGES } from "@/components/common/controlled-inputs/image-uploader/constants";
-import { ListingType, ResidentialPremisesType } from "@/enums/listing";
-import { Messengers } from "@/enums/user";
+import { MAX_IMAGES } from '@/components/common/controlled-inputs/image-uploader/constants';
+import { ListingType, ResidentialPremisesType } from '@/enums/listing';
+import { Messengers } from '@/enums/user';
 
-import { regexPatterns } from "./regexPatterns";
+import { regexPatterns } from './regexPatterns';
 
 const multilingialText = z
   .record(z.string(), z.string().min(1))
@@ -18,8 +18,8 @@ const contactMethodSchema = z.object({
 const userContacts = z.object({
   phone: z
     .string()
-    .min(1, "Phone number is required")
-    .regex(regexPatterns.phone, "Please enter a valid phone number"),
+    .min(1, 'Phone number is required')
+    .regex(regexPatterns.phone, 'Please enter a valid phone number'),
   contacts: z.array(contactMethodSchema).default([]),
 });
 
@@ -27,7 +27,7 @@ export const validationSchema = {
   user: z
     .object({
       name: z.string().min(1),
-      email: z.string().email("Invalid email address"),
+      email: z.string().email('Invalid email address'),
       id: z.string().uuid().optional(),
     })
     .merge(userContacts),
@@ -35,6 +35,7 @@ export const validationSchema = {
   residentialPremises: z
     .object({
       id: z.string().optional(),
+      state: z.number().positive().optional(),
       title: multilingialText,
       description: multilingialText,
       price: z.number().positive(),
@@ -69,8 +70,8 @@ export const validationSchema = {
         return true;
       },
       {
-        message: "If floor is provided, totalFloors must also be filled.",
-        path: ["totalFloors"],
+        message: 'If floor is provided, totalFloors must also be filled.',
+        path: ['totalFloors'],
       }
     )
     .refine(
@@ -82,8 +83,8 @@ export const validationSchema = {
         return true;
       },
       {
-        message: "Floor number cannot be greater than total floors.",
-        path: ["floor"],
+        message: 'Floor number cannot be greater than total floors.',
+        path: ['floor'],
       }
     ),
 };

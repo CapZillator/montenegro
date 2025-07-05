@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import { SVGProps } from 'react';
 
 export const Save = (props: SVGProps<SVGSVGElement>) => (
   <svg
@@ -8,6 +8,7 @@ export const Save = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
+      fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}

@@ -1,14 +1,14 @@
-import { FC, ReactNode } from "react";
-import classNames from "classnames";
-import { twMerge } from "tailwind-merge";
+import { FC, ReactNode } from 'react';
+import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-import { ButtonIcon } from "./enums";
-import { getButtonIcon } from "./helpers";
+import { ButtonIcon } from './enums';
+import { getButtonIcon } from './helpers';
 
 type Props = {
-  type?: "button" | "submit" | "reset" | undefined;
+  type?: 'button' | 'submit' | 'reset' | undefined;
   icon?: ButtonIcon;
-  iconSide?: "left" | "right";
+  iconSide?: 'left' | 'right';
   children?: ReactNode;
   className?: string;
   iconClassName?: string;
@@ -17,9 +17,9 @@ type Props = {
 };
 
 export const Button: FC<Props> = ({
-  type = "button",
+  type = 'button',
   icon,
-  iconSide = "left",
+  iconSide = 'left',
   children,
   className,
   iconClassName,
@@ -30,12 +30,12 @@ export const Button: FC<Props> = ({
     {...{ type, onClick, disabled }}
     className={twMerge(
       classNames(
-        "text-sm text-primary uppercase rounded-sm cursor-pointer bg-primary-content shadow-sm shadow-primary-content/40  duration-300",
-        "px-3 py-2 hover:bg-secondary-content",
-        "disabled:bg-disable disabled:focus:outline-none disabled:text-primary/30 disabled:hover:bg-none",
+        'text-sm text-primary uppercase rounded-sm cursor-pointer bg-primary-content shadow-sm shadow-primary-content/40  duration-300',
+        'px-3 py-2 hover:bg-secondary-content',
+        'disabled:bg-disable disabled:focus:outline-none disabled:text-primary/30 disabled:hover:bg-none',
         {
-          "flex items-center gap-2": icon,
-          "flex-row-reverse": iconSide === "right" && icon,
+          'flex items-center gap-2': icon,
+          'flex-row-reverse': iconSide === 'right' && icon,
         },
         className
       )
@@ -43,7 +43,10 @@ export const Button: FC<Props> = ({
   >
     {icon ? (
       <>
-        {getButtonIcon(icon, iconClassName)}
+        {getButtonIcon(
+          icon,
+          classNames('fill-primary stroke-primary', iconClassName)
+        )}
         {children}
       </>
     ) : (

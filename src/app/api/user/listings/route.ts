@@ -1,14 +1,15 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
-import { sqlFieldTypes } from "@/constants/sql";
-import { validationSchema } from "@/constants/validationSchemas";
-import { getErrorMessage } from "@/helpers/guards";
-import { auth } from "@/lib/auth";
-import { sql } from "@/lib/db";
-import { deleteImagesByPublicIds } from "@/lib/images/deleteImagesByPublicIds";
-import { ResidentialPremises } from "@/types/realEstate";
-import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from "@/utils/api";
+import { sqlFieldTypes } from '@/constants/sql';
+import { validationSchema } from '@/constants/validationSchemas';
+import { ListingState } from '@/enums/listing';
+import { getErrorMessage } from '@/helpers/guards';
+import { auth } from '@/lib/auth';
+import { sql } from '@/lib/db';
+import { deleteImagesByPublicIds } from '@/lib/images/deleteImagesByPublicIds';
+import { ResidentialPremises } from '@/types/realEstate';
+import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from '@/utils/api';
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,23 +23,23 @@ export async function GET(req: NextRequest) {
 
     if (!id) {
       return NextResponse.json(
-        { error: "User id is missing" },
+        { error: 'User id is missing' },
         { status: 403 }
       );
     }
 
     const searchParams = req.nextUrl.searchParams;
-    const listingId = searchParams.get("listingId");
+    const listingId = searchParams.get('listingId');
 
     const listings = listingId
       ? await sql`
         SELECT * FROM residential_premises_listings
         WHERE user_id = ${id} AND id = ${listingId}
-        AND deleted_at IS NULL
+        AND state != ${ListingState.DELETED}
       `
       : await sql`
         SELECT * FROM residential_premises_listings
-        WHERE user_id = ${id} AND deleted_at IS NULL
+        WHERE user_id = ${id} AND state != ${ListingState.DELETED}
       `;
 
     return NextResponse.json(
@@ -50,7 +51,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 422 });
     }
 
-    console.log("error", error);
+    console.error('error', error);
 
     return NextResponse.json(
       { error: getErrorMessage(error) },
@@ -71,23 +72,23 @@ export async function POST(req: NextRequest) {
 
     if (!id) {
       return NextResponse.json(
-        { error: "User id is missing" },
+        { error: 'User id is missing' },
         { status: 403 }
       );
     }
 
     const listingData: Omit<
       ResidentialPremises,
-      "id" | "userId" | "createdAt" | "updatedAt"
+      'id' | 'userId' | 'createdAt' | 'updatedAt'
     > = await req.json();
     const validListingData = toSnakeCase(
       validationSchema.residentialPremises.parse(listingData)
     );
 
     const { query, values } = buildSqlQuery(
-      "residential_premises_listings",
+      'residential_premises_listings',
       { ...validListingData, user_id: id },
-      "insert",
+      'insert',
       undefined,
       sqlFieldTypes.residentialPremisesListings
     );
@@ -100,7 +101,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 422 });
     }
 
-    console.log("error", error);
+    console.error('error', error);
 
     return NextResponse.json(
       { error: getErrorMessage(error) },
@@ -121,7 +122,7 @@ export async function PUT(req: NextRequest) {
 
     const listingData: Omit<
       ResidentialPremises,
-      "userId" | "createdAt" | "updatedAt"
+      'userId' | 'createdAt' | 'updatedAt'
     > = await req.json();
     const validListingData = toSnakeCase(
       validationSchema.residentialPremises.parse(listingData)
@@ -130,18 +131,18 @@ export async function PUT(req: NextRequest) {
 
     if (!id || !userId) {
       return NextResponse.json(
-        { error: "Listing/user data is missing" },
+        { error: 'Listing/user data is missing' },
         { status: 409 }
       );
     }
 
     const { query, values } = buildSqlQuery(
-      "residential_premises_listings",
+      'residential_premises_listings',
       { ...validBaseListingData },
-      "update",
+      'update',
       [
-        { field: "id", value: id },
-        { field: "user_id", value: userId },
+        { field: 'id', value: id },
+        { field: 'user_id', value: userId },
       ],
       sqlFieldTypes.residentialPremisesListings
     );
@@ -154,7 +155,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 422 });
     }
 
-    console.log("error", error);
+    console.error('error', error);
 
     return NextResponse.json(
       { error: getErrorMessage(error) },
@@ -181,14 +182,14 @@ export async function DELETE(req: NextRequest) {
 
     if (!id || !userId || !listingToDelete.length) {
       return NextResponse.json(
-        { error: "Listing/user data is missing" },
+        { error: 'Listing/user data is missing' },
         { status: 409 }
       );
     }
 
     await sql`
     UPDATE residential_premises_listings
-    SET deleted_at = NOW(), images = '{}'
+    SET deleted_at = NOW(), images = '{}', state = ${ListingState.DELETED}
     WHERE id = ${listingToDelete[0].id} AND user_id = ${listingToDelete[0].user_id}
     `;
     await deleteImagesByPublicIds(listingToDelete[0].images);
@@ -199,7 +200,7 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 422 });
     }
 
-    console.log("error", error);
+    console.error('error', error);
 
     return NextResponse.json(
       { error: getErrorMessage(error) },
