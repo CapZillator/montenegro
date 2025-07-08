@@ -17,7 +17,7 @@ export const Description: FC<Props> = async ({ text, locale }) => {
       <h3 className={classNames('font-semibold', 'lg:text-lg')}>
         {t('listings.elements.description')}
       </h3>
-      <p>{getLocalizedStringValue(text, locale)}s</p>
+      <p>{getLocalizedStringValue(text, locale)}</p>
     </>
   );
 };

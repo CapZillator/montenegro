@@ -1,20 +1,22 @@
-import { FC } from "react";
-import { useLocale } from "next-intl";
-import classNames from "classnames";
+import { FC } from 'react';
+import { useLocale } from 'next-intl';
+import classNames from 'classnames';
 
-import { DeleteStroke } from "@/components/common/icons/actions/DeleteStroke";
-import { Edit } from "@/components/common/icons/actions/Edit";
-import { Area } from "@/components/common/icons/realty/Area";
-import { Bed } from "@/components/common/icons/realty/Bed";
-import { Calendar } from "@/components/common/icons/realty/Calendar";
-import { Door } from "@/components/common/icons/realty/Door";
-import { Location } from "@/components/common/icons/realty/Location";
-import { ImageButton } from "@/components/common/image-button/ImageButton";
-import { isoUTCStringToLocaleString } from "@/formatters/date";
-import { formatNumberToFinancialAmount } from "@/formatters/finance";
-import { useTranslation } from "@/hooks/use-translation/useTranslation";
-import { ResidentialPremises } from "@/types/realEstate";
-import { getFullAddress, getLocalizedStringValue } from "@/utils/listings";
+import {
+  AreaIcon,
+  BedIcon,
+  CalendarIcon,
+  DeleteStrokeIcon,
+  DoorIcon,
+  EditIcon,
+  LocationIcon,
+} from '@/components/common/icons';
+import { ImageButton } from '@/components/common/image-button/ImageButton';
+import { isoUTCStringToLocaleString } from '@/formatters/date';
+import { formatNumberToFinancialAmount } from '@/formatters/finance';
+import { useTranslation } from '@/hooks/use-translation/useTranslation';
+import { ResidentialPremises } from '@/types/realEstate';
+import { getFullAddress, getLocalizedStringValue } from '@/utils/listings';
 
 type Props = {
   onOpenListing: (id: string) => void;
@@ -35,10 +37,10 @@ export const ListingList: FC<Props> = ({
   return (
     <div
       className={classNames(
-        "grid grid-cols-1 gap-2",
-        "sm:grid-cols-2",
-        "md:grid-cols-3",
-        "lg:grid-cols-4 lg:gap-3"
+        'grid grid-cols-1 gap-2',
+        'sm:grid-cols-2',
+        'md:grid-cols-3',
+        'lg:grid-cols-4 lg:gap-3'
       )}
     >
       {listings?.map((listing) => (
@@ -53,52 +55,58 @@ export const ListingList: FC<Props> = ({
           />
           <div>
             <div
-              className={classNames("flex items-center justify-between gap-2")}
+              className={classNames('flex items-center justify-between gap-2')}
             >
-              <p className={classNames("font-semibold")}>
+              <p className={classNames('font-semibold')}>
                 {formatNumberToFinancialAmount(listing.price)} €
               </p>
               <span
                 className={classNames(
-                  "lowercase py-0.5 px-2 bg-primary-content text-primary rounded-sm"
+                  'lowercase py-0.5 px-2 bg-primary-content text-primary rounded-sm'
                 )}
               >
                 {t(`listings.types.${listing.listingType}`)}
               </span>
             </div>
 
-            <h3 className={classNames("font-semibold truncate")}>
+            <h3 className={classNames('font-semibold truncate')}>
               {getLocalizedStringValue(listing.title, locale)}
             </h3>
-            <div className={classNames("flex items-center gap-1")}>
-              <Location
-                className={classNames("w-5 h-5 stroke-primary-content")}
+            <div className={classNames('flex items-center gap-1')}>
+              <LocationIcon
+                className={classNames('w-5 h-5 stroke-primary-content')}
               />
               <span className="truncate">
                 {getFullAddress(listing.location, listing.address)}
               </span>
             </div>
           </div>
-          <div className={classNames("grid grid-cols-4 text-sm")}>
-            <div className={classNames("flex items-center gap-2")}>
-              <Door className={classNames("w-4 h-4 fill-primary-content")} />
+          <div className={classNames('grid grid-cols-4 text-sm')}>
+            <div className={classNames('flex items-center gap-2')}>
+              <DoorIcon
+                className={classNames('w-4 h-4 fill-primary-content')}
+              />
               <span>{listing.rooms}</span>
             </div>
-            <div className={classNames("flex items-center gap-2")}>
-              <Bed className={classNames("w-4 h-4 stroke-primary-content")} />
+            <div className={classNames('flex items-center gap-2')}>
+              <BedIcon
+                className={classNames('w-4 h-4 stroke-primary-content')}
+              />
               <span>{listing.bedrooms}</span>
             </div>
-            <div className={classNames("col-span-2 flex items-center gap-2")}>
-              <Area className={classNames("w-4 h-4 fill-primary-content")} />
+            <div className={classNames('col-span-2 flex items-center gap-2')}>
+              <AreaIcon
+                className={classNames('w-4 h-4 fill-primary-content')}
+              />
               <span>
-                {listing.area} {t("measures.m")}
+                {listing.area} {t('measures.m')}
                 <sup>2</sup>
               </span>
             </div>
           </div>
-          <div className={classNames("flex items-center gap-2")}>
-            <Calendar
-              className={classNames("w-4 h-4 stroke-primary-content")}
+          <div className={classNames('flex items-center gap-2')}>
+            <CalendarIcon
+              className={classNames('w-4 h-4 stroke-primary-content')}
             />
             <span className="text-sm">
               {isoUTCStringToLocaleString(listing.createdAt)}
@@ -106,16 +114,16 @@ export const ListingList: FC<Props> = ({
           </div>
           <div
             className={classNames(
-              "absolute top-4 left-4 right-4 flex justify-end gap-2"
+              'absolute top-4 left-4 right-4 flex justify-end gap-2'
             )}
           >
             <ImageButton
               onClick={() => onOpenListing(listing.id)}
               isDisabled={isDisabled}
             >
-              <Edit
+              <EditIcon
                 className={classNames(
-                  "w-5 h-5 fill-primary-content duration-300 group-hover:fill-primary"
+                  'w-5 h-5 fill-primary-content duration-300 group-hover:fill-primary'
                 )}
               />
             </ImageButton>
@@ -123,9 +131,9 @@ export const ListingList: FC<Props> = ({
               onClick={() => onDeleteListing(listing.id)}
               isDisabled={isDisabled}
             >
-              <DeleteStroke
+              <DeleteStrokeIcon
                 className={classNames(
-                  "w-5 h-5 stroke-primary-content duration-300 group-hover:stroke-primary"
+                  'w-5 h-5 stroke-primary-content duration-300 group-hover:stroke-primary'
                 )}
               />
             </ImageButton>

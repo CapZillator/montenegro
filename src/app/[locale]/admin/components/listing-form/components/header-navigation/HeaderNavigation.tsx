@@ -1,11 +1,11 @@
-import { FC } from "react";
-import classNames from "classnames";
-import { twMerge } from "tailwind-merge";
+import { FC } from 'react';
+import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-import { ArrowBack } from "@/components/common/icons/navigation/ArrowBack";
-import { useOverflowX } from "@/hooks/use-overflow-x/useOverflowX";
+import { ArrowBackIcon } from '@/components/common/icons';
+import { useOverflowX } from '@/hooks/use-overflow-x/useOverflowX';
 
-import { StepIndicator } from "./components/step-indicator/StepIndicator";
+import { StepIndicator } from './components/step-indicator/StepIndicator';
 
 type Props = {
   steps: string[];
@@ -26,10 +26,10 @@ export const HeaderNavigation: FC<Props> = ({
     <div
       ref={ref}
       className={classNames(
-        "flex flex-wrap items-center gap-3 relative w-full pb-5 overflow-x-hidden",
-        "lg:pb-10",
+        'flex flex-wrap items-center gap-3 relative w-full pb-5 overflow-x-hidden',
+        'lg:pb-10',
         {
-          "justify-between": !isOverflowing,
+          'justify-between': !isOverflowing,
         }
       )}
     >
@@ -39,21 +39,21 @@ export const HeaderNavigation: FC<Props> = ({
         className="cursor-pointer"
         disabled={isDisabled}
       >
-        <ArrowBack
+        <ArrowBackIcon
           className={twMerge(
             classNames(
-              "w-7 h-7 stroke-primary-content hover:stroke-secondary-content duration-300",
+              'w-7 h-7 stroke-primary-content hover:stroke-secondary-content duration-300',
               {
-                "stroke-disable hover:stroke-disable": isDisabled,
+                'stroke-disable hover:stroke-disable': isDisabled,
               }
             )
           )}
         />
       </button>
-      <div className={classNames({ "h-6": isOverflowing })}>
+      <div className={classNames({ 'h-6': isOverflowing })}>
         <StepIndicator {...{ steps, currentStep: step, isOverflowing }} />
         {isOverflowing ? (
-          <div className={classNames("flex items-center gap-3")}>
+          <div className={classNames('flex items-center gap-3')}>
             <div className="w-6 h-6 rounded-full border-2 flex items-center justify-center text-xs font-bold bg-secondary-content text-primary border-secondary-content">
               <span>{step}</span>
             </div>
@@ -63,7 +63,7 @@ export const HeaderNavigation: FC<Props> = ({
           </div>
         ) : null}
       </div>
-      <div className={classNames("w-7", { hidden: isOverflowing })} />
+      <div className={classNames('w-7', { hidden: isOverflowing })} />
     </div>
   );
 };

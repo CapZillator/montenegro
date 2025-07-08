@@ -5,30 +5,34 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import classNames from 'classnames';
 
-import { ControlledRangeSlider } from '@/components/common//controlled-inputs/controlled-range-slider/ControlledRangeSlider';
 import { Accordion } from '@/components/common/accordion/Accordion';
 import { Button } from '@/components/common/button/Button';
 import { ButtonIcon } from '@/components/common/button/enums';
-import { ControlledDropdown } from '@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown';
-import { ControlledSwitcher } from '@/components/common/controlled-inputs/controlled-switcher/ControlledSwitcher';
-import { MoneyInput } from '@/components/common/controlled-inputs/money-input/MoneyInput';
-import { NumericInput } from '@/components/common/controlled-inputs/numeric-input/NumericInput';
-import { Close } from '@/components/common/icons/actions/Close';
-import { Filter } from '@/components/common/icons/actions/Filter';
-import { AirConditioner } from '@/components/common/icons/realty/AirConditioner';
-import { Area } from '@/components/common/icons/realty/Area';
-import { Armchair } from '@/components/common/icons/realty/Armchair';
-import { Bath } from '@/components/common/icons/realty/Bath';
-import { Bed } from '@/components/common/icons/realty/Bed';
-import { Calendar } from '@/components/common/icons/realty/Calendar';
-import { City } from '@/components/common/icons/realty/City';
-import { Deal } from '@/components/common/icons/realty/Deal';
-import { Door } from '@/components/common/icons/realty/Door';
-import { Location } from '@/components/common/icons/realty/Location';
-import { Parking } from '@/components/common/icons/realty/Parking';
-import { Pets } from '@/components/common/icons/realty/Pets';
-import { Stairs } from '@/components/common/icons/realty/Stairs';
-import { Wallet } from '@/components/common/icons/realty/Wallet';
+import {
+  ControlledDropdown,
+  ControlledRangeSlider,
+  ControlledSwitcher,
+  MoneyInput,
+  NumericInput,
+} from '@/components/common/controlled-inputs';
+import {
+  AirConditionerIcon,
+  AreaIcon,
+  ArmchairIcon,
+  BathIcon,
+  BedIcon,
+  CalendarIcon,
+  CityIcon,
+  CloseIcon,
+  DealIcon,
+  DoorIcon,
+  FilterIcon,
+  LocationIcon,
+  ParkingIcon,
+  PetsIcon,
+  StairsIcon,
+  WalletIcon,
+} from '@/components/common/icons';
 import { LOCALIZED_CITIES } from '@/constants/location';
 import { ListingType, ResidentialPremisesType } from '@/enums/listing';
 import { useLocale } from '@/hooks/use-locale/useLocale';
@@ -104,7 +108,7 @@ export function FiltersForm() {
           'xl:hidden'
         )}
       >
-        <Filter className="w-4.5 h-4.5 stroke-primary-content" />
+        <FilterIcon className="w-4.5 h-4.5 stroke-primary-content" />
         <span>{t('actions.filters')}</span>
       </button>
       <form
@@ -130,7 +134,7 @@ export function FiltersForm() {
             }
             className={classNames('cursor-pointer')}
           >
-            <Close className="w-6 h-6 fill-primary-content duration-300 hover:fill-secondary-content" />
+            <CloseIcon className="w-6 h-6 fill-primary-content duration-300 hover:fill-secondary-content" />
           </button>
         </div>
 
@@ -141,7 +145,7 @@ export function FiltersForm() {
             values={realEstateTypeDropdownOptions}
             controlButtonStyles="w-full"
             label={t('filters.type')}
-            icon={<City className="w-5 h-5 stroke-primary-content" />}
+            icon={<CityIcon className="w-5 h-5 stroke-primary-content" />}
           />
           <ControlledDropdown
             name={'listingType'}
@@ -149,7 +153,7 @@ export function FiltersForm() {
             values={listingTypeDropdownOptions}
             controlButtonStyles="w-full"
             label={t('filters.listingType')}
-            icon={<Deal className="w-5 h-5 fill-primary-content" />}
+            icon={<DealIcon className="w-5 h-5 fill-primary-content" />}
           />
           <ControlledDropdown
             name={'location'}
@@ -158,13 +162,15 @@ export function FiltersForm() {
             controlButtonStyles="w-full"
             label={t('filters.place')}
             searchEnabled
-            icon={<Location className="w-5 h-5 stroke-primary-content" />}
+            icon={<LocationIcon className="w-5 h-5 stroke-primary-content" />}
           />
         </div>
 
         <div className="mb-3">
           <div className="flex gap-1.5 items-center mb-1">
-            <Wallet className={classNames('w-5 h-5 stroke-primary-content')} />
+            <WalletIcon
+              className={classNames('w-5 h-5 stroke-primary-content')}
+            />
             <p>{t('listings.properties.price')}</p>
           </div>
           <div className="flex gap-2 items-center">
@@ -176,7 +182,7 @@ export function FiltersForm() {
 
         <div className="mb-3">
           <div className="flex gap-1.5 items-center mb-1">
-            <Area className={classNames('w-5 h-5 fill-primary-content')} />
+            <AreaIcon className={classNames('w-5 h-5 fill-primary-content')} />
             <p>{t('listings.properties.area')}</p>
           </div>
           <div className="flex gap-2 items-center">
@@ -211,7 +217,7 @@ export function FiltersForm() {
             control={control}
             label={t('listings.properties.rooms')}
             max={9}
-            icon={<Door className="w-5 h-5 fill-primary-content" />}
+            icon={<DoorIcon className="w-5 h-5 fill-primary-content" />}
           />
           <ControlledRangeSlider
             control={control}
@@ -219,7 +225,7 @@ export function FiltersForm() {
             label={t('listings.properties.bedrooms')}
             nameFrom="bedroomsFrom"
             nameTo="bedroomsTo"
-            icon={<Bed className="w-5 h-5 fill-primary-content" />}
+            icon={<BedIcon className="w-5 h-5 fill-primary-content" />}
           />
           <ControlledRangeSlider
             control={control}
@@ -227,7 +233,7 @@ export function FiltersForm() {
             label={t('listings.properties.bathrooms')}
             nameFrom="bathroomsFrom"
             nameTo="bathroomsTo"
-            icon={<Bath className="w-5 h-5 fill-primary-content" />}
+            icon={<BathIcon className="w-5 h-5 fill-primary-content" />}
           />
         </div>
 
@@ -248,7 +254,7 @@ export function FiltersForm() {
           >
             <div className="mb-3">
               <div className="flex gap-1.5 items-center mb-1">
-                <Stairs
+                <StairsIcon
                   className={classNames('w-5 h-5 fill-primary-content')}
                 />
                 <p>{t('listings.properties.floor')}</p>
@@ -262,7 +268,7 @@ export function FiltersForm() {
 
             <div className="mb-3">
               <div className="flex gap-1.5 items-center mb-1">
-                <Calendar
+                <CalendarIcon
                   className={classNames('w-5 h-5 stroke-primary-content')}
                 />
                 <p>{t('listings.properties.buildingYear')}</p>
@@ -279,20 +285,20 @@ export function FiltersForm() {
                 control={control}
                 name="furnished"
                 label={t('listings.properties.furnished')}
-                icon={<Armchair className="w-5 h-5 fill-primary-content" />}
+                icon={<ArmchairIcon className="w-5 h-5 fill-primary-content" />}
               />
               <ControlledSwitcher
                 control={control}
                 name="parking"
                 label={t('listings.properties.parking')}
-                icon={<Parking className="w-5 h-5 fill-primary-content" />}
+                icon={<ParkingIcon className="w-5 h-5 fill-primary-content" />}
               />
               <ControlledSwitcher
                 control={control}
                 name="airConditioner"
                 label={t('listings.properties.ac')}
                 icon={
-                  <AirConditioner className="w-5 h-5 fill-primary-content" />
+                  <AirConditionerIcon className="w-5 h-5 fill-primary-content" />
                 }
               />
               {isLongTermRent ? (
@@ -300,7 +306,7 @@ export function FiltersForm() {
                   name={'petsAllowed'}
                   control={control}
                   label={t('listings.properties.petsAllowed')}
-                  icon={<Pets className="w-5 h-5 fill-primary-content" />}
+                  icon={<PetsIcon className="w-5 h-5 fill-primary-content" />}
                 />
               ) : null}
             </div>

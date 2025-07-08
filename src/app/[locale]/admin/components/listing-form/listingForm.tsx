@@ -10,31 +10,35 @@ import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
 import { Button, ButtonIcon } from '@/components/common/button';
-import { ControlledDropdown } from '@/components/common/controlled-inputs/controlled-dropdown/ControlledDropdown';
-import { ControlledMapInput } from '@/components/common/controlled-inputs/controlled-map-input/ControlledMapInput';
-import { ControlledSwitcher } from '@/components/common/controlled-inputs/controlled-switcher/ControlledSwitcher';
-import { ImageUploader } from '@/components/common/controlled-inputs/image-uploader/ImageUploader';
-import { MoneyInput } from '@/components/common/controlled-inputs/money-input/MoneyInput';
-import { MultilingualTextInput } from '@/components/common/controlled-inputs/multilingual-text-input/MultilingualTextInput';
-import { MultilingualTextarea } from '@/components/common/controlled-inputs/multilingual-textarea/MultilingualTextarea';
-import { NumericInput } from '@/components/common/controlled-inputs/numeric-input/NumericInput';
-import { TextInput } from '@/components/common/controlled-inputs/text-input/TextInput';
+import {
+  ControlledDropdown,
+  ControlledMapInput,
+  ControlledSwitcher,
+  ImageUploader,
+  MoneyInput,
+  MultilingualTextarea,
+  MultilingualTextInput,
+  NumericInput,
+  TextInput,
+} from '@/components/common/controlled-inputs';
 import { FormNavigation } from '@/components/common/form-navigation/FormNavigation';
-import { Language } from '@/components/common/icons/Language';
-import { Address } from '@/components/common/icons/realty/Address';
-import { AirConditioner } from '@/components/common/icons/realty/AirConditioner';
-import { Area } from '@/components/common/icons/realty/Area';
-import { Armchair } from '@/components/common/icons/realty/Armchair';
-import { Bath } from '@/components/common/icons/realty/Bath';
-import { Bed } from '@/components/common/icons/realty/Bed';
-import { Calendar } from '@/components/common/icons/realty/Calendar';
-import { Door } from '@/components/common/icons/realty/Door';
-import { Location } from '@/components/common/icons/realty/Location';
-import { Parking } from '@/components/common/icons/realty/Parking';
-import { Pets } from '@/components/common/icons/realty/Pets';
-import { Price } from '@/components/common/icons/realty/Price';
-import { Stairs } from '@/components/common/icons/realty/Stairs';
-import { Wallet } from '@/components/common/icons/realty/Wallet';
+import {
+  AddressIcon,
+  AirConditionerIcon,
+  AreaIcon,
+  ArmchairIcon,
+  BathIcon,
+  BedIcon,
+  CalendarIcon,
+  DoorIcon,
+  LanguageIcon,
+  LocationIcon,
+  ParkingIcon,
+  PetsIcon,
+  PriceIcon,
+  StairsIcon,
+  WalletIcon,
+} from '@/components/common/icons';
 import { Dropdown } from '@/components/common/inputs/dropdown/Dropdown';
 import { UserContactsModal } from '@/components/common/user-contacts-modal/UserContactsModal';
 import { queryKeys } from '@/constants/fetch';
@@ -266,7 +270,7 @@ export const ListingForm: FC<Props> = ({
                   selectedValue={listingLocale}
                   onUpdate={onUpdateListingLocale}
                   icon={
-                    <Language
+                    <LanguageIcon
                       className={twMerge(
                         classNames('w-4 h-4 fill-primary', {
                           'fill-primary-content/30': isSubmitting,
@@ -302,7 +306,9 @@ export const ListingForm: FC<Props> = ({
                   control={control}
                   label={`${t('listings.properties.price')} *`}
                   disabled={isSubmitting}
-                  icon={<Wallet className="w-5 h-5 stroke-primary-content" />}
+                  icon={
+                    <WalletIcon className="w-5 h-5 stroke-primary-content" />
+                  }
                   inputContainerStyles="w-40"
                 />
                 <NumericInput
@@ -316,7 +322,7 @@ export const ListingForm: FC<Props> = ({
                       <sup>2</sup>
                     </>
                   }
-                  icon={<Area className="w-5 h-5 fill-primary-content" />}
+                  icon={<AreaIcon className="w-5 h-5 fill-primary-content" />}
                   inputContainerStyles="w-40"
                 />
                 <NumericInput
@@ -328,7 +334,7 @@ export const ListingForm: FC<Props> = ({
                     isSubmitting
                   }
                   containerStyles="col-start-1"
-                  icon={<Door className="w-5 h-5 fill-primary-content" />}
+                  icon={<DoorIcon className="w-5 h-5 fill-primary-content" />}
                   inputContainerStyles="w-15"
                 />
                 <NumericInput
@@ -339,7 +345,7 @@ export const ListingForm: FC<Props> = ({
                     propertyType === ResidentialPremisesType.STUDIO ||
                     isSubmitting
                   }
-                  icon={<Bed className="w-5 h-5 fill-primary-content" />}
+                  icon={<BedIcon className="w-5 h-5 fill-primary-content" />}
                   inputContainerStyles="w-15"
                 />
                 <NumericInput
@@ -350,7 +356,7 @@ export const ListingForm: FC<Props> = ({
                     propertyType === ResidentialPremisesType.STUDIO ||
                     isSubmitting
                   }
-                  icon={<Bath className="w-5 h-5 fill-primary-content" />}
+                  icon={<BathIcon className="w-5 h-5 fill-primary-content" />}
                   inputContainerStyles="w-15"
                 />
               </div>
@@ -364,7 +370,7 @@ export const ListingForm: FC<Props> = ({
             >
               <div className="col-start-1">
                 <label className="flex items-center gap-1.5 mb-1">
-                  <Stairs className="w-5 h-5 stroke-primary-content" />
+                  <StairsIcon className="w-5 h-5 stroke-primary-content" />
                   <span>{t('listings.properties.floor')}</span>
                 </label>
                 <div className={classNames('flex items-center gap-2')}>
@@ -388,7 +394,9 @@ export const ListingForm: FC<Props> = ({
                 control={control}
                 label={t('listings.properties.buildingYear')}
                 disabled={isSubmitting}
-                icon={<Calendar className="w-5 h-5 stroke-primary-content" />}
+                icon={
+                  <CalendarIcon className="w-5 h-5 stroke-primary-content" />
+                }
                 inputContainerStyles="w-15"
               />
               {isLongTermRent ? (
@@ -397,7 +405,9 @@ export const ListingForm: FC<Props> = ({
                   control={control}
                   label={`${t('listings.properties.deposit')}`}
                   disabled={isSubmitting}
-                  icon={<Price className="w-5 h-5 stroke-primary-content" />}
+                  icon={
+                    <PriceIcon className="w-5 h-5 stroke-primary-content" />
+                  }
                   inputContainerStyles="w-40"
                 />
               ) : null}
@@ -406,7 +416,7 @@ export const ListingForm: FC<Props> = ({
                 control={control}
                 label={t('listings.properties.furnished')}
                 disabled={isSubmitting}
-                icon={<Armchair className="w-5 h-5 fill-primary-content" />}
+                icon={<ArmchairIcon className="w-5 h-5 fill-primary-content" />}
                 containerStyles="col-start-1"
               />
               <ControlledSwitcher
@@ -415,7 +425,7 @@ export const ListingForm: FC<Props> = ({
                 label={t('listings.properties.ac')}
                 disabled={isSubmitting}
                 icon={
-                  <AirConditioner className="w-5 h-5 fill-primary-content" />
+                  <AirConditionerIcon className="w-5 h-5 fill-primary-content" />
                 }
               />
               <ControlledSwitcher
@@ -423,7 +433,7 @@ export const ListingForm: FC<Props> = ({
                 control={control}
                 label={t('listings.properties.parking')}
                 disabled={isSubmitting}
-                icon={<Parking className="w-5 h-5 fill-primary-content" />}
+                icon={<ParkingIcon className="w-5 h-5 fill-primary-content" />}
               />
               {isLongTermRent ? (
                 <ControlledSwitcher
@@ -431,7 +441,7 @@ export const ListingForm: FC<Props> = ({
                   control={control}
                   label={t('listings.properties.petsAllowed')}
                   disabled={isSubmitting}
-                  icon={<Pets className="w-5 h-5 fill-primary-content" />}
+                  icon={<PetsIcon className="w-5 h-5 fill-primary-content" />}
                 />
               ) : null}
             </div>
@@ -456,7 +466,9 @@ export const ListingForm: FC<Props> = ({
                   label={t('listings.properties.location')}
                   values={locations}
                   disabled={isSubmitting}
-                  icon={<Location className="w-5 h-5 stroke-primary-content" />}
+                  icon={
+                    <LocationIcon className="w-5 h-5 stroke-primary-content" />
+                  }
                   controlButtonStyles="w-40"
                   searchEnabled
                 />
@@ -465,7 +477,9 @@ export const ListingForm: FC<Props> = ({
                   control={control}
                   label={t('listings.properties.address')}
                   disabled={isSubmitting}
-                  icon={<Address className="w-5 h-5 fill-primary-content" />}
+                  icon={
+                    <AddressIcon className="w-5 h-5 fill-primary-content" />
+                  }
                 />
               </div>
 

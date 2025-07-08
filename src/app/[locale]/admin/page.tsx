@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import classNames from "classnames";
+import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import classNames from 'classnames';
 
-import { Add } from "@/components/common/icons/actions/Add";
-import { queryKeys } from "@/constants/fetch";
-import { deleteListingFetcher, userListingsFetcher } from "@/fetchers/listings";
-import { useToast } from "@/hooks/use-toast/useToast";
-import { useTranslation } from "@/hooks/use-translation/useTranslation";
+import { AddIcon } from '@/components/common/icons';
+import { queryKeys } from '@/constants/fetch';
+import { deleteListingFetcher, userListingsFetcher } from '@/fetchers/listings';
+import { useToast } from '@/hooks/use-toast/useToast';
+import { useTranslation } from '@/hooks/use-translation/useTranslation';
 
-import { ListingForm } from "./components/listing-form/listingForm";
-import { ListingList } from "./components/listing-list/ListingList";
-import { AdminPanelContentComponents } from "./enums";
+import { ListingForm } from './components/listing-form/listingForm';
+import { ListingList } from './components/listing-list/ListingList';
+import { AdminPanelContentComponents } from './enums';
 
 export default function AdminDashboard() {
   const [componentToShow, setComponentToShow] = useState(
     AdminPanelContentComponents.LISTINGS_LIST
   );
-  const [listingIdToUpdate, setListingIdToUpdate] = useState("");
+  const [listingIdToUpdate, setListingIdToUpdate] = useState('');
   const { data: session, status } = useSession();
   const {
     data: listings,
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
 
   const onCloseListingForm = () => {
     setComponentToShow(AdminPanelContentComponents.LISTINGS_LIST);
-    setListingIdToUpdate("");
+    setListingIdToUpdate('');
   };
   const onOpenListing = (id: string) => {
     setListingIdToUpdate(id);
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
         queryKey: [queryKeys.listings.userListings],
       });
     } catch (_error) {
-      showToast(t("errors.deleteFailed"), "error");
+      showToast(t('errors.deleteFailed'), 'error');
     } finally {
       setIsListDisabled(false);
     }
@@ -60,10 +60,10 @@ export default function AdminDashboard() {
     ? listings?.find((listing) => listing.id === listingIdToUpdate)
     : undefined;
 
-  console.log("listings list", listings);
+  console.log('listings list', listings);
   console.log(listingsError);
 
-  if (status === "loading" || isListingsLoading) {
+  if (status === 'loading' || isListingsLoading) {
     return (
       <main>
         <h1>Loading...</h1>
@@ -80,7 +80,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className={classNames("w-full 2xl:max-w-container-md 2xl:mx-auto")}>
+    <div className={classNames('w-full 2xl:max-w-container-md 2xl:mx-auto')}>
       {componentToShow === AdminPanelContentComponents.LISTINGS_LIST && (
         <div className="relative">
           <ListingList
@@ -95,14 +95,14 @@ export default function AdminDashboard() {
             <button
               type="button"
               className={classNames(
-                "mr-2 bg-primary-content text-primary p-2 rounded-sm shadow-sm shadow-primary-content/40 duration-300 cursor-pointer",
-                "hover:bg-secondary-content"
+                'mr-2 bg-primary-content text-primary p-2 rounded-sm shadow-sm shadow-primary-content/40 duration-300 cursor-pointer',
+                'hover:bg-secondary-content'
               )}
               onClick={() =>
                 setComponentToShow(AdminPanelContentComponents.LISTING_FORM)
               }
             >
-              <Add className="w-6 h-6 stroke-primary" />
+              <AddIcon className="w-6 h-6 stroke-primary" />
             </button>
           </div>
         </div>

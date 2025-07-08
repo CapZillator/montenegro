@@ -6,13 +6,17 @@ import classNames from 'classnames';
 
 import { Button } from '@/components/common/button/Button';
 import { ButtonIcon } from '@/components/common/button/enums';
-import { ContactMethodInput } from '@/components/common/controlled-inputs/contact-method-input/ContactMethodInput';
-import { PhoneInput } from '@/components/common/controlled-inputs/phone-input/PhoneInput';
-import { TextInput } from '@/components/common/controlled-inputs/text-input/TextInput';
-import { Contacts } from '@/components/common/icons/user/Contacts';
-import { Email } from '@/components/common/icons/user/Email';
-import { Phone } from '@/components/common/icons/user/Phone';
-import { Profile } from '@/components/common/icons/user/Profile';
+import {
+  ContactMethodInput,
+  PhoneInput,
+  TextInput,
+} from '@/components/common/controlled-inputs';
+import {
+  ContactsIcon,
+  EmailICon,
+  PhoneIcon,
+  ProfileIcon,
+} from '@/components/common/icons';
 import { queryKeys } from '@/constants/fetch';
 import { validationSchema } from '@/constants/validationSchemas';
 import { updateUserProfileFetcher } from '@/fetchers/user';
@@ -89,21 +93,21 @@ export const UserForm: FC<Props> = ({ user }) => {
               control={control}
               label={`${t('user.name')}`}
               disabled={isSubmitting}
-              icon={<Profile className="w-5 h-5 fill-primary-content" />}
+              icon={<ProfileIcon className="w-5 h-5 fill-primary-content" />}
             />
             <TextInput
               name={'email'}
               control={control}
               label={`${t('user.email')}`}
               disabled={isSubmitting}
-              icon={<Email className="w-5 h-5 fill-primary-content" />}
+              icon={<EmailICon className="w-5 h-5 fill-primary-content" />}
             />
             <PhoneInput
               name={'phone'}
               control={control}
               label={`${t('user.phone')}`}
               disabled={isSubmitting}
-              icon={<Phone className="w-5 h-5 fill-primary-content" />}
+              icon={<PhoneIcon className="w-5 h-5 fill-primary-content" />}
             />
           </div>
           <div>
@@ -112,7 +116,7 @@ export const UserForm: FC<Props> = ({ user }) => {
               control={control}
               label={t('user.additionalContacts')}
               disabled={isSubmitting}
-              icon={<Contacts className="w-5 h-5 fill-primary-content" />}
+              icon={<ContactsIcon className="w-5 h-5 fill-primary-content" />}
             />
           </div>
         </div>

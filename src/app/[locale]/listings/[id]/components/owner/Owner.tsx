@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { notFound } from 'next/navigation';
 import classNames from 'classnames';
 
-import { Profile } from '@/components/common/icons/user/Profile';
+import { ProfileIcon } from '@/components/common/icons';
 import { getListingOwnerById } from '@/utils/db/listings';
 
 import { Contacts } from './components/contacts/Contacts';
@@ -21,7 +21,7 @@ export const Owner: FC<Props> = async ({ userId }) => {
   return (
     <div>
       <p className={classNames('flex items-center gap-1.5')}>
-        <Profile className="w-5 h-5 fill-primary-content" />
+        <ProfileIcon className="w-5 h-5 fill-primary-content" />
         <span>{owner.name}</span>
       </p>
       <Contacts phone={owner.phone} contacts={owner.contacts} />

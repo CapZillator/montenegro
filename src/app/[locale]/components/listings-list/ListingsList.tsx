@@ -2,11 +2,13 @@ import { FC } from 'react';
 import { getLocale, getTranslations } from 'next-intl/server';
 import classNames from 'classnames';
 
-import { Area } from '@/components/common/icons/realty/Area';
-import { Bed } from '@/components/common/icons/realty/Bed';
-import { Calendar } from '@/components/common/icons/realty/Calendar';
-import { Door } from '@/components/common/icons/realty/Door';
-import { Location } from '@/components/common/icons/realty/Location';
+import {
+  AreaIcon,
+  BedIcon,
+  CalendarIcon,
+  DoorIcon,
+  LocationIcon,
+} from '@/components/common/icons';
 import { LocalizedLink } from '@/components/localized-link/LokalizedLink';
 import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { ResidentialPremises } from '@/types/realEstate';
@@ -70,7 +72,7 @@ export const ListingsList: FC<Props> = async ({ data }) => {
                   {getLocalizedStringValue(listing.title, locale)}
                 </h3>
                 <div className={classNames('flex items-center gap-1')}>
-                  <Location
+                  <LocationIcon
                     className={classNames('w-5 h-5 stroke-primary-content')}
                   />
                   <span className="truncate">
@@ -80,13 +82,13 @@ export const ListingsList: FC<Props> = async ({ data }) => {
               </div>
               <div className={classNames('grid grid-cols-4 text-sm')}>
                 <div className={classNames('flex items-center gap-2')}>
-                  <Door
+                  <DoorIcon
                     className={classNames('w-4 h-4 fill-primary-content')}
                   />
                   <span>{listing.rooms}</span>
                 </div>
                 <div className={classNames('flex items-center gap-2')}>
-                  <Bed
+                  <BedIcon
                     className={classNames('w-4 h-4 stroke-primary-content')}
                   />
                   <span>{listing.bedrooms}</span>
@@ -94,7 +96,7 @@ export const ListingsList: FC<Props> = async ({ data }) => {
                 <div
                   className={classNames('col-span-2 flex items-center gap-2')}
                 >
-                  <Area
+                  <AreaIcon
                     className={classNames('w-4 h-4 fill-primary-content')}
                   />
                   <span>
@@ -104,7 +106,7 @@ export const ListingsList: FC<Props> = async ({ data }) => {
                 </div>
               </div>
               <div className={classNames('flex items-center gap-2')}>
-                <Calendar
+                <CalendarIcon
                   className={classNames('w-4 h-4 stroke-primary-content')}
                 />
                 <p className="text-sm">
