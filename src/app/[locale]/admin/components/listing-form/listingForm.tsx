@@ -167,7 +167,7 @@ export const ListingForm: FC<Props> = ({
       setValue('latitude', coords[0]);
       setValue('longitude', coords[1]);
     }
-  }, [coords]);
+  }, [coords, setValue]);
 
   const onSubmit = async (
     data: Omit<

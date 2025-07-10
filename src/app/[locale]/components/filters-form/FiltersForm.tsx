@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect,useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 
 import { Accordion } from '@/components/common/accordion/Accordion';
@@ -39,6 +39,7 @@ import { useLocale } from '@/hooks/use-locale/useLocale';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
 import { useWindowSize } from '@/hooks/use-window-size/useWindowSize';
 import { ResidentialPremisesFilters } from '@/types/filters';
+import { parseSearchParamsToFilters } from '@/utils/filters';
 
 import { DEFAULT_FILTERS_BAR_STATE, DEFAULT_VALUES } from './constants';
 
@@ -47,6 +48,7 @@ export function FiltersForm() {
     DEFAULT_FILTERS_BAR_STATE
   );
   const router = useRouter();
+  const searchParamsRaw = useSearchParams();
   const { t } = useTranslation();
   const { control, reset, watch, handleSubmit } =
     useForm<ResidentialPremisesFilters>({
@@ -59,24 +61,40 @@ export function FiltersForm() {
     listingType && listingType === ListingType.LONG_TERM_RENT;
 
   const onSubmit = (data: any) => {
-    const params = new URLSearchParams();
+    const searchParams = new URLSearchParams(searchParamsRaw.toString());
+    const filterKeys = Object.keys(DEFAULT_VALUES);
+
+    filterKeys.forEach((key) => {
+      searchParams.delete(key);
+    });
 
     Object.entries(
       isLongTermRent ? data : { ...data, petsAllowed: null }
     ).forEach(([key, value]) => {
       if (Array.isArray(value) && !value.length) return;
-      if (value) {
-        params.set(key, value.toString());
+      if (value !== null && value !== undefined && value !== '') {
+        searchParams.set(key, value.toString());
       }
     });
 
     if (!isDesktop && !isLargeDesktop) {
       setFiltersBarState({ ...filtersBarState, isMainOpen: false });
     }
-    router.push(`?${params.toString()}`);
+
+    router.push(`?${searchParams.toString()}`);
   };
 
-  const onReset = () => reset();
+  useEffect(() => {
+    const filtersFromParams = parseSearchParamsToFilters(
+      Object.fromEntries(searchParamsRaw.entries())
+    );
+    reset({ ...DEFAULT_VALUES, ...filtersFromParams });
+  }, [searchParamsRaw, reset]);
+
+  const onReset = () => {
+    reset();
+    router.push('?');
+  };
 
   const realEstateTypeDropdownOptions = Object.values(
     ResidentialPremisesType
@@ -104,7 +122,7 @@ export function FiltersForm() {
           })
         }
         className={classNames(
-          'mt-2 mb-3 px-2 py-1 flex items-center gap-1.5 border-solid border-1 border-divider/25 rounded-sm text-sm shadow-md uppercase bg-primary',
+          'px-3 py-2 flex items-center gap-1.5 border-solid border-1 border-divider/25 rounded-sm text-sm shadow-md uppercase bg-primary',
           'xl:hidden'
         )}
       >

@@ -1,7 +1,14 @@
 import { FC } from 'react';
 import { Control, Controller } from 'react-hook-form';
+import dynamic from 'next/dynamic';
 
-import { EditableLocationMap } from '@/components/common/map/components/editable-location-map/EditableLocationMap';
+const EditableLocationMap = dynamic(
+  () =>
+    import(
+      '@/components/common/map/components/editable-location-map/EditableLocationMap'
+    ).then((mod) => mod.EditableLocationMap),
+  { ssr: false }
+);
 
 type Props = {
   nameLat: string;

@@ -1,16 +1,16 @@
-import { FC, ReactNode, useMemo, useRef, useState } from "react";
-import classNames from "classnames";
-import { twMerge } from "tailwind-merge";
+import { FC, ReactNode, useMemo, useRef, useState } from 'react';
+import classNames from 'classnames';
+import { twMerge } from 'tailwind-merge';
 
-import { useClickOutside } from "@/hooks/use-click-outside/useOutsideClick";
-import { useDebounce } from "@/hooks/use-debounce/useDebounce";
-import { useTranslation } from "@/hooks/use-translation/useTranslation";
+import { useClickOutside } from '@/hooks/use-click-outside/useOutsideClick';
+import { useDebounce } from '@/hooks/use-debounce/useDebounce';
+import { useTranslation } from '@/hooks/use-translation/useTranslation';
 
-import { Close } from "../../icons/actions/Close";
-import { ChevronDown } from "../../icons/navigation/ChevronDown";
-import { Checked } from "../../icons/state/Checked";
-import { DROPDOWN_HEIGHT } from "./constants";
-import { getLabel } from "./utils";
+import { Close } from '../../icons/actions/Close';
+import { ChevronDown } from '../../icons/navigation/ChevronDown';
+import { Checked } from '../../icons/state/Checked';
+import { DROPDOWN_HEIGHT } from './constants';
+import { getLabel } from './utils';
 
 type Props = {
   values: { name: string; value: string | boolean }[];
@@ -41,7 +41,7 @@ export const Dropdown: FC<Props> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(Boolean(isOpenByDefault));
   const [openUpwards, setOpenUpwards] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const { t } = useTranslation();
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -58,10 +58,10 @@ export const Dropdown: FC<Props> = ({
 
   const onSelect = (value: string | boolean) => {
     if (frozenValues && frozenValues.includes(value)) return;
-    setSearchTerm("");
+    setSearchTerm('');
     if (isMultipleSelect) {
       onUpdate(
-        value === "any"
+        value === 'any'
           ? []
           : selectedValue.includes(value)
             ? selectedValue.filter((selected) => selected !== value)
@@ -70,14 +70,14 @@ export const Dropdown: FC<Props> = ({
 
       return;
     }
-    onUpdate(value === "any" ? "" : value);
+    onUpdate(value === 'any' ? '' : value);
     setIsOpen(false);
   };
 
   const clickOutsideCallback = () => {
     if (isOpen) {
       setIsOpen(false);
-      setSearchTerm("");
+      setSearchTerm('');
     }
   };
 
@@ -96,14 +96,14 @@ export const Dropdown: FC<Props> = ({
   return (
     <div
       ref={dropdownRef}
-      className={twMerge(classNames("cursor-pointer", controlButtonStyles))}
+      className={twMerge(classNames('cursor-pointer', controlButtonStyles))}
     >
       <button
         className={twMerge(
           classNames(
-            "flex items-center gap-2 text-primary rounded-sm bg-primary-content capitalize shadow-sm shadow-primary-content/40 duration-300 cursor-pointer",
-            "hover:bg-secondary-content focus:bg-secondary-content disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30",
-            "px-3 py-1.5",
+            'flex items-center gap-2 text-primary rounded-sm bg-primary-content shadow-sm shadow-primary-content/40 duration-300 cursor-pointer',
+            'hover:bg-secondary-content focus:bg-secondary-content disabled:bg-disable disabled:focus:outline-none disabled:text-primary-content/30',
+            'px-3 py-1.5',
             controlButtonStyles
           )
         )}
@@ -126,13 +126,13 @@ export const Dropdown: FC<Props> = ({
           {selectedValuesLabel ? (
             <>{selectedValuesLabel}</>
           ) : (
-            <>{t("states.any")}</>
+            <>{t('states.any')}</>
           )}
         </div>
         {isMultipleSelect && selectedValue.length > 1 ? (
           <span
             className={classNames(
-              "text-sm bg-primary/30 px-1.5 text-primary rounded-sm"
+              'text-sm bg-primary/30 px-1.5 text-primary rounded-sm'
             )}
           >
             {selectedValue.length}
@@ -140,9 +140,9 @@ export const Dropdown: FC<Props> = ({
         ) : null}
         <ChevronDown
           className={twMerge(
-            classNames("w-2.5 h-2.5 shrink-0 fill-primary duration-300", {
-              "-scale-100": isOpen,
-              "fill-primary-content/30": disabled,
+            classNames('w-2.5 h-2.5 shrink-0 fill-primary duration-300', {
+              '-scale-100': isOpen,
+              'fill-primary-content/30': disabled,
             })
           )}
         />
@@ -152,11 +152,11 @@ export const Dropdown: FC<Props> = ({
         <div className="relative">
           <div
             className={classNames(
-              "absolute bg-primary/90 rounded-sm text-primary-content shadow-sm shadow-primary-content/75",
-              "backdrop-blur-sm min-w-full z-20",
+              'absolute bg-primary/90 rounded-sm text-primary-content shadow-sm shadow-primary-content/75',
+              'backdrop-blur-sm min-w-full z-20',
               {
-                "top-1.5": !openUpwards,
-                "bottom-10": openUpwards,
+                'top-1.5': !openUpwards,
+                'bottom-10': openUpwards,
               }
             )}
           >
@@ -166,22 +166,22 @@ export const Dropdown: FC<Props> = ({
                   type="text"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder={`${t("actions.search")}...`}
+                  placeholder={`${t('actions.search')}...`}
                   className={classNames(
-                    "w-full pl-2 pr-7 py-1 text-sm bg-secondary rounded text-primary-content inset-shadow-sm inset-shadow-primary-content/20",
-                    "focus:outline-2 focus:outline-primary-content/80 placeholder:text-primary-content/80"
+                    'w-full pl-2 pr-7 py-1 text-sm bg-secondary rounded text-primary-content inset-shadow-sm inset-shadow-primary-content/20',
+                    'focus:outline-2 focus:outline-primary-content/80 placeholder:text-primary-content/80'
                   )}
                 />
                 <button
                   type="button"
                   className={classNames(
-                    "group absolute w-4 h-4 fill-secondary-content top-1/2 -translate-y-1/2 right-1.5 cursor-pointer"
+                    'group absolute w-4 h-4 fill-secondary-content top-1/2 -translate-y-1/2 right-1.5 cursor-pointer'
                   )}
-                  onClick={() => setSearchTerm("")}
+                  onClick={() => setSearchTerm('')}
                 >
                   <Close
                     className={classNames(
-                      "fill-primary-content duration-300 group-hover:fill-divider"
+                      'fill-primary-content duration-300 group-hover:fill-divider'
                     )}
                   />
                 </button>
@@ -196,12 +196,12 @@ export const Dropdown: FC<Props> = ({
                     key={value.value.toString()}
                     onClick={() => onSelect(value.value)}
                     className={classNames(
-                      "relative cursor-pointer hover:text-divider duration-300",
+                      'relative cursor-pointer hover:text-divider duration-300',
                       // {
                       //   "flex items-center gap-2": isMultipleSelect,
                       // }
                       {
-                        "pl-5": isShowCheckedIcon,
+                        'pl-5': isShowCheckedIcon,
                       }
                     )}
                   >
@@ -214,7 +214,7 @@ export const Dropdown: FC<Props> = ({
               })}
               {filteredValues.length === 0 && (
                 <li className="text-sm text-primary/75 py-1">
-                  {t("states.nothingFound")}
+                  {t('states.nothingFound')}
                 </li>
               )}
             </ul>

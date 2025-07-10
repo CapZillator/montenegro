@@ -136,5 +136,13 @@
     "weekAgo": "week(s) ago",
     "monthAgo": "month(s) ago",
     "yearAgo": "year(s) ago"
+  },
+  "sorting": {
+    "new": "New first",
+    "old": "Old first",
+    "priceAsc": "Low price first",
+    "priceDesc": "High price first",
+    "areaAsc": "Small area first",
+    "areaDesc": "Big area first"
   }
 }
