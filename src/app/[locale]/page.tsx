@@ -1,6 +1,7 @@
-// import { getTranslations } from "next-intl/server";
+import { getTranslations } from 'next-intl/server';
 import classNames from 'classnames';
 
+import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { SortOption } from '@/types/sorting';
 import { getListings } from '@/utils/db/listings';
 import { parseSearchParamsToFilters } from '@/utils/filters';
@@ -13,6 +14,7 @@ export default async function Home({ searchParams }: any) {
   const params = await Promise.resolve(searchParams);
   const filters = parseSearchParamsToFilters(params);
   const sort = (params.sort as SortOption) ?? SortOption.NEWEST;
+  const t = await getTranslations();
 
   const listings = await getListings(filters, sort);
 
@@ -21,11 +23,22 @@ export default async function Home({ searchParams }: any) {
       <div
         className={classNames(
           'flex items-center gap-3 my-3 flex-wrap',
-          'lg:block'
+          'xl:block'
         )}
       >
-        <Sorting />
         <FiltersForm />
+        <div
+          className={classNames(
+            'flex items-center gap-5 flex-wrap',
+            'xl:pl-84 xl:pr-2 xl:pt-4'
+          )}
+        >
+          <Sorting />
+          <p className={classNames('hidden text-lg', 'md:block')}>
+            {formatNumberToFinancialAmount(listings.length)}{' '}
+            {t('listings.offers')}
+          </p>
+        </div>
       </div>
       <ListingsList data={listings} />
     </div>

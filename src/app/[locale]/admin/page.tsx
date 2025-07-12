@@ -21,11 +21,7 @@ export default function AdminDashboard() {
   );
   const [listingIdToUpdate, setListingIdToUpdate] = useState('');
   const { data: session, status } = useSession();
-  const {
-    data: listings,
-    error: listingsError,
-    isLoading: isListingsLoading,
-  } = useQuery({
+  const { data: listings, isLoading: isListingsLoading } = useQuery({
     queryKey: [queryKeys.listings.userListings],
     queryFn: async () => userListingsFetcher(),
   });
@@ -59,9 +55,6 @@ export default function AdminDashboard() {
   const formData = listingIdToUpdate
     ? listings?.find((listing) => listing.id === listingIdToUpdate)
     : undefined;
-
-  console.log('listings list', listings);
-  console.log(listingsError);
 
   if (status === 'loading' || isListingsLoading) {
     return (

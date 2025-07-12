@@ -98,7 +98,8 @@
     "elements": {
       "preview": "preview",
       "description": "Description"
-    }
+    },
+    "offers": "offer(s)"
   },
   "filters": {
     "label": "Filters",

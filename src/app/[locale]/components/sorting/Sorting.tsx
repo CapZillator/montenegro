@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect,useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import classNames from 'classnames';
 
@@ -43,16 +43,11 @@ export const Sorting: FC = () => {
   ];
 
   return (
-    <div className={classNames('xl:pl-82 xl:pt-4')}>
-      <Dropdown
-        selectedValue={sortBy}
-        values={sortOptionValues}
-        onUpdate={onSortByUpdate}
-        controlButtonStyles={classNames(
-          'min-w-32 w-32',
-          'xl:w-fit xl:min-w-40'
-        )}
-      />
-    </div>
+    <Dropdown
+      selectedValue={sortBy}
+      values={sortOptionValues}
+      onUpdate={onSortByUpdate}
+      controlButtonStyles={classNames('min-w-32 w-32', 'xl:w-fit xl:min-w-40')}
+    />
   );
 };

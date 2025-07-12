@@ -57,9 +57,15 @@ export const userListingsFetcher = async (listingId?: string) => {
 
   const listings = await response.json();
 
-  return listings.listings.map((listing: Record<string, any>) =>
-    toCamelCase(listing)
-  ) as ResidentialPremises[];
+  return listings.listings.map((listing: Record<string, any>) => {
+    const camel = toCamelCase(listing);
+
+    return {
+      ...camel,
+      latitude: camel.latitude ? parseFloat(camel.latitude) : undefined,
+      longitude: camel.longitude ? parseFloat(camel.longitude) : undefined,
+    };
+  }) as ResidentialPremises[];
 };
 
 export const deleteListingFetcher = async (listingId: string) => {

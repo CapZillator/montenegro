@@ -98,7 +98,8 @@
     "elements": {
       "preview": "превью",
       "description": "Описание"
-    }
+    },
+    "offers": "предложений(я)"
   },
   "filters": {
     "label": "Фильтры",
