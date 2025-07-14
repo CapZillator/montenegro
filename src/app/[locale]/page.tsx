@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { SortOption } from '@/types/sorting';
+import { PAGINATION_OPTIONS } from '@/utils/db/constants';
 import { getListings } from '@/utils/db/listings';
 import { parseSearchParamsToFilters } from '@/utils/filters';
 
@@ -16,7 +17,15 @@ export default async function Home({ searchParams }: any) {
   const sort = (params.sort as SortOption) ?? SortOption.NEWEST;
   const t = await getTranslations();
 
-  const listings = await getListings(filters, sort);
+  const currentPage = Number(params.page ?? 1);
+  const perPage = PAGINATION_OPTIONS.itemsPerPage;
+
+  const { listings, total, totalPages } = await getListings(
+    filters,
+    sort,
+    currentPage,
+    perPage
+  );
 
   return (
     <div className={classNames('')}>
@@ -35,12 +44,19 @@ export default async function Home({ searchParams }: any) {
         >
           <Sorting />
           <p className={classNames('hidden text-lg', 'md:block')}>
-            {formatNumberToFinancialAmount(listings.length)}{' '}
-            {t('listings.offers')}
+            {formatNumberToFinancialAmount(total)} {t('listings.offers')}
           </p>
         </div>
       </div>
-      <ListingsList data={listings} />
+
+      <ListingsList
+        data={listings}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        filters={filters}
+        sort={sort}
+        perPage={perPage}
+      />
     </div>
   );
 }

@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { FC, useEffect, useRef, useState } from "react";
-import classNames from "classnames";
+import { FC, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
 
-import { LocalizedLink } from "../../localized-link/LokalizedLink";
-import { AddListing } from "./components/add-listing/AddListing";
-import { LanguageSwitcher } from "./components/language-switcher/LanguageSwitcher";
-import { User } from "./components/user/User";
-import { DropdownVariant } from "./enums";
+import { LocalizedLink } from '../../localized-link/LokalizedLink';
+import { AddListing } from './components/add-listing/AddListing';
+import { LanguageSwitcher } from './components/language-switcher/LanguageSwitcher';
+import { User } from './components/user/User';
+import { DropdownVariant } from './enums';
 
 export const Header: FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<DropdownVariant | null>(
@@ -30,21 +30,21 @@ export const Header: FC = () => {
       setActiveDropdown(null);
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
     <header
       className={classNames(
-        "fixed flex justify-center shadow-md left-0 right-0 px-4 py-2 bg-primary z-40",
-        "lg:px-5"
+        'fixed flex justify-center shadow-md left-0 right-0 px-4 py-2 bg-primary/80 backdrop-blur-md z-40',
+        'lg:px-5'
       )}
     >
       <div
         className={classNames(
-          "flex items-center justify-between w-full max-w-container-xl"
+          'flex items-center justify-between w-full max-w-container-xl'
         )}
       >
         <div>

@@ -18,6 +18,12 @@ export const Sorting: FC = () => {
     const currentSort = searchParams.get('sort') as SortOption | null;
     if (currentSort && Object.values(SortOption).includes(currentSort)) {
       setSortBy(currentSort);
+
+      return;
+    }
+
+    if (!currentSort) {
+      setSortBy(SortOption.NEWEST);
     }
   }, [searchParams]);
 

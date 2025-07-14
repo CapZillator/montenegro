@@ -10,7 +10,7 @@ import { User } from '@/types/user';
 import { buildWhereClauseQuery } from '../api';
 import { toCamelCase } from '../api';
 import { buildFilterConditions } from '../filters';
-import { SORT_SQL_MAP } from './constants';
+import { PAGINATION_OPTIONS,SORT_SQL_MAP } from './constants';
 
 const getOrderByClause = (sort?: string): string => {
   if (!sort) return 'ORDER BY created_at DESC';
@@ -27,8 +27,16 @@ const getOrderByClause = (sort?: string): string => {
 export const getListings = cache(
   async (
     filters: ResidentialPremisesFilters,
-    sort = SortOption.NEWEST
-  ): Promise<ResidentialPremises[]> => {
+    sort = SortOption.NEWEST,
+    page = PAGINATION_OPTIONS.defaultPage,
+    perPage = PAGINATION_OPTIONS.itemsPerPage
+  ): Promise<{
+    listings: ResidentialPremises[];
+    total: number;
+    page: number;
+    perPage: number;
+    totalPages: number;
+  }> => {
     const conditions = buildFilterConditions(filters);
     const { clause, values } = buildWhereClauseQuery([
       ...conditions,
@@ -36,18 +44,38 @@ export const getListings = cache(
     ]);
 
     const orderBy = getOrderByClause(sort);
+    const offset = (page - 1) * perPage;
 
-    const query = `
+    const listingsQuery = `
       SELECT *
       FROM residential_premises_listings
       ${clause}
       ${orderBy}
-      LIMIT 20;
+      LIMIT ${perPage}
+      OFFSET ${offset};
     `;
 
-    const result = await sql(query, values);
+    const countQuery = `
+      SELECT COUNT(*) AS total
+      FROM residential_premises_listings
+      ${clause};
+    `;
 
-    return result.map(toCamelCase) as ResidentialPremises[];
+    const [listingsResult, countResult] = await Promise.all([
+      sql(listingsQuery, values),
+      sql(countQuery, values),
+    ]);
+
+    const total = Number(countResult[0]?.total ?? 0);
+    const totalPages = Math.ceil(total / perPage);
+
+    return {
+      listings: listingsResult.map(toCamelCase) as ResidentialPremises[],
+      total,
+      page,
+      perPage,
+      totalPages,
+    };
   }
 );
 

@@ -93,7 +93,15 @@ export function FiltersForm() {
 
   const onReset = () => {
     reset();
-    router.push('?');
+    const params = new URLSearchParams(searchParamsRaw.toString());
+
+    const sort = params.get('sort');
+    const newParams = new URLSearchParams();
+    if (sort) {
+      newParams.set('sort', sort);
+    }
+
+    router.push(`?${newParams.toString()}`);
   };
 
   const realEstateTypeDropdownOptions = Object.values(
