@@ -3,7 +3,7 @@ export enum ButtonIcon {
   DELETE = 'delete',
   // EDIT = "edit",
   SAVE = 'save',
-  // CANCEL = "cancel",
+  // CANCEL = 'cancel',
   CLOSE = 'close',
   NEXT = 'next',
   BACK = 'back',

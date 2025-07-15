@@ -18,6 +18,7 @@
     "addGroup": "Добавить раздел",
     "save": "Сохранить",
     "delete": "Удалить",
+    "cancel": "Отменить",
     "close": "Закрыть",
     "search": "Поиск",
     "next": "Далее",
@@ -34,7 +35,8 @@
     "reset": "Сбросить",
     "apply": "Применить",
     "done": "Готово",
-    "findOnMap": "Найти на карте"
+    "findOnMap": "Найти на карте",
+    "confirmAction": "Подвердите действие"
   },
   "states": {
     "saved": "Сохранено",
@@ -53,8 +55,9 @@
     }
   },
   "warnings": {
-    "wrongFile": "Wrong file(s) size or format!",
-    "tooMany": "Too many files!"
+    "wrongFile": "Неверный формат или размер файла(ов)!",
+    "tooMany": "Слишком много файлов!",
+    "listingDeletion": "Объявление будет удалено безвозвратно. Вы уверены?"
   },
   "realEstate": {
     "types": {

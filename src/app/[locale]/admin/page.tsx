@@ -5,20 +5,24 @@ import { useSession } from 'next-auth/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import classNames from 'classnames';
 
-import { AddIcon } from '@/components/common/icons';
 import { queryKeys } from '@/constants/fetch';
 import { deleteListingFetcher, userListingsFetcher } from '@/fetchers/listings';
 import { useToast } from '@/hooks/use-toast/useToast';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
 
+import { ConfirmDeleteModal } from './components/confirm-delete-modal/ConfirmDeleteModal';
 import { ListingForm } from './components/listing-form/listingForm';
 import { ListingList } from './components/listing-list/ListingList';
 import { AdminPanelContentComponents } from './enums';
+import { ConfirmDeletion } from './types';
 
 export default function AdminDashboard() {
   const [componentToShow, setComponentToShow] = useState(
     AdminPanelContentComponents.LISTINGS_LIST
   );
+  const [confirmDeletion, setConfirmDeletion] = useState<ConfirmDeletion>({
+    isShowModal: false,
+  });
   const [listingIdToUpdate, setListingIdToUpdate] = useState('');
   const { data: session, status } = useSession();
   const { data: listings, isLoading: isListingsLoading } = useQuery({
@@ -34,23 +38,47 @@ export default function AdminDashboard() {
     setComponentToShow(AdminPanelContentComponents.LISTINGS_LIST);
     setListingIdToUpdate('');
   };
+
   const onOpenListing = (id: string) => {
     setListingIdToUpdate(id);
     setComponentToShow(AdminPanelContentComponents.LISTING_FORM);
   };
-  const onDeleteListing = async (id: string) => {
+
+  const onDeleteListing = (id: string) =>
+    setConfirmDeletion({
+      isShowModal: true,
+      listingId: id,
+    });
+
+  const onDeleteConfirmed = async () => {
     try {
-      setIsListDisabled(true);
-      await deleteListingFetcher(id);
-      queryClient.invalidateQueries({
-        queryKey: [queryKeys.listings.userListings],
+      setConfirmDeletion({
+        isShowModal: false,
+        listingId: null,
       });
+      if (confirmDeletion.listingId) {
+        setIsListDisabled(true);
+        await deleteListingFetcher(confirmDeletion.listingId);
+        queryClient.invalidateQueries({
+          queryKey: [queryKeys.listings.userListings],
+        });
+
+        return;
+      }
+
+      showToast(t('errors.deleteFailed'), 'error');
     } catch (_error) {
       showToast(t('errors.deleteFailed'), 'error');
     } finally {
       setIsListDisabled(false);
     }
   };
+
+  const onCancelDeletion = () =>
+    setConfirmDeletion({
+      isShowModal: false,
+      listingId: null,
+    });
 
   const formData = listingIdToUpdate
     ? listings?.find((listing) => listing.id === listingIdToUpdate)
@@ -73,9 +101,11 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className={classNames('w-full 2xl:max-w-container-md 2xl:mx-auto')}>
-      {componentToShow === AdminPanelContentComponents.LISTINGS_LIST && (
-        <div className="relative">
+    <>
+      <div
+        className={classNames('w-full', '2xl:max-w-container-md 2xl:mx-auto')}
+      >
+        {componentToShow === AdminPanelContentComponents.LISTINGS_LIST && (
           <ListingList
             {...{
               listings,
@@ -84,25 +114,18 @@ export default function AdminDashboard() {
               isDisabled: isListDisabled,
             }}
           />
-          <div className="sticky bottom-8 w-full flex justify-end z-5">
-            <button
-              type="button"
-              className={classNames(
-                'mr-2 bg-primary-content text-primary p-2 rounded-sm shadow-sm shadow-primary-content/40 duration-300 cursor-pointer',
-                'hover:bg-secondary-content'
-              )}
-              onClick={() =>
-                setComponentToShow(AdminPanelContentComponents.LISTING_FORM)
-              }
-            >
-              <AddIcon className="w-6 h-6 stroke-primary" />
-            </button>
-          </div>
-        </div>
+        )}
+        {componentToShow === AdminPanelContentComponents.LISTING_FORM && (
+          <ListingForm onClose={onCloseListingForm} initialListing={formData} />
+        )}
+      </div>
+
+      {confirmDeletion.isShowModal && (
+        <ConfirmDeleteModal
+          handleClose={onCancelDeletion}
+          handleConfirm={onDeleteConfirmed}
+        />
       )}
-      {componentToShow === AdminPanelContentComponents.LISTING_FORM && (
-        <ListingForm onClose={onCloseListingForm} initialListing={formData} />
-      )}
-    </div>
+    </>
   );
 }

@@ -18,6 +18,7 @@
     "addGroup": "Добавить раздел",
     "save": "Save",
     "delete": "Delete",
+    "cancel": "Cancel",
     "close": "Close",
     "search": "Search",
     "next": "Next",
@@ -34,7 +35,8 @@
     "reset": "Reset",
     "apply": "Apply",
     "done": "Done",
-    "findOnMap": "Find on map"
+    "findOnMap": "Find on map",
+    "confirmAction": "Confirm the action"
   },
   "states": {
     "saved": "Saved",
@@ -54,7 +56,8 @@
   },
   "warnings": {
     "wrongFile": "Wrong file(s) size or format!",
-    "tooMany": "Too many files!"
+    "tooMany": "Too many files!",
+    "listingDeletion": "The listing will be permanently removed. Are you sure?"
   },
   "realEstate": {
     "types": {
