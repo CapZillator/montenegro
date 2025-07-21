@@ -1,10 +1,10 @@
-import { fetchPaths } from '@/constants/fetch';
+import { FETCH_PATHS } from '@/constants/fetch';
 
 export const geocodeAddress = async (
   query: string
 ): Promise<[number, number]> => {
   const response = await fetch(
-    `${fetchPaths.internal.geo.geocode}/?q=${encodeURIComponent(query)}`
+    `${FETCH_PATHS.internal.geo.geocode}/?q=${encodeURIComponent(query)}`
   );
 
   if (!response.ok) {

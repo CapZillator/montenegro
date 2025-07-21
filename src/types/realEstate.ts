@@ -2,7 +2,7 @@ import { ListingType, ResidentialPremisesType } from '@/enums/listing';
 
 export type ResidentialPremises = {
   id: string;
-  state: string;
+  state: number;
   userId: string;
   title: Record<string, string>;
   description: Record<string, string>;

@@ -10,6 +10,7 @@
     "genericRequest": "Ошибка запроса к БД",
     "deleteFailed": "Deletion failed, try again",
     "uploadFailed": "Uploading failed, try again",
+    "listingUpdateFailed": "Не удалось обновить объявление",
     "geocoding": "Couldn't find the location"
   },
   "actions": {
@@ -148,6 +149,8 @@
     "priceAsc": "Сначала дешевые",
     "priceDesc": "Сначала дорогие",
     "areaAsc": "Сначала маленькие",
-    "areaDesc": "Сначала большие"
+    "areaDesc": "Сначала большие",
+    "active": "Сначала активные",
+    "inactive": "Сначала неактивные"
   }
 }

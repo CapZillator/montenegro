@@ -6,7 +6,12 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import classNames from 'classnames';
 
 import { queryKeys } from '@/constants/fetch';
-import { deleteListingFetcher, userListingsFetcher } from '@/fetchers/listings';
+import { ListingState } from '@/enums/listing';
+import {
+  deleteListingFetcher,
+  updateListingStateFetcher,
+  userListingsFetcher,
+} from '@/fetchers/listings';
 import { useToast } from '@/hooks/use-toast/useToast';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
 
@@ -42,6 +47,20 @@ export default function AdminDashboard() {
   const onOpenListing = (id: string) => {
     setListingIdToUpdate(id);
     setComponentToShow(AdminPanelContentComponents.LISTING_FORM);
+  };
+
+  const onChangeVisibility = async (id: string, state: ListingState) => {
+    try {
+      setIsListDisabled(true);
+      await updateListingStateFetcher(id, state);
+      queryClient.invalidateQueries({
+        queryKey: [queryKeys.listings.userListings],
+      });
+    } catch (_error) {
+      showToast(t('errors.listingUpdateFailed'), 'error');
+    } finally {
+      setIsListDisabled(false);
+    }
   };
 
   const onDeleteListing = (id: string) =>
@@ -110,6 +129,7 @@ export default function AdminDashboard() {
             {...{
               listings,
               onOpenListing,
+              onChangeVisibility,
               onDeleteListing,
               isDisabled: isListDisabled,
             }}

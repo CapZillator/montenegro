@@ -1,13 +1,14 @@
-export const fetchPaths = {
+export const FETCH_PATHS = {
   internal: {
     user: {
-      LISTINGS: '/api/user/listings',
-      PROFILE: '/api/user',
-      CHECK_USER: '/api/user/check',
-      UPDATE_USER_CONTACT: '/api/user/contact',
+      listings: '/api/user/listings',
+      listingStatus: '/api/user/listings/status',
+      profile: '/api/user',
+      checkUser: '/api/user/check',
+      updateUserContact: '/api/user/contact',
     },
     image: {
-      MANAGE_LISTING_IMAGE: '/api/image',
+      manageListingImages: '/api/image',
     },
     geo: {
       geocode: '/api/geo/geocode',

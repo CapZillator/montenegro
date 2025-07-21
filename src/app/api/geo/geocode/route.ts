@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { fetchPaths } from '@/constants/fetch';
+import { FETCH_PATHS } from '@/constants/fetch';
 import { getErrorMessage } from '@/helpers/guards';
 
 export async function GET(req: NextRequest) {
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     const query = req.nextUrl.searchParams.get('q');
     if (!query) return new Response('Missing query', { status: 400 });
 
-    const url = `${fetchPaths.external.nominatim}/search?format=json&q=${encodeURIComponent(query)}`;
+    const url = `${FETCH_PATHS.external.nominatim}/search?format=json&q=${encodeURIComponent(query)}`;
     const res = await fetch(url, {
       headers: {
         'User-Agent': 'montenegro-app/1.0 (andruf52@gmail.com)',

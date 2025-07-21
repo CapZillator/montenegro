@@ -53,7 +53,7 @@ export const Sorting: FC = () => {
       selectedValue={sortBy}
       values={sortOptionValues}
       onUpdate={onSortByUpdate}
-      controlButtonStyles={classNames('min-w-32 w-32', 'xl:w-fit xl:min-w-40')}
+      controlButtonStyles={classNames('min-w-32', 'xl:w-fit xl:min-w-40')}
     />
   );
 };

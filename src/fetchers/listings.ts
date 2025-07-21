@@ -1,4 +1,5 @@
-import { fetchPaths } from '@/constants/fetch';
+import { FETCH_PATHS } from '@/constants/fetch';
+import { ListingState } from '@/enums/listing';
 import { ResidentialPremises } from '@/types/realEstate';
 import { toCamelCase } from '@/utils/api';
 
@@ -8,7 +9,7 @@ export const addListingFetcher = async (
     'id' | 'userId' | 'state' | 'createdAt' | 'updatedAt'
   >
 ) => {
-  const response = await fetch(fetchPaths.internal.user.LISTINGS, {
+  const response = await fetch(FETCH_PATHS.internal.user.listings, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ export const updateListingFetcher = async (
     'userId' | 'state' | 'createdAt' | 'updatedAt'
   >
 ) => {
-  const response = await fetch(fetchPaths.internal.user.LISTINGS, {
+  const response = await fetch(FETCH_PATHS.internal.user.listings, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -47,8 +48,8 @@ export const updateListingFetcher = async (
 export const userListingsFetcher = async (listingId?: string) => {
   const response = await fetch(
     listingId
-      ? `${fetchPaths.internal.user.LISTINGS}?listingId=${listingId}`
-      : fetchPaths.internal.user.LISTINGS
+      ? `${FETCH_PATHS.internal.user.listings}?listingId=${listingId}`
+      : FETCH_PATHS.internal.user.listings
   );
 
   if (!response.ok) {
@@ -69,12 +70,29 @@ export const userListingsFetcher = async (listingId?: string) => {
 };
 
 export const deleteListingFetcher = async (listingId: string) => {
-  const response = await fetch(fetchPaths.internal.user.LISTINGS, {
+  const response = await fetch(FETCH_PATHS.internal.user.listings, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ id: listingId }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Response status: ${response.status}`);
+  }
+};
+
+export const updateListingStateFetcher = async (
+  id: string,
+  state: ListingState
+) => {
+  const response = await fetch(FETCH_PATHS.internal.user.listingStatus, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ id, state }),
   });
 
   if (!response.ok) {

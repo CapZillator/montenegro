@@ -23,6 +23,11 @@ const userContacts = z.object({
   contacts: z.array(contactMethodSchema).default([]),
 });
 
+const listingState = z.object({
+  id: z.string().optional(),
+  state: z.number().positive().optional(),
+});
+
 export const validationSchema = {
   user: z
     .object({
@@ -32,6 +37,7 @@ export const validationSchema = {
     })
     .merge(userContacts),
   userContacts,
+  listingState,
   residentialPremises: z
     .object({
       id: z.string().optional(),

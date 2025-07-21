@@ -1,17 +1,17 @@
-import { fetchPaths } from "@/constants/fetch";
-import { InternalApiResponse } from "@/types/fetch";
-import { UserContacts } from "@/types/user";
-import { User, UserStatus } from "@/types/user";
+import { FETCH_PATHS } from '@/constants/fetch';
+import { InternalApiResponse } from '@/types/fetch';
+import { UserContacts } from '@/types/user';
+import { User, UserStatus } from '@/types/user';
 
 export const checkUserFetcher = async () => {
-  const response = await fetch(fetchPaths.internal.user.CHECK_USER);
+  const response = await fetch(FETCH_PATHS.internal.user.checkUser);
 
   if (!response.ok) {
     throw new Error(`Response status: ${response.status}`);
   }
 
   const userData = (await response.json()) as InternalApiResponse<
-    "userStatus",
+    'userStatus',
     UserStatus
   >;
 
@@ -19,10 +19,10 @@ export const checkUserFetcher = async () => {
 };
 
 export const updateUserContactsFetcher = async (data: UserContacts) => {
-  const response = await fetch(fetchPaths.internal.user.UPDATE_USER_CONTACT, {
-    method: "POST",
+  const response = await fetch(FETCH_PATHS.internal.user.updateUserContact, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });
@@ -35,7 +35,7 @@ export const updateUserContactsFetcher = async (data: UserContacts) => {
 };
 
 export const userProfileFetcher = async () => {
-  const response = await fetch(fetchPaths.internal.user.PROFILE);
+  const response = await fetch(FETCH_PATHS.internal.user.profile);
 
   if (!response.ok) {
     throw new Error(`Response status: ${response.status}`);
@@ -47,10 +47,10 @@ export const userProfileFetcher = async () => {
 };
 
 export const updateUserProfileFetcher = async (data: User) => {
-  const response = await fetch(fetchPaths.internal.user.PROFILE, {
-    method: "PUT",
+  const response = await fetch(FETCH_PATHS.internal.user.profile, {
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   });

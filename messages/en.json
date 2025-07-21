@@ -10,6 +10,7 @@
     "genericRequest": "Request failed",
     "deleteFailed": "Deletion failed, try again",
     "uploadFailed": "Uploading failed, try again",
+    "listingUpdateFailed": "Unable to update listing, try again",
     "geocoding": "Couldn't find the location"
   },
   "actions": {
@@ -148,6 +149,8 @@
     "priceAsc": "Low price first",
     "priceDesc": "High price first",
     "areaAsc": "Small area first",
-    "areaDesc": "Big area first"
+    "areaDesc": "Big area first",
+    "active": "Active first",
+    "inactive": "Inactive first"
   }
 }

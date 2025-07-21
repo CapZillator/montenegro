@@ -1,8 +1,8 @@
-import { fetchPaths } from "@/constants/fetch";
+import { FETCH_PATHS } from '@/constants/fetch';
 
 export const uploadImageFetcher = async (formData: FormData) => {
-  const response = await fetch(fetchPaths.internal.image.MANAGE_LISTING_IMAGE, {
-    method: "POST",
+  const response = await fetch(FETCH_PATHS.internal.image.manageListingImages, {
+    method: 'POST',
     body: formData,
   });
 
@@ -16,9 +16,9 @@ export const uploadImageFetcher = async (formData: FormData) => {
 };
 
 export const deleteListingImageFetcher = async (publicIds: string[]) => {
-  const response = await fetch(fetchPaths.internal.image.MANAGE_LISTING_IMAGE, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
+  const response = await fetch(FETCH_PATHS.internal.image.manageListingImages, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ publicIds }),
   });
 
