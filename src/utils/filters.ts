@@ -1,6 +1,6 @@
-import { filterConfig } from "@/constants/filters";
-import { FilterCondition, ResidentialPremisesFilters } from "@/types/filters";
-import { SqlOperator } from "@/types/sql";
+import { filterConfig } from '@/constants/filters';
+import { FilterCondition, ResidentialPremisesFilters } from '@/types/filters';
+import { SqlOperator } from '@/types/sql';
 
 export const parseSearchParamsToFilters = (
   params: Record<string, string | string[] | undefined>
@@ -16,8 +16,11 @@ export const parseSearchParamsToFilters = (
 
   for (const conf of filterConfig) {
     const raw = params[conf.key];
-    const value = conf.parse(raw);
-    setFilter(conf.key, value);
+
+    if (raw) {
+      const value = conf.parse(raw);
+      setFilter(conf.key, value);
+    }
   }
 
   return filters;

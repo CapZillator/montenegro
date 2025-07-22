@@ -109,16 +109,21 @@ export const ListingList: FC<Props> = ({
               }
             )}
           >
-            <img
-              src={listing.images[0]}
-              alt="Preview image"
-              className={classNames(
-                'relative w-full aspect-4/3 object-cover rounded-md',
-                {
-                  'opacity-50': listing.state !== ListingState.ACTIVE,
-                }
+            <div className="relative">
+              <img
+                src={listing.images[0]}
+                alt="Preview image"
+                className={classNames(
+                  'relative w-full aspect-4/3 object-cover rounded-md',
+                  {
+                    'opacity-50': listing.state !== ListingState.ACTIVE,
+                  }
+                )}
+              />
+              {listing.state !== ListingState.ACTIVE && (
+                <InvisibleIcon className="absolute top-1/2 left-1/2 -translate-1/2 w-1/5 h-1/5 fill-secondary-content" />
               )}
-            />
+            </div>
             <div
               className={classNames({
                 'opacity-50': listing.state !== ListingState.ACTIVE,

@@ -1,11 +1,11 @@
-import { SqlOperator } from "./sql";
+import { SqlOperator } from './sql';
 
 export type ResidentialPremisesFilters = {
   priceFrom?: number | null;
   priceTo?: number | null;
 
   propertyType?: string[] | null;
-  listingType?: string | null;
+  listingType?: string | string[] | null;
 
   roomsFrom?: number | null;
   roomsTo?: number | null;
