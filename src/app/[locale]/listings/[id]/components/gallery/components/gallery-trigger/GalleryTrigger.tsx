@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import { FC } from "react";
-import classNames from "classnames";
+import { FC } from 'react';
+import classNames from 'classnames';
 
-import { useModal } from "@/components/common/modal/ModalContext";
+import { ImageClient } from '@/components/common/image/Image.client';
+import { useModal } from '@/components/common/modal/ModalContext';
 
-import { ImageGalleryModal } from "../image-gallery-modal/ImageGalleryModal";
+import { ImageGalleryModal } from '../image-gallery-modal/ImageGalleryModal';
 
 type Props = {
   images: string[];
@@ -18,21 +19,21 @@ const GalleryTrigger: FC<Props> = ({ images, index, className }) => {
 
   const handleClick = () => {
     openModal(
-      "gallery",
+      'gallery',
       <ImageGalleryModal
         images={images}
         initialIndex={index}
-        onClose={() => closeModal("gallery")}
+        onClose={() => closeModal('gallery')}
       />
     );
   };
 
   return (
-    <img
-      src={images[index]}
+    <ImageClient
+      fullUrl={images[index]}
       alt={`Preview ${index + 1}`}
       onClick={handleClick}
-      className={classNames("cursor-pointer", className)}
+      className={classNames('cursor-pointer', className)}
     />
   );
 };

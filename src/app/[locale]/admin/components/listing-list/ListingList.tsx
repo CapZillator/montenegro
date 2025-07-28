@@ -13,6 +13,7 @@ import {
   LocationIcon,
   VisibleIcon,
 } from '@/components/common/icons';
+import { ImageClient } from '@/components/common/image/Image.client';
 import { ImageButton } from '@/components/common/image-button/ImageButton';
 import { Dropdown } from '@/components/common/inputs';
 import { ListingState } from '@/enums/listing';
@@ -110,8 +111,8 @@ export const ListingList: FC<Props> = ({
             )}
           >
             <div className="relative">
-              <img
-                src={listing.images[0]}
+              <ImageClient
+                fullUrl={listing.images[0]}
                 alt="Preview image"
                 className={classNames(
                   'relative w-full aspect-4/3 object-cover rounded-md',
@@ -121,7 +122,7 @@ export const ListingList: FC<Props> = ({
                 )}
               />
               {listing.state !== ListingState.ACTIVE && (
-                <InvisibleIcon className="absolute top-1/2 left-1/2 -translate-1/2 w-1/5 h-1/5 fill-secondary-content" />
+                <InvisibleIcon className="absolute top-1/2 left-1/2 -translate-1/2 w-1/5 h-1/5 fill-primary-content" />
               )}
             </div>
             <div

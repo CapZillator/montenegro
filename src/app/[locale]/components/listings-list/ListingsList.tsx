@@ -13,6 +13,7 @@ import {
   DoorIcon,
   LocationIcon,
 } from '@/components/common/icons';
+import { ImageServer } from '@/components/common/image/Image.server';
 import { LocalizedLink } from '@/components/localized-link/LokalizedLink';
 import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { ResidentialPremisesFilters } from '@/types/filters';
@@ -102,8 +103,8 @@ export const ListingsList: FC<Props> = ({
                   'relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-lg bg-primary'
                 )}
               >
-                <img
-                  src={listing.images[0]}
+                <ImageServer
+                  fullUrl={listing.images[0]}
                   alt="Preview image"
                   className="relative w-full aspect-4/3 object-cover rounded-md"
                 />

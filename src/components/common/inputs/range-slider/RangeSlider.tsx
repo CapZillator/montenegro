@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { FC, ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import classNames from "classnames";
-import { motion } from "framer-motion";
+import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import classNames from 'classnames';
+import { motion } from 'framer-motion';
 
 type Props = {
   onChangeFrom: (val: number | undefined | null) => void;
@@ -28,7 +28,7 @@ export const RangeSlider: FC<Props> = ({
   icon,
 }) => {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [dragging, setDragging] = useState<null | "from" | "to">(null);
+  const [dragging, setDragging] = useState<null | 'from' | 'to'>(null);
 
   const realMax = max + step;
 
@@ -51,9 +51,9 @@ export const RangeSlider: FC<Props> = ({
     (clientX: number) => {
       const val = getValueFromClientX(clientX);
 
-      if (dragging === "from") {
+      if (dragging === 'from') {
         onChangeFrom(Math.min(val, to));
-      } else if (dragging === "to") {
+      } else if (dragging === 'to') {
         if (val >= realMax - step / 2) {
           onChangeTo(null);
         } else {
@@ -72,17 +72,17 @@ export const RangeSlider: FC<Props> = ({
       updatePosition(e.touches[0].clientX);
 
     if (dragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("touchmove", handleTouchMove);
-      window.addEventListener("mouseup", stopDragging);
-      window.addEventListener("touchend", stopDragging);
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('mouseup', stopDragging);
+      window.addEventListener('touchend', stopDragging);
     }
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("mouseup", stopDragging);
-      window.removeEventListener("touchend", stopDragging);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('mouseup', stopDragging);
+      window.removeEventListener('touchend', stopDragging);
     };
   }, [dragging, updatePosition, stopDragging]);
 
@@ -90,7 +90,7 @@ export const RangeSlider: FC<Props> = ({
     <div className="w-full space-y-2">
       {label?.length || icon ? (
         <label
-          className={classNames("block", { "flex items-center gap-1.5": icon })}
+          className={classNames('block', { 'flex items-center gap-1.5': icon })}
         >
           {icon}
           {label}
@@ -106,11 +106,11 @@ export const RangeSlider: FC<Props> = ({
           className="absolute top-1/2 h-3 bg-primary-content rounded"
           style={{
             left: `${percent(from)}%`,
-            transform: "translateY(-50%)",
+            transform: 'translateY(-50%)',
             width: `${Math.max(0, percent(to) - percent(from))}%`,
-            willChange: "left, width, transform",
+            willChange: 'left, width, transform',
           }}
-          transition={{ type: "spring", stiffness: 250, damping: 30 }}
+          transition={{ type: 'spring', stiffness: 250, damping: 30 }}
         />
 
         {/* From */}
@@ -122,13 +122,13 @@ export const RangeSlider: FC<Props> = ({
           className="absolute top-1/2 w-5 h-5 bg-primary rounded-sm cursor-pointer touch-none shadow-sm shadow-primary-content/50 border-1 border-primary-content/80"
           style={{
             left: `${percent(from)}%`,
-            transform: "translate(-50%, -50%)",
-            zIndex: dragging === "from" ? 10 : 5,
-            willChange: "transform",
+            transform: 'translate(-50%, -50%)',
+            zIndex: dragging === 'from' ? 10 : 5,
+            willChange: 'transform',
           }}
-          onMouseDown={() => setDragging("from")}
-          onTouchStart={() => setDragging("from")}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          onMouseDown={() => setDragging('from')}
+          onTouchStart={() => setDragging('from')}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         />
 
         {/* To */}
@@ -140,13 +140,13 @@ export const RangeSlider: FC<Props> = ({
           className="absolute top-1/2 w-5 h-5 bg-primary rounded-sm cursor-pointer touch-none shadow-sm shadow-primary-content/50 border-1 border-primary-content/80"
           style={{
             left: `${percent(to)}%`,
-            transform: "translate(-50%, -50%)",
-            zIndex: dragging === "to" ? 10 : 5,
-            willChange: "transform",
+            transform: 'translate(-50%, -50%)',
+            zIndex: dragging === 'to' ? 10 : 5,
+            willChange: 'transform',
           }}
-          onMouseDown={() => setDragging("to")}
-          onTouchStart={() => setDragging("to")}
-          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          onMouseDown={() => setDragging('to')}
+          onTouchStart={() => setDragging('to')}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
         />
       </div>
 
