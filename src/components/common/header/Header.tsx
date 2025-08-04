@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { LocalizedLink } from '../../localized-link/LokalizedLink';
 import { AddListing } from './components/add-listing/AddListing';
-import { LanguageSwitcher } from './components/language-switcher/LanguageSwitcher';
+import { LocalSettingsSwitcher } from './components/local-settings-switcher/LocalSettingsSwitcher';
 import { User } from './components/user/User';
 import { DropdownVariant } from './enums';
 
@@ -52,7 +52,7 @@ export const Header: FC = () => {
         </div>
         <div className="flex items-center gap-4 ">
           <AddListing />
-          <LanguageSwitcher
+          <LocalSettingsSwitcher
             isOpen={activeDropdown === DropdownVariant.LANGUAGE}
             onToggle={(open) =>
               setActiveDropdown(open ? DropdownVariant.LANGUAGE : null)

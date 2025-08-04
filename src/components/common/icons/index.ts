@@ -17,6 +17,8 @@ export { UploadArrow as UploadArrowIcon } from './actions/UploadArrow';
 export { Telegram as TelegramIcon } from './contacts/Telegram';
 export { Viber as ViberIcon } from './contacts/Viber';
 export { WhatsApp as WhatsAppIcon } from './contacts/WhatsApp';
+export { Currency as CurrencyIcon } from './Currency';
+export { Globe as GlobeIcon } from './Globe';
 export { Image as ImageIcon } from './Image';
 export { Language as LanguageIcon } from './Language';
 export { List as ListIcon } from './List';

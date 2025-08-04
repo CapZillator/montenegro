@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import classNames from 'classnames';
 
-import { queryKeys } from '@/constants/fetch';
+import { QUERY_KEYS } from '@/constants/fetch';
 import { ListingState } from '@/enums/listing';
 import {
   deleteListingFetcher,
@@ -31,7 +31,7 @@ export default function AdminDashboard() {
   const [listingIdToUpdate, setListingIdToUpdate] = useState('');
   const { data: session, status } = useSession();
   const { data: listings, isLoading: isListingsLoading } = useQuery({
-    queryKey: [queryKeys.listings.userListings],
+    queryKey: [QUERY_KEYS.listings.userListings],
     queryFn: async () => userListingsFetcher(),
   });
   const { t } = useTranslation();
@@ -54,7 +54,7 @@ export default function AdminDashboard() {
       setIsListDisabled(true);
       await updateListingStateFetcher(id, state);
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.listings.userListings],
+        queryKey: [QUERY_KEYS.listings.userListings],
       });
     } catch (_error) {
       showToast(t('errors.listingUpdateFailed'), 'error');
@@ -79,7 +79,7 @@ export default function AdminDashboard() {
         setIsListDisabled(true);
         await deleteListingFetcher(confirmDeletion.listingId);
         queryClient.invalidateQueries({
-          queryKey: [queryKeys.listings.userListings],
+          queryKey: [QUERY_KEYS.listings.userListings],
         });
 
         return;

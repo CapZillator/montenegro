@@ -41,7 +41,7 @@ import {
 } from '@/components/common/icons';
 import { Dropdown } from '@/components/common/inputs/dropdown/Dropdown';
 import { UserContactsModal } from '@/components/common/user-contacts-modal/UserContactsModal';
-import { queryKeys } from '@/constants/fetch';
+import { QUERY_KEYS } from '@/constants/fetch';
 import { AVAILABLE_LOCALES } from '@/constants/i18n';
 import { LOCALIZED_CITIES } from '@/constants/location';
 import { validationSchema } from '@/constants/validationSchemas';
@@ -135,7 +135,7 @@ export const ListingForm: FC<Props> = ({
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: [queryKeys.geo.geocode, fullAddress],
+    queryKey: [QUERY_KEYS.geo.geocode, fullAddress],
     queryFn: () => geocodeAddress(fullAddress),
     enabled: false,
     staleTime: 1000 * 60 * 15,
@@ -187,7 +187,7 @@ export const ListingForm: FC<Props> = ({
         await addListingFetcher(data);
       }
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.listings.userListings],
+        queryKey: [QUERY_KEYS.listings.userListings],
       });
       showToast(
         t(initialListing ? 'states.updated' : 'states.added'),
@@ -252,7 +252,7 @@ export const ListingForm: FC<Props> = ({
             )}
           >
             <div className={classNames('space-y-2')}>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <ControlledDropdown
                   name={'propertyType'}
                   control={control}

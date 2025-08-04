@@ -1,28 +1,12 @@
 import { FC, useState } from 'react';
-import { useLocale } from 'next-intl';
 import classNames from 'classnames';
 
-import {
-  AreaIcon,
-  BedIcon,
-  CalendarIcon,
-  DeleteStrokeIcon,
-  DoorIcon,
-  EditIcon,
-  InvisibleIcon,
-  LocationIcon,
-  VisibleIcon,
-} from '@/components/common/icons';
-import { ImageClient } from '@/components/common/image/Image.client';
-import { ImageButton } from '@/components/common/image-button/ImageButton';
 import { Dropdown } from '@/components/common/inputs';
 import { ListingState } from '@/enums/listing';
-import { isoUTCStringToLocaleString } from '@/formatters/date';
-import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
 import { ResidentialPremises } from '@/types/realEstate';
-import { getFullAddress, getLocalizedStringValue } from '@/utils/listings';
 
+import { Listing } from './components/listing/Listing';
 import { SortOption } from './enums';
 import { useSortedListings } from './useSortedListings';
 
@@ -42,7 +26,6 @@ export const ListingList: FC<Props> = ({
   isDisabled,
 }) => {
   const [sortBy, setSortBy] = useState(SortOption.NEWEST);
-  const locale = useLocale();
   const { t } = useTranslation();
 
   const onChangeState = (id: string, state: ListingState) => {
@@ -101,148 +84,14 @@ export const ListingList: FC<Props> = ({
         )}
       >
         {sortedListings?.map((listing) => (
-          <div
+          <Listing
             key={listing.id}
-            className={classNames(
-              'relative flex flex-col gap-2 border-solid border-divider/25 border-1 shadow-md p-2 rounded-lg',
-              {
-                'bg-primary': listing.state === ListingState.ACTIVE,
-              }
-            )}
-          >
-            <div className="relative">
-              <ImageClient
-                fullUrl={listing.images[0]}
-                alt="Preview image"
-                className={classNames(
-                  'relative w-full aspect-4/3 object-cover rounded-md',
-                  {
-                    'opacity-50': listing.state !== ListingState.ACTIVE,
-                  }
-                )}
-              />
-              {listing.state !== ListingState.ACTIVE && (
-                <InvisibleIcon className="absolute top-1/2 left-1/2 -translate-1/2 w-1/5 h-1/5 fill-primary-content" />
-              )}
-            </div>
-            <div
-              className={classNames({
-                'opacity-50': listing.state !== ListingState.ACTIVE,
-              })}
-            >
-              <div
-                className={classNames(
-                  'flex items-center justify-between gap-2'
-                )}
-              >
-                <p className={classNames('font-semibold')}>
-                  {formatNumberToFinancialAmount(listing.price)} €
-                </p>
-                <span
-                  className={classNames(
-                    'lowercase py-0.5 px-2 bg-primary-content text-primary rounded-sm'
-                  )}
-                >
-                  {t(`listings.types.${listing.listingType}`)}
-                </span>
-              </div>
-
-              <h3 className={classNames('font-semibold truncate')}>
-                {getLocalizedStringValue(listing.title, locale)}
-              </h3>
-              <div className={classNames('flex items-center gap-1')}>
-                <LocationIcon
-                  className={classNames('w-5 h-5 stroke-primary-content')}
-                />
-                <span className="truncate">
-                  {getFullAddress(listing.location, listing.address)}
-                </span>
-              </div>
-            </div>
-            <div
-              className={classNames('grid grid-cols-4 text-sm', {
-                'opacity-50': listing.state !== ListingState.ACTIVE,
-              })}
-            >
-              <div className={classNames('flex items-center gap-2')}>
-                <DoorIcon
-                  className={classNames('w-4 h-4 fill-primary-content')}
-                />
-                <span>{listing.rooms}</span>
-              </div>
-              <div className={classNames('flex items-center gap-2')}>
-                <BedIcon
-                  className={classNames('w-4 h-4 stroke-primary-content')}
-                />
-                <span>{listing.bedrooms}</span>
-              </div>
-              <div className={classNames('col-span-2 flex items-center gap-2')}>
-                <AreaIcon
-                  className={classNames('w-4 h-4 fill-primary-content')}
-                />
-                <span>
-                  {listing.area} {t('measures.m')}
-                  <sup>2</sup>
-                </span>
-              </div>
-            </div>
-            <div
-              className={classNames('flex items-center gap-2', {
-                'opacity-50': listing.state !== ListingState.ACTIVE,
-              })}
-            >
-              <CalendarIcon
-                className={classNames('w-4 h-4 stroke-primary-content')}
-              />
-              <span className="text-sm">
-                {isoUTCStringToLocaleString(listing.createdAt)}
-              </span>
-            </div>
-            <div
-              className={classNames(
-                'absolute top-4 left-4 right-4 flex justify-end gap-2'
-              )}
-            >
-              <ImageButton
-                onClick={() => onChangeState(listing.id, listing.state)}
-                isDisabled={isDisabled}
-              >
-                {listing.state === ListingState.ACTIVE ? (
-                  <InvisibleIcon
-                    className={classNames(
-                      'w-5 h-5 fill-primary-content duration-300 group-hover:fill-primary'
-                    )}
-                  />
-                ) : (
-                  <VisibleIcon
-                    className={classNames(
-                      'w-5 h-5 fill-primary-content duration-300 group-hover:fill-primary'
-                    )}
-                  />
-                )}
-              </ImageButton>
-              <ImageButton
-                onClick={() => onOpenListing(listing.id)}
-                isDisabled={isDisabled}
-              >
-                <EditIcon
-                  className={classNames(
-                    'w-5 h-5 fill-primary-content duration-300 group-hover:fill-primary'
-                  )}
-                />
-              </ImageButton>
-              <ImageButton
-                onClick={() => onDeleteListing(listing.id)}
-                isDisabled={isDisabled}
-              >
-                <DeleteStrokeIcon
-                  className={classNames(
-                    'w-5 h-5 stroke-primary-content duration-300 group-hover:stroke-primary'
-                  )}
-                />
-              </ImageButton>
-            </div>
-          </div>
+            listing={listing}
+            onOpen={onOpenListing}
+            onChangeState={onChangeState}
+            onDelete={onDeleteListing}
+            isDisabled={isDisabled}
+          />
         ))}
       </div>
     </>

@@ -17,7 +17,7 @@ import {
   PhoneIcon,
   ProfileIcon,
 } from '@/components/common/icons';
-import { queryKeys } from '@/constants/fetch';
+import { QUERY_KEYS } from '@/constants/fetch';
 import { validationSchema } from '@/constants/validationSchemas';
 import { updateUserProfileFetcher } from '@/fetchers/user';
 import { useToast } from '@/hooks/use-toast/useToast';
@@ -49,15 +49,13 @@ export const UserForm: FC<Props> = ({ user }) => {
     try {
       await updateUserProfileFetcher(data);
       queryClient.invalidateQueries({
-        queryKey: [queryKeys.user.data],
+        queryKey: [QUERY_KEYS.user.data],
       });
       showToast(t('states.updated'), 'success');
     } catch (_error) {
       showToast(t('errors.genericRequest'), 'error');
     }
   };
-
-  console.log('user', user);
 
   return (
     <>

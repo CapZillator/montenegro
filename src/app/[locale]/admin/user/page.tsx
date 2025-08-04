@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useQuery } from "@tanstack/react-query";
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 
-import { queryKeys } from "@/constants/fetch";
-import { userProfileFetcher } from "@/fetchers/user";
+import { QUERY_KEYS } from '@/constants/fetch';
+import { userProfileFetcher } from '@/fetchers/user';
 
-import { UserForm } from "./components/user-form/UserForm";
+import { UserForm } from './components/user-form/UserForm';
 
 export default function ListingManager() {
   const {
@@ -14,7 +14,7 @@ export default function ListingManager() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: [queryKeys.user.data],
+    queryKey: [QUERY_KEYS.user.data],
     queryFn: userProfileFetcher,
   });
 

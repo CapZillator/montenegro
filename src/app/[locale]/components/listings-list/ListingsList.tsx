@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import { fetchListings } from '@/actions/listings';
 import { Button } from '@/components/common/button';
+import { ConvertedPrice } from '@/components/common/converted-price/ConvertedPrice';
 import {
   AreaIcon,
   BedIcon,
@@ -15,7 +16,6 @@ import {
 } from '@/components/common/icons';
 import { ImageServer } from '@/components/common/image/Image.server';
 import { LocalizedLink } from '@/components/localized-link/LokalizedLink';
-import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { ResidentialPremisesFilters } from '@/types/filters';
 import { ResidentialPremises } from '@/types/realEstate';
 import { SortOption } from '@/types/sorting';
@@ -87,7 +87,7 @@ export const ListingsList: FC<Props> = ({
         className={classNames(
           'grid grid-cols-1 gap-3',
           'sm:grid-cols-2',
-          'md:grid-cols-3',
+          'lg:grid-cols-3',
           'xl:pl-82',
           '2xl:grid-cols-4',
           '3xl:grid-cols-5'
@@ -115,7 +115,7 @@ export const ListingsList: FC<Props> = ({
                     )}
                   >
                     <p className={classNames('font-semibold')}>
-                      {formatNumberToFinancialAmount(listing.price)} €
+                      <ConvertedPrice amount={listing.price} />
                     </p>
                     <span
                       className={classNames(

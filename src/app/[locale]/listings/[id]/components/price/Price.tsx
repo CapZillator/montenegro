@@ -1,25 +1,42 @@
-import { FC } from "react";
-import { getTranslations } from "next-intl/server";
-import classNames from "classnames";
+'use client';
 
-import { formatNumberToFinancialAmount } from "@/formatters/finance";
+import { FC } from 'react';
+import classNames from 'classnames';
+
+import { formatNumberToFinancialAmount } from '@/formatters/finance';
+import { useConvertedPrice } from '@/hooks/use-converted-price/useConvertedPrice';
+import { useTranslation } from '@/hooks/use-translation/useTranslation';
+import { Currency } from '@/types/currency';
 
 type Props = {
-price: number;
-area: number;
-}
+  price: number;
+  area: number;
+};
 
-export const Price: FC<Props> = async ({
-    price,
-  area,
-}) => {
-      const t = await getTranslations();
-    const pricePerUnit = Math.round(price / area);
+export const Price: FC<Props> = ({ price, area }) => {
+  const { t } = useTranslation();
+  const {
+    price: convertedPrice,
+    currencySymbol,
+    isLoading,
+  } = useConvertedPrice(price, Currency.USD);
 
-    return (
+  if (isLoading) return <div>...</div>;
+
+  const pricePerUnit = Math.round(convertedPrice / area);
+
+  return (
     <div>
-        <p className={classNames("font-semibold", "lg:text-lg")}>{formatNumberToFinancialAmount(price)} €</p>
-        {pricePerUnit ? <p className="text-sm">1 {t("measures.m")}<sup>2</sup> - {formatNumberToFinancialAmount(pricePerUnit)} €</p> : null}
+      <p className={classNames('font-semibold', 'lg:text-lg')}>
+        {formatNumberToFinancialAmount(convertedPrice)} {currencySymbol}
+      </p>
+      {pricePerUnit ? (
+        <p className="text-sm">
+          1 {t('measures.m')}
+          <sup>2</sup> - {formatNumberToFinancialAmount(pricePerUnit)}{' '}
+          {currencySymbol}
+        </p>
+      ) : null}
     </div>
   );
 };

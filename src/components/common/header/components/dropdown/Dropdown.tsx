@@ -1,20 +1,21 @@
-import { forwardRef, ReactNode, Ref } from "react";
-import classNames from "classnames";
+import { ElementType, forwardRef, ReactNode, Ref } from 'react';
+import classNames from 'classnames';
 
-import { ChevronDown } from "@/components/common/icons/navigation/ChevronDown";
+import { ChevronDown } from '@/components/common/icons/navigation/ChevronDown';
 
-import { DropdownMenu } from "./components/dropdown-menu/DropdownMenu";
+import { DropdownMenu } from './components/dropdown-menu/DropdownMenu';
 
 type Props = {
   isOpen: boolean;
   buttonChildren: ReactNode;
   menuChildren: ReactNode;
   onToggle: (isOpen: boolean) => void;
+  menuAs?: ElementType;
 };
 
 export const Dropdown = forwardRef<HTMLDivElement, Props>(
   (
-    { isOpen, buttonChildren, menuChildren, onToggle },
+    { isOpen, buttonChildren, menuChildren, onToggle, menuAs },
     ref: Ref<HTMLDivElement>
   ) => {
     const onToggleDropdown = () => onToggle(!isOpen);
@@ -22,20 +23,20 @@ export const Dropdown = forwardRef<HTMLDivElement, Props>(
     return (
       <div className="flex items-center relative h-8" ref={ref}>
         <button
-          className={classNames("flex items-center gap-3 p-1 cursor-pointer")}
+          className={classNames('flex items-center gap-3 p-1 cursor-pointer')}
           onClick={onToggleDropdown}
         >
           {buttonChildren}
           <ChevronDown
-            className={classNames("w-3 fill-primary-content duration-300", {
-              "-scale-100": isOpen,
+            className={classNames('w-3 fill-primary-content duration-300', {
+              '-scale-100': isOpen,
             })}
           />
         </button>
-        {isOpen && <DropdownMenu>{menuChildren}</DropdownMenu>}
+        {isOpen && <DropdownMenu as={menuAs}>{menuChildren}</DropdownMenu>}
       </div>
     );
   }
 );
 
-Dropdown.displayName = "Dropdown";
+Dropdown.displayName = 'Dropdown';

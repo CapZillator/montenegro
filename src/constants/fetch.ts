@@ -13,13 +13,17 @@ export const FETCH_PATHS = {
     geo: {
       geocode: '/api/geo/geocode',
     },
+    currency: {
+      exchangeRates: '/api/currency',
+    },
   },
   external: {
     nominatim: 'https://nominatim.openstreetmap.org',
+    exchangeRates: 'https://api.exchangerate.host',
   },
 };
 
-export const queryKeys = {
+export const QUERY_KEYS = {
   listings: {
     userListings: 'userListings',
   },
@@ -29,5 +33,8 @@ export const queryKeys = {
   },
   geo: {
     geocode: 'geocode',
+  },
+  currency: {
+    exchangeRates: 'exchangeRates',
   },
 };

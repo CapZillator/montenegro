@@ -5,7 +5,6 @@ import { getErrorMessage } from '@/helpers/guards';
 
 export async function GET(req: NextRequest) {
   try {
-    console.log('Getting addr from server side');
     const query = req.nextUrl.searchParams.get('q');
     if (!query) return new Response('Missing query', { status: 400 });
 

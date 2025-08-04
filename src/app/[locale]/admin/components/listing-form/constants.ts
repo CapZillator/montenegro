@@ -1,5 +1,5 @@
-import { Currency } from '@/enums/currencies';
 import { ListingType, ResidentialPremisesType } from '@/enums/listing';
+import { Currency } from '@/types/currency';
 import { ResidentialPremises } from '@/types/realEstate';
 
 export const DEFAULT_RESIDENTIAL_PREMISE_DATA = {

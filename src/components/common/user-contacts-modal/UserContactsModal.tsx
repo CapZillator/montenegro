@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { ContactMethodInput } from '@/components/common/controlled-inputs/contact-method-input/ContactMethodInput';
 import { PhoneInput } from '@/components/common/controlled-inputs/phone-input/PhoneInput';
 import { GenericModal } from '@/components/common/generic-modal/GenericModal';
-import { queryKeys } from '@/constants/fetch';
+import { QUERY_KEYS } from '@/constants/fetch';
 import { validationSchema } from '@/constants/validationSchemas';
 import { updateUserContactsFetcher } from '@/fetchers/user';
 import { useCurrentUser } from '@/hooks/use-current-user/useCurrentUser';
@@ -49,7 +49,7 @@ export const UserContactsModal: FC<Props> = ({ handleClose }) => {
     try {
       await updateUserContactsFetcher(data);
       queryClient.setQueryData(
-        [queryKeys.user.status, session?.user?.id],
+        [QUERY_KEYS.user.status, session?.user?.id],
         () => {
           return {
             ...userData,

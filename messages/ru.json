@@ -104,7 +104,8 @@
       "preview": "превью",
       "description": "Описание"
     },
-    "offers": "предложения(й)"
+    "offers": "предложения(й)",
+    "contactPerson": "Контактное лицо"
   },
   "filters": {
     "label": "Фильтры",
@@ -152,5 +153,9 @@
     "areaDesc": "Сначала большие",
     "active": "Сначала активные",
     "inactive": "Сначала неактивные"
+  },
+  "localSettings": {
+    "currency": "Валюта",
+    "language": "Язык"
   }
 }

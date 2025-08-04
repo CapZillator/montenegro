@@ -104,7 +104,8 @@
       "preview": "preview",
       "description": "Description"
     },
-    "offers": "offer(s)"
+    "offers": "offer(s)",
+    "contactPerson": "Contact person"
   },
   "filters": {
     "label": "Filters",
@@ -152,5 +153,9 @@
     "areaDesc": "Big area first",
     "active": "Active first",
     "inactive": "Inactive first"
+  },
+  "localSettings": {
+    "currency": "Currency",
+    "language": "Language"
   }
 }
