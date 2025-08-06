@@ -36,7 +36,7 @@ export const UserForm: FC<Props> = ({ user }) => {
     control,
     formState: { isSubmitting },
     handleSubmit,
-  } = useForm<User>({
+  } = useForm({
     defaultValues: user ?? DEFAULT_USER_DATA,
     resolver: zodResolver(validationSchema.user),
     mode: 'onChange',

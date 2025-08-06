@@ -37,7 +37,7 @@ export const UserContactsModal: FC<Props> = ({ handleClose }) => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<UserContacts>({
+  } = useForm({
     resolver: zodResolver(validationSchema.userContacts),
     mode: 'onChange',
     defaultValues: {
