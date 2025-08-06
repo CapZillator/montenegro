@@ -10,7 +10,7 @@ type CreateUserInput = {
 
 export const pool = new Pool({
   connectionString: process.env.SPACEHUB_POSTGRES_URL!,
-  ssl: { rejectUnauthorized: false },
+  ssl: true,
 });
 
 export const getUserIdByProviderAccount = async (
