@@ -8,11 +8,9 @@ type CreateUserInput = {
   image?: string | null;
 };
 
-const isProd = process.env.NODE_ENV === 'production';
-
 export const pool = new Pool({
   connectionString: process.env.SPACEHUB_POSTGRES_URL!,
-  ssl: isProd ? true : { rejectUnauthorized: false },
+  ssl: { rejectUnauthorized: false },
 });
 
 export const getUserIdByProviderAccount = async (
