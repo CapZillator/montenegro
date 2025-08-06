@@ -9,7 +9,7 @@ type CreateUserInput = {
 };
 
 export const pool = new Pool({
-  connectionString: process.env.SPACEHUB_POSTGRES_URL!,
+  connectionString: process.env.POSTGRES_NO_VERIFY_URL!,
   ssl: true,
 });
 
