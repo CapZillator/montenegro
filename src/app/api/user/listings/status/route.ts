@@ -5,7 +5,7 @@ import { validationSchema } from '@/constants/validationSchemas';
 import { ListingState } from '@/enums/listing';
 import { getErrorMessage } from '@/helpers/guards';
 import { auth } from '@/lib/auth';
-import { sql } from '@/lib/db';
+import { pool } from '@/lib/db';
 import { ResidentialPremises } from '@/types/realEstate';
 import { toSnakeCase } from '@/utils/api';
 
@@ -24,23 +24,29 @@ export async function PATCH(req: NextRequest) {
       validationSchema.listingState.parse(listingData)
     );
 
-    const listingToUpdate = await sql`
+    const listingToUpdate = await pool.query(
+      `
     SELECT id FROM residential_premises_listings
-    WHERE id = ${id} AND user_id = ${userId} AND state != ${ListingState.DELETED} LIMIT 1
-    `;
+    WHERE id = ${id} AND user_id = $1 AND state != $2 LIMIT 1
+    `,
+      [userId, ListingState.DELETED]
+    );
 
-    if (!userId || !listingToUpdate.length) {
+    if (!userId || !listingToUpdate.rows.length) {
       return NextResponse.json(
         { error: 'Listing/user data is missing' },
         { status: 409 }
       );
     }
 
-    await sql`
+    await pool.query(
+      `
     UPDATE residential_premises_listings
-    SET state = ${state}
-    WHERE id = ${id} AND user_id = ${userId}
-    `;
+    SET state = $1
+    WHERE id = $2 AND user_id = $3
+    `,
+      [state, id, userId]
+    );
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (error) {

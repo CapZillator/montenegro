@@ -2,12 +2,12 @@
 
 import { FC } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import { LatLngExpression,LatLngTuple } from 'leaflet';
+import { LatLngTuple } from 'leaflet';
 
 import { DEFAULT_COORDS } from '@/constants/location';
 
 type Props = {
-  center?: LatLngExpression;
+  center?: LatLngTuple;
   zoom?: number;
   className?: string;
   children?: React.ReactNode;
@@ -19,11 +19,14 @@ export const BaseMap: FC<Props> = ({
   className,
   children,
 }) => {
-  const fallbackCenter = DEFAULT_COORDS as LatLngTuple;
+  const position =
+    center && center.every((coordinate) => coordinate)
+      ? center
+      : DEFAULT_COORDS;
 
   return (
     <MapContainer
-      center={center ?? fallbackCenter}
+      center={position}
       zoom={zoom}
       className={className || 'w-full h-full min-h-24 min-w-24'}
     >

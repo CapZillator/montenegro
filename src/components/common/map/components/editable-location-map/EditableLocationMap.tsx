@@ -21,11 +21,10 @@ export const EditableLocationMap: FC<Props> = ({
   className,
   onChange,
 }) => {
-  const fallbackCenter = DEFAULT_COORDS as LatLngTuple;
-  let position = fallbackCenter;
-  if (coordinates && coordinates[0] && coordinates[1]) {
-    position = [coordinates[0], coordinates[1]];
-  }
+  const position =
+    coordinates && coordinates.every((coordinate) => coordinate)
+      ? coordinates
+      : DEFAULT_COORDS;
 
   const handleDragEnd = (e: L.LeafletEvent) => {
     const marker = e.target as L.Marker;

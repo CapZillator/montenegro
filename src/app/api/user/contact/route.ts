@@ -1,18 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 
-import { sqlFieldTypes } from "@/constants/sql";
-import { validationSchema } from "@/constants/validationSchemas";
-import { auth } from "@/lib/auth";
-import { sql } from "@/lib/db";
-import { buildSqlQuery } from "@/utils/api";
+import { sqlFieldTypes } from '@/constants/sql';
+import { validationSchema } from '@/constants/validationSchemas';
+import { auth } from '@/lib/auth';
+import { pool } from '@/lib/db';
+import { buildSqlQuery } from '@/utils/api';
 
 export async function POST(req: NextRequest) {
   try {
     const session = await auth();
 
     if (!session?.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const data = await req.json();
@@ -24,23 +24,23 @@ export async function POST(req: NextRequest) {
     };
 
     const { query, values } = buildSqlQuery(
-      "users",
+      'users',
       updateData,
-      "update",
+      'update',
       [
         {
-          field: "id",
+          field: 'id',
           value: session.user.id,
         },
       ],
       sqlFieldTypes.users
     );
 
-    await sql(query, values);
+    await pool.query(query, values);
 
     return NextResponse.json({ ok: true });
   } catch (error: any) {
-    console.error("Contact update error:", error);
+    console.error('Contact update error:', error);
 
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.message }, { status: 422 });

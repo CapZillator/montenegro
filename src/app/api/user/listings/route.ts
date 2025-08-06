@@ -6,7 +6,7 @@ import { validationSchema } from '@/constants/validationSchemas';
 import { ListingState } from '@/enums/listing';
 import { getErrorMessage } from '@/helpers/guards';
 import { auth } from '@/lib/auth';
-import { sql } from '@/lib/db';
+import { pool } from '@/lib/db';
 import { deleteImagesByPublicIds } from '@/lib/images/deleteImagesByPublicIds';
 import { ResidentialPremises } from '@/types/realEstate';
 import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from '@/utils/api';
@@ -32,18 +32,24 @@ export async function GET(req: NextRequest) {
     const listingId = searchParams.get('listingId');
 
     const listings = listingId
-      ? await sql`
+      ? await pool.query(
+          `
         SELECT * FROM residential_premises_listings
-        WHERE user_id = ${id} AND id = ${listingId}
-        AND state != ${ListingState.DELETED}
-      `
-      : await sql`
+        WHERE user_id = $1 AND id = $2
+        AND state != $3
+      `,
+          [id, listingId, ListingState.DELETED]
+        )
+      : await pool.query(
+          `
         SELECT * FROM residential_premises_listings
-        WHERE user_id = ${id} AND state != ${ListingState.DELETED}
-      `;
+        WHERE user_id = $1 AND state != $2
+      `,
+          [id, ListingState.DELETED]
+        );
 
     return NextResponse.json(
-      { listings: safeParseJsonFields(listings) },
+      { listings: safeParseJsonFields(listings.rows) },
       { status: 200 }
     );
   } catch (error) {
@@ -93,9 +99,12 @@ export async function POST(req: NextRequest) {
       sqlFieldTypes.residentialPremisesListings
     );
 
-    const newListing = await sql(query, values);
+    const newListing = await pool.query(query, values);
 
-    return NextResponse.json({ listingId: newListing[0].id }, { status: 200 });
+    return NextResponse.json(
+      { listingId: newListing.rows[0].id },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.message }, { status: 422 });
@@ -147,9 +156,12 @@ export async function PUT(req: NextRequest) {
       sqlFieldTypes.residentialPremisesListings
     );
 
-    const newListing = await sql(query, values);
+    const newListing = await pool.query(query, values);
 
-    return NextResponse.json({ listingId: newListing[0].id }, { status: 200 });
+    return NextResponse.json(
+      { listingId: newListing.rows[0].id },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.message }, { status: 422 });
@@ -175,24 +187,34 @@ export async function DELETE(req: NextRequest) {
     const { id: userId } = session.user;
     const { id } = await req.json();
 
-    const listingToDelete = await sql`
+    const listingToDelete = await pool.query(
+      `
     SELECT id, user_id, images FROM  residential_premises_listings
-    WHERE id = ${id} AND user_id = ${userId} LIMIT 1
-    `;
+    WHERE id = $1 AND user_id = $2 LIMIT 1
+    `,
+      [id, userId]
+    );
 
-    if (!id || !userId || !listingToDelete.length) {
+    if (!id || !userId || !listingToDelete.rows.length) {
       return NextResponse.json(
         { error: 'Listing/user data is missing' },
         { status: 409 }
       );
     }
 
-    await sql`
+    await pool.query(
+      `
     UPDATE residential_premises_listings
-    SET deleted_at = NOW(), images = '{}', state = ${ListingState.DELETED}
-    WHERE id = ${listingToDelete[0].id} AND user_id = ${listingToDelete[0].user_id}
-    `;
-    await deleteImagesByPublicIds(listingToDelete[0].images);
+    SET deleted_at = NOW(), images = '{}', state = $1
+    WHERE id = $2 AND user_id = $3
+    `,
+      [
+        ListingState.DELETED,
+        listingToDelete.rows[0].id,
+        listingToDelete.rows[0].user_id,
+      ]
+    );
+    await deleteImagesByPublicIds(listingToDelete.rows[0].images);
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (error) {

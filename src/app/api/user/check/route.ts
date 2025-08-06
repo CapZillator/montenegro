@@ -1,23 +1,24 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-import { auth } from "@/lib/auth";
-import { sql } from "@/lib/db";
+import { auth } from '@/lib/auth';
+import { pool } from '@/lib/db';
 
 export async function GET() {
   try {
     const session = await auth();
 
     if (!session || !session.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const { id } = session.user;
-    const existingUser = await sql`
-      SELECT id, phone FROM users WHERE id = ${id};
-    `;
+    const existingUser = await pool.query(
+      'SELECT id, phone FROM users WHERE id = $1;',
+      [id]
+    );
 
-    if (existingUser.length > 0) {
-      const { id, phone } = existingUser[0];
+    if (existingUser.rows.length > 0) {
+      const { id, phone } = existingUser.rows[0];
 
       return NextResponse.json({
         userStatus: {
@@ -27,9 +28,9 @@ export async function GET() {
       });
     }
 
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+    return NextResponse.json({ error: 'User not found' }, { status: 404 });
   } catch (error: any) {
-    console.error("Check or create user error:", error);
+    console.error('Check or create user error:', error);
 
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

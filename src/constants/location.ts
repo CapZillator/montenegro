@@ -1,6 +1,8 @@
+import { LatLngTuple } from 'leaflet';
+
 import { NameValue } from '@/types/inputs';
 
-export const DEFAULT_COORDS = [42.4304, 19.2594];
+export const DEFAULT_COORDS = [42.4304, 19.2594] as LatLngTuple;
 
 export const LOCALIZED_CITIES: Record<string, NameValue[]> = {
   en: [
