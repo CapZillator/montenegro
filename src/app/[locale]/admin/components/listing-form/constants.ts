@@ -26,6 +26,7 @@ export const DEFAULT_RESIDENTIAL_PREMISE_DATA = {
   address: '',
   latitude: undefined,
   longitude: undefined,
+  nearbyAmenities: undefined,
   deposit: undefined,
   petsAllowed: undefined,
 };

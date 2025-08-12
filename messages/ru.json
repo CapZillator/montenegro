@@ -79,6 +79,19 @@
     "benefits": {
       "pets": "Можно с питомцами"
     },
+    "nearbyAmenities": {
+      "supermarket": "Супермаркет",
+      "market": "Рынок",
+      "restaurant": "Ресторан",
+      "cafe": "Кафе",
+      "coffeeShop": "Кофейня",
+      "school": "Школа",
+      "park": "Парк",
+      "gym": "Зал",
+      "pharmacy": "Аптека",
+      "mall": "Торговый центр",
+      "transitStop": "Остановка транспорта"
+    },
     "features": "Удобства",
     "properties": {
       "title": "Заголовок",
@@ -98,7 +111,8 @@
       "address": "Адрес",
       "deposit": "Депозит",
       "petsAllowed": "Питомцы",
-      "ac": "Кондиционер"
+      "ac": "Кондиционер",
+      "nearby": "Рядом"
     },
     "elements": {
       "preview": "превью",

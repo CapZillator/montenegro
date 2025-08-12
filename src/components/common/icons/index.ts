@@ -52,3 +52,15 @@ export { Contacts as ContactsIcon } from './user/Contacts';
 export { Email as EmailICon } from './user/Email';
 export { Phone as PhoneIcon } from './user/Phone';
 export { Profile as ProfileIcon } from './user/Profile';
+
+export { Supermarket as SupermarketIcon } from './nearby/Supermarket';
+export { Market as MarketIcon } from './nearby/Market';
+export { Restaurant as RestaurantIcon } from './nearby/Restaurant';
+export { Cafe as CafeIcon } from './nearby/Cafe';
+export { Coffee as CoffeeIcon } from './nearby/Coffee';
+export { School as SchoolIcon } from './nearby/School';
+export { Park as ParkIcon } from './nearby/Park';
+export { Gym as GymIcon } from './nearby/Gym';
+export { Pharmacy as PharmacyIcon } from './nearby/Pharmacy';
+export { Mall as MallIcon } from './nearby/Mall';
+export { TransitStop as TransitStopIcon } from './nearby/TransitStop';

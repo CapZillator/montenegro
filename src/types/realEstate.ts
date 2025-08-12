@@ -1,5 +1,19 @@
 import { ListingType, ResidentialPremisesType } from '@/enums/listing';
 
+export enum NearbyAmenities {
+  SUPERMARKET = 'supermarket',
+  MARKET = 'market',
+  RESTAURANT = 'restaurant',
+  CAFE = 'cafe',
+  COFFEE_SHOP = 'coffeeShop',
+  SCHOOL = 'school',
+  PARK = 'park',
+  GYM = 'gym',
+  PHARMACY = 'pharmacy',
+  MALL = 'mall',
+  TRANSIT_STOP = 'transitStop',
+}
+
 export type ResidentialPremises = {
   id: string;
   state: number;
@@ -27,6 +41,7 @@ export type ResidentialPremises = {
   address?: string;
   latitude?: number;
   longitude?: number;
+  nearbyAmenities?: string[];
   deposit?: number;
   petsAllowed?: boolean;
   airConditioner?: boolean;

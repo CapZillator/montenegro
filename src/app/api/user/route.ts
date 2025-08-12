@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { sqlFieldTypes } from '@/constants/sql';
 import { validationSchema } from '@/constants/validationSchemas';
 import { auth } from '@/lib/auth';
-import { pool } from '@/lib/db';
+import { pool } from '@/lib/pool';
 import { User } from '@/types/user';
 import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from '@/utils/api';
 

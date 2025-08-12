@@ -10,3 +10,4 @@ export { MultilingualTextarea } from './multilingual-textarea/MultilingualTextar
 export { NumericInput } from './numeric-input/NumericInput';
 export { PhoneInput } from './phone-input/PhoneInput';
 export { TextInput } from './text-input/TextInput';
+export { ControlledBadgePicker } from './controlled-badge-picker/ControlledBadgePicker';

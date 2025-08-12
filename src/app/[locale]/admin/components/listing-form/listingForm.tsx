@@ -10,10 +10,12 @@ import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
 import { Button, ButtonIcon } from '@/components/common/button';
+import { NEARBY_AMENITIES_ICON_MAP } from '@/constants/ui/badges';
 import {
   ControlledDropdown,
   ControlledMapInput,
   ControlledSwitcher,
+  ControlledBadgePicker,
   ImageUploader,
   MoneyInput,
   MultilingualTextarea,
@@ -46,6 +48,7 @@ import { AVAILABLE_LOCALES } from '@/constants/i18n';
 import { LOCALIZED_CITIES } from '@/constants/location';
 import { validationSchema } from '@/constants/validationSchemas';
 import { ListingType, ResidentialPremisesType } from '@/enums/listing';
+import { NearbyAmenities } from '@/types/realEstate';
 import { geocodeAddress } from '@/fetchers/geo';
 import { addListingFetcher, updateListingFetcher } from '@/fetchers/listings';
 import { useCurrentUser } from '@/hooks/use-current-user/useCurrentUser';
@@ -230,6 +233,12 @@ export const ListingForm: FC<Props> = ({
   const localesDropdownOptions = AVAILABLE_LOCALES.map((locale) => ({
     name: locale,
     value: locale,
+  }));
+
+  const nearbyAmenitiesValues = Object.values(NearbyAmenities).map((value) => ({
+    name: t(`listings.nearbyAmenities.${value}`),
+    value: value,
+    icon: NEARBY_AMENITIES_ICON_MAP[value],
   }));
 
   return (
@@ -500,6 +509,13 @@ export const ListingForm: FC<Props> = ({
                 'relative z-10 aspect-square w-full border-solid border-divider/25 border-1 rounded-lg',
                 'md:aspect-auto md:h-96'
               )}
+            />
+            <ControlledBadgePicker
+              control={control}
+              values={nearbyAmenitiesValues}
+              name="nearbyAmenities"
+              label={t('listings.properties.nearby')}
+              disabled={isLoading}
             />
           </div>
         )}

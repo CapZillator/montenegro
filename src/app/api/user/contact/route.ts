@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { sqlFieldTypes } from '@/constants/sql';
 import { validationSchema } from '@/constants/validationSchemas';
 import { auth } from '@/lib/auth';
-import { pool } from '@/lib/db';
+import { pool } from '@/lib/pool';
 import { buildSqlQuery } from '@/utils/api';
 
 export async function POST(req: NextRequest) {

@@ -1,7 +1,7 @@
 import { cache } from 'react';
 
 import { ListingState } from '@/enums/listing';
-import { pool } from '@/lib/db';
+import { pool } from '@/lib/pool';
 import { ResidentialPremisesFilters } from '@/types/filters';
 import { ResidentialPremises } from '@/types/realEstate';
 import { SortOption } from '@/types/sorting';
@@ -115,9 +115,9 @@ export const getListingOwnerById = cache(
 
     if (result.rows.length === 0) return null;
 
-    return toCamelCase(result.rows[0]) as Pick<
-      User,
-      'name' | 'phone' | 'contacts'
-    >;
+    return {
+      ...toCamelCase(result.rows[0]),
+      contacts: JSON.parse(result.rows[0].contacts),
+    } as Pick<User, 'name' | 'phone' | 'contacts'>;
   }
 );

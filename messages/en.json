@@ -79,6 +79,19 @@
     "benefits": {
       "pets": "Pets are allowed"
     },
+    "nearbyAmenities": {
+      "supermarket": "Supermarket",
+      "market": "Market",
+      "restaurant": "Restaurant",
+      "cafe": "Cafe",
+      "coffeeShop": "Coffee shop",
+      "school": "School",
+      "park": "Park",
+      "gym": "Gym",
+      "pharmacy": "Pharmacy",
+      "mall": "Shopping mall",
+      "transitStop": "Transit stop"
+    },
     "features": "Features",
     "properties": {
       "title": "Title",
@@ -98,7 +111,8 @@
       "address": "Address",
       "deposit": "Deposit",
       "petsAllowed": "Pets",
-      "ac": "A/C"
+      "ac": "A/C",
+      "nearby": "Nearby"
     },
     "elements": {
       "preview": "preview",

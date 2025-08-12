@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { FETCH_PATHS } from '@/constants/fetch';
 import { getErrorMessage } from '@/helpers/guards';
-import { pool } from '@/lib/db';
+import { pool } from '@/lib/pool';
 import { Currency } from '@/types/currency';
 
 const EXCHANGE_RATES_URL = `${FETCH_PATHS.external.exchangeRates}/live?access_key=${process.env.EXCHANGERATE_KEY}&source=${Currency.USD}&currencies=${Currency.EUR},${Currency.VND}`;

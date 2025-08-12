@@ -6,7 +6,7 @@ import { validationSchema } from '@/constants/validationSchemas';
 import { ListingState } from '@/enums/listing';
 import { getErrorMessage } from '@/helpers/guards';
 import { auth } from '@/lib/auth';
-import { pool } from '@/lib/db';
+import { pool } from '@/lib/pool';
 import { deleteImagesByPublicIds } from '@/lib/images/deleteImagesByPublicIds';
 import { ResidentialPremises } from '@/types/realEstate';
 import { buildSqlQuery, safeParseJsonFields, toSnakeCase } from '@/utils/api';

@@ -8,8 +8,9 @@ type Props = {
 };
 
 export const Address: FC<Props> = async ({ location, address }) => (
-  <div className="inline-flex gap-2">
+  <div className="flex gap-2">
     <Location className="w-5 h-5 fill-primary-content shrink-0" />
+
     <span className="block">
       {address ? `${location}, ${address}` : location}
     </span>

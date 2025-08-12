@@ -1,10 +1,13 @@
 import { z } from 'zod';
 
+import { NearbyAmenities } from '@/types/realEstate';
 import { MAX_IMAGES } from '@/components/common/controlled-inputs/image-uploader/constants';
 import { ListingType, ResidentialPremisesType } from '@/enums/listing';
 import { Messengers } from '@/enums/user';
 
 import { regexPatterns } from './regexPatterns';
+
+const nearbyAmenityValues = Object.values(NearbyAmenities);
 
 const multilingialText = z
   .record(z.string(), z.string().min(1))
@@ -64,6 +67,10 @@ export const validationSchema = {
       address: z.string().optional(),
       latitude: z.number().min(-90).max(90).optional(),
       longitude: z.number().min(-180).max(180).optional(),
+      nearbyAmenities: z
+        .array(z.enum(nearbyAmenityValues as [string, ...string[]]))
+        .max(nearbyAmenityValues.length)
+        .default([]),
       deposit: z.number().nonnegative().optional(),
       petsAllowed: z.boolean().optional(),
     })

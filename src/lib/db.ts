@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { pool } from './pool';
 
 type CreateUserInput = {
   provider: string;
@@ -7,11 +7,6 @@ type CreateUserInput = {
   name?: string | null;
   image?: string | null;
 };
-
-export const pool = new Pool({
-  connectionString: process.env.POSTGRES_NO_VERIFY_URL!,
-  ssl: true,
-});
 
 export const getUserIdByProviderAccount = async (
   provider: string,

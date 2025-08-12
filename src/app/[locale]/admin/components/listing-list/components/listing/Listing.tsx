@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import {
   AreaIcon,
   BedIcon,
-  CalendarIcon,
   DeleteStrokeIcon,
   DoorIcon,
   EditIcon,
@@ -16,12 +15,12 @@ import {
 import { ImageClient } from '@/components/common/image/Image.client';
 import { ImageButton } from '@/components/common/image-button/ImageButton';
 import { ListingState } from '@/enums/listing';
-import { isoUTCStringToLocaleString } from '@/formatters/date';
 import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { useConvertedPrice } from '@/hooks/use-converted-price/useConvertedPrice';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
 import { ResidentialPremises } from '@/types/realEstate';
 import { getFullAddress, getLocalizedStringValue } from '@/utils/listings';
+import { PublishDate } from '@/components/common/publish-date/PublishDate';
 
 type Props = {
   listing: ResidentialPremises;
@@ -113,16 +112,7 @@ export const Listing: FC<Props> = ({
         </div>
       </div>
 
-      <div
-        className={classNames('flex items-center gap-2', {
-          'opacity-50': !isActive,
-        })}
-      >
-        <CalendarIcon className="w-4 h-4 stroke-primary-content" />
-        <span className="text-sm">
-          {isoUTCStringToLocaleString(listing.createdAt)}
-        </span>
-      </div>
+      <PublishDate date={listing.updatedAt ?? listing.createdAt} />
 
       <div className="absolute top-4 left-4 right-4 flex justify-end gap-2">
         <ImageButton
