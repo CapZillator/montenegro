@@ -24,6 +24,24 @@ const getOrderByClause = (sort?: string): string => {
   return 'ORDER BY created_at DESC';
 };
 
+const safeParseJson = (raw: unknown) => {
+  if (raw == null) return null;
+
+  if (typeof raw === 'object') return raw;
+
+  if (typeof raw !== 'string') return null;
+
+  const data = raw.trim();
+
+  if (!data) return null;
+
+  try {
+    return JSON.parse(data);
+  } catch {
+    return null;
+  }
+};
+
 export const getListings = cache(
   async (
     filters: ResidentialPremisesFilters,
@@ -70,7 +88,7 @@ export const getListings = cache(
       pool.query(countQuery, values),
     ]);
     const total = Number(countResult.rows[0]?.total ?? 0);
-    const totalPages = Math.ceil(total / perPage);
+    const totalPages = Math.max(1, Math.ceil(total / perPage));
 
     return {
       listings: listingsResult.rows.map(toCamelCase) as ResidentialPremises[],
@@ -117,7 +135,7 @@ export const getListingOwnerById = cache(
 
     return {
       ...toCamelCase(result.rows[0]),
-      contacts: JSON.parse(result.rows[0].contacts),
+      contacts: safeParseJson(result.rows[0].contacts),
     } as Pick<User, 'name' | 'phone' | 'contacts'>;
   }
 );
