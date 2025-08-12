@@ -10,12 +10,11 @@ import classNames from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
 import { Button, ButtonIcon } from '@/components/common/button';
-import { NEARBY_AMENITIES_ICON_MAP } from '@/constants/ui/badges';
 import {
+  ControlledBadgePicker,
   ControlledDropdown,
   ControlledMapInput,
   ControlledSwitcher,
-  ControlledBadgePicker,
   ImageUploader,
   MoneyInput,
   MultilingualTextarea,
@@ -46,15 +45,16 @@ import { UserContactsModal } from '@/components/common/user-contacts-modal/UserC
 import { QUERY_KEYS } from '@/constants/fetch';
 import { AVAILABLE_LOCALES } from '@/constants/i18n';
 import { LOCALIZED_CITIES } from '@/constants/location';
+import { NEARBY_AMENITIES_ICON_MAP } from '@/constants/ui/badges';
 import { validationSchema } from '@/constants/validationSchemas';
 import { ListingType, ResidentialPremisesType } from '@/enums/listing';
-import { NearbyAmenities } from '@/types/realEstate';
 import { geocodeAddress } from '@/fetchers/geo';
 import { addListingFetcher, updateListingFetcher } from '@/fetchers/listings';
 import { useCurrentUser } from '@/hooks/use-current-user/useCurrentUser';
 import { useLocale } from '@/hooks/use-locale/useLocale';
 import { useToast } from '@/hooks/use-toast/useToast';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
+import { NearbyAmenities } from '@/types/realEstate';
 import { ResidentialPremises } from '@/types/realEstate';
 
 import { HeaderNavigation } from './components/header-navigation/HeaderNavigation';

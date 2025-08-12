@@ -3,11 +3,11 @@
 import { FC } from 'react';
 import classNames from 'classnames';
 
+import { PublishDate } from '@/components/common/publish-date/PublishDate';
 import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { useConvertedPrice } from '@/hooks/use-converted-price/useConvertedPrice';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
 import { Currency } from '@/types/currency';
-import { PublishDate } from '@/components/common/publish-date/PublishDate';
 
 type Props = {
   price: number;

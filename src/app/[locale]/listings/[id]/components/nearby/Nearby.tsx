@@ -1,9 +1,11 @@
 import { FC } from 'react';
 import { getTranslations } from 'next-intl/server';
 import classNames from 'classnames';
-import { NearbyAmenities } from '@/types/realEstate';
-import { Badge } from '../common/badge/Badge';
+
 import { NEARBY_AMENITIES_ICON_MAP } from '@/constants/ui/badges';
+import { NearbyAmenities } from '@/types/realEstate';
+
+import { Badge } from '../common/badge/Badge';
 
 type Props = {
   data: string[];

@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-import { NearbyAmenities } from '@/types/realEstate';
 import { MAX_IMAGES } from '@/components/common/controlled-inputs/image-uploader/constants';
 import { ListingType, ResidentialPremisesType } from '@/enums/listing';
 import { Messengers } from '@/enums/user';
+import { NearbyAmenities } from '@/types/realEstate';
 
 import { regexPatterns } from './regexPatterns';
 

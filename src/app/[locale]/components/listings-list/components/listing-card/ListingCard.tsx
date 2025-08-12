@@ -10,10 +10,10 @@ import {
   LocationIcon,
 } from '@/components/common/icons';
 import { ImageServer } from '@/components/common/image/Image.server';
+import { PublishDate } from '@/components/common/publish-date/PublishDate';
 import { ResidentialPremises } from '@/types/realEstate';
 import { getLocalizedStringValue } from '@/utils/listings';
 import { getFullAddress } from '@/utils/listings';
-import { PublishDate } from '@/components/common/publish-date/PublishDate';
 
 type Props = {
   data: ResidentialPremises;

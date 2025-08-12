@@ -14,13 +14,13 @@ import {
 } from '@/components/common/icons';
 import { ImageClient } from '@/components/common/image/Image.client';
 import { ImageButton } from '@/components/common/image-button/ImageButton';
+import { PublishDate } from '@/components/common/publish-date/PublishDate';
 import { ListingState } from '@/enums/listing';
 import { formatNumberToFinancialAmount } from '@/formatters/finance';
 import { useConvertedPrice } from '@/hooks/use-converted-price/useConvertedPrice';
 import { useTranslation } from '@/hooks/use-translation/useTranslation';
 import { ResidentialPremises } from '@/types/realEstate';
 import { getFullAddress, getLocalizedStringValue } from '@/utils/listings';
-import { PublishDate } from '@/components/common/publish-date/PublishDate';
 
 type Props = {
   listing: ResidentialPremises;

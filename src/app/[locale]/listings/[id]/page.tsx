@@ -11,10 +11,10 @@ import { Address } from './components/addresse/Address';
 import { Description } from './components/description/Description';
 import { Gallery } from './components/gallery/Gallery';
 import { Map } from './components/map/Map';
-import { Owner } from './components/owner/Owner';
 import { Meta } from './components/meta/Meta';
-import { Summary } from './components/summary/Summary';
 import { Nearby } from './components/nearby/Nearby';
+import { Owner } from './components/owner/Owner';
+import { Summary } from './components/summary/Summary';
 import { ADDITIONAL_BENEFIT_NAMES, ParamsSchema } from './constants';
 
 export default async function ListingPage({ params }: any) {

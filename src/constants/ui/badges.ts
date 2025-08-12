@@ -1,17 +1,17 @@
-import { NearbyAmenities } from '@/types/realEstate';
 import {
-  SupermarketIcon,
-  MarketIcon,
-  RestaurantIcon,
   CafeIcon,
   CoffeeIcon,
-  SchoolIcon,
-  ParkIcon,
   GymIcon,
-  PharmacyIcon,
   MallIcon,
+  MarketIcon,
+  ParkIcon,
+  PharmacyIcon,
+  RestaurantIcon,
+  SchoolIcon,
+  SupermarketIcon,
   TransitStopIcon,
 } from '@/components/common/icons';
+import { NearbyAmenities } from '@/types/realEstate';
 
 export const NEARBY_AMENITIES_ICON_MAP = {
   [NearbyAmenities.SUPERMARKET]: SupermarketIcon,

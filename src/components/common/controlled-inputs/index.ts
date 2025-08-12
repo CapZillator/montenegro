@@ -1,4 +1,5 @@
 export { ContactMethodInput } from './contact-method-input/ContactMethodInput';
+export { ControlledBadgePicker } from './controlled-badge-picker/ControlledBadgePicker';
 export { ControlledDropdown } from './controlled-dropdown/ControlledDropdown';
 export { ControlledMapInput } from './controlled-map-input/ControlledMapInput';
 export { ControlledRangeSlider } from './controlled-range-slider/ControlledRangeSlider';
@@ -10,4 +11,3 @@ export { MultilingualTextarea } from './multilingual-textarea/MultilingualTextar
 export { NumericInput } from './numeric-input/NumericInput';
 export { PhoneInput } from './phone-input/PhoneInput';
 export { TextInput } from './text-input/TextInput';
-export { ControlledBadgePicker } from './controlled-badge-picker/ControlledBadgePicker';

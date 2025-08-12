@@ -1,9 +1,9 @@
-import { createElement, FC } from 'react';
+import { FC } from 'react';
 import { getTranslations } from 'next-intl/server';
 import classNames from 'classnames';
 
-import { BENEFIT_ENTRIES_MAP } from './constants';
 import { Badge } from '../common/badge/Badge';
+import { BENEFIT_ENTRIES_MAP } from './constants';
 
 type BenefitKey = keyof typeof BENEFIT_ENTRIES_MAP;
 

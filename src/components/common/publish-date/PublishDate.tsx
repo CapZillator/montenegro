@@ -1,8 +1,9 @@
 'use client';
 
 import { FC } from 'react';
-import classNames from 'classnames';
 import { useTranslations } from 'next-intl';
+import classNames from 'classnames';
+
 import { CalendarIcon } from '@/components/common/icons';
 import { getRelativeDate } from '@/utils/time';
 

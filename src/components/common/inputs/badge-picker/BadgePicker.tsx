@@ -27,6 +27,7 @@ export const BadgePicker: FC<Props> = ({
     >
       {values.map((badge) => {
         const isSelected = selectedValues.includes(badge.value);
+
         return (
           <label
             key={badge.value}

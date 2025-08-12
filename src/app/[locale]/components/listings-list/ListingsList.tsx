@@ -10,6 +10,7 @@ import { LocalizedLink } from '@/components/localized-link/LokalizedLink';
 import { ResidentialPremisesFilters } from '@/types/filters';
 import { ResidentialPremises } from '@/types/realEstate';
 import { SortOption } from '@/types/sorting';
+
 import { ListingCard } from './components/listing-card/ListingCard';
 
 type Props = {
